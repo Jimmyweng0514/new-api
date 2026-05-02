@@ -23,6 +23,8 @@ import { useWorkspace } from '../context/workspace-context'
 import { getWorkspaceByPath, WORKSPACE_IDS } from '../lib/workspace-registry'
 import { type Workspace } from '../types'
 
+const BLUEFUTURE_VERSION = 'BlueFuture v1.0'
+
 type WorkspaceSwitcherProps = {
   workspaces: Workspace[]
   defaultName?: string
@@ -38,7 +40,7 @@ type WorkspaceSwitcherProps = {
 export function WorkspaceSwitcher({
   workspaces,
   defaultName = 'BlueFuture Studio',
-  defaultVersion,
+  defaultVersion = BLUEFUTURE_VERSION,
 }: WorkspaceSwitcherProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -62,7 +64,7 @@ export function WorkspaceSwitcher({
             ? {
                 ...workspace,
                 name: status?.system_name || defaultName,
-                plan: status?.version || defaultVersion || t('Unknown version'),
+                plan: status?.version || defaultVersion || BLUEFUTURE_VERSION,
               }
             : workspace
         )
