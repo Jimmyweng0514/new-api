@@ -14,15 +14,18 @@ export function SignUp() {
       <div className='w-full space-y-8'>
         <div className='space-y-2'>
           <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
-            {t('Create an account')}
+            {t('创建 BlueFuture 账号')}
           </h2>
+          <p className='text-muted-foreground text-center text-sm leading-relaxed sm:text-left'>
+            {t('把热门模型、额度和密钥管理放进一个入口。')}
+          </p>
           <p className='text-muted-foreground text-left text-sm sm:text-base'>
-            {t('Already have an account?')}{' '}
+            {t('已有账号？')}{' '}
             <Link
               to='/sign-in'
               className='hover:text-primary font-medium underline underline-offset-4'
             >
-              {t('Sign in')}
+              {t('直接登录')}
             </Link>
             .
           </p>

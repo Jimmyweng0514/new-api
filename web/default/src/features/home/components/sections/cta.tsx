@@ -35,21 +35,21 @@ export function CTA(props: CTAProps) {
         animation='scale-in'
       >
         <h2 className='text-2xl leading-tight font-bold tracking-tight md:text-4xl'>
-          {t('Ready to simplify')}
+          {t('准备好把')}
           <br />
-          <span className='bg-gradient-to-r from-blue-400 via-violet-400 to-purple-500 bg-clip-text text-transparent'>
-            {t('your AI integration?')}
+          <span className='bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent dark:from-blue-300 dark:via-sky-300 dark:to-teal-200'>
+            {t('AI 放进你的未来生活？')}
           </span>
         </h2>
         <p className='text-muted-foreground/80 mx-auto mt-5 max-w-md text-sm leading-relaxed md:text-base'>
           {t(
-            'Deploy your own gateway and start routing requests through your configured upstream services.'
+            '从一个清爽入口开始，连接热门模型，管理额度和密钥，让灵感不用再卡在配置里。'
           )}
         </p>
         <div className='mt-8 flex items-center justify-center gap-3'>
           <Button className='group rounded-lg' asChild>
             <Link to='/sign-up'>
-              {t('Get Started')}
+              {t('开始使用')}
               <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
             </Link>
           </Button>
@@ -58,7 +58,7 @@ export function CTA(props: CTAProps) {
             className='border-border/50 hover:border-border hover:bg-muted/50 rounded-lg'
             asChild
           >
-            <Link to='/pricing'>{t('View Pricing')}</Link>
+            <Link to='/pricing'>{t('查看模型')}</Link>
           </Button>
         </div>
       </AnimateInView>

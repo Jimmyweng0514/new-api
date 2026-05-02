@@ -8,24 +8,24 @@ export function HowItWorks() {
   const steps = [
     {
       num: '1',
-      title: t('Configure'),
+      title: t('注册账号'),
       desc: t(
-        'Add your API keys, set up channels and configure access permissions'
+        '进入 BlueFuture Studio，创建你的 AI 能力入口。'
       ),
       icon: <Settings className='size-6' strokeWidth={1.5} />,
     },
     {
       num: '2',
-      title: t('Connect'),
+      title: t('选择模型'),
       desc: t(
-        'Connect through OpenAI, Claude, Gemini, and other compatible API routes'
+        '按写作、代码、学习、自动化等场景选择合适模型。'
       ),
       icon: <Zap className='size-6' strokeWidth={1.5} />,
     },
     {
       num: '3',
-      title: t('Monitor'),
-      desc: t('Track usage, costs and performance with real-time analytics'),
+      title: t('开始创作'),
+      desc: t('管理密钥、查看用量，把 AI 接进你的日常工作流。'),
       icon: <BarChart3 className='size-6' strokeWidth={1.5} />,
     },
   ]
@@ -35,10 +35,10 @@ export function HowItWorks() {
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='mb-16 text-center md:mb-20'>
           <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
-            {t('How It Works')}
+            {t('怎么开始')}
           </p>
           <h2 className='text-2xl font-bold tracking-tight md:text-3xl'>
-            {t('Three steps to get started')}
+            {t('三步，把 AI 变成日常能力')}
           </h2>
         </AnimateInView>
 

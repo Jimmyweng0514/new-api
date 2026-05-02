@@ -40,7 +40,7 @@ function BrandLogo({
     >
       <div className='relative h-6 w-6'>
         {loading || !logoLoaded ? (
-          <Skeleton className='absolute inset-0 rounded-full' />
+          <Skeleton className='absolute inset-0 rounded-lg' />
         ) : null}
         {displayLogo}
       </div>
@@ -139,7 +139,7 @@ function MobileSignInButton({ onNavigate }: MobileSignInButtonProps) {
   return (
     <Button variant='secondary' size='sm' asChild className='h-10 w-full'>
       <Link to='/sign-in' onClick={onNavigate}>
-        {t('Sign in')}
+        {t('登录')}
       </Link>
     </Button>
   )

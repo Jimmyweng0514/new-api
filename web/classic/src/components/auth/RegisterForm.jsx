@@ -396,17 +396,20 @@ const RegisterForm = () => {
       <div className='flex flex-col items-center'>
         <div className='w-full max-w-md'>
           <div className='flex items-center justify-center mb-6 gap-2'>
-            <img src={logo} alt='Logo' className='h-10 rounded-full' />
-            <Title heading={3} className='!text-gray-800'>
+            <img src={logo} alt='Logo' className='h-11 w-11 bf-login-logo' />
+            <Title heading={3} className='!text-semi-color-text-0 !mb-0'>
               {systemName}
             </Title>
           </div>
 
-          <Card className='border-0 !rounded-2xl overflow-hidden'>
-            <div className='flex justify-center pt-6 pb-2'>
+          <Card className='bf-login-card border-0 !rounded-2xl overflow-hidden'>
+            <div className='flex flex-col items-center text-center pt-7 pb-2 px-6'>
               <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                {t('注 册')}
+                {t('创建 BlueFuture 账号')}
               </Title>
+              <Text className='bf-login-copy'>
+                {t('把热门模型、额度和密钥管理放进一个入口。')}
+              </Text>
             </div>
             <div className='px-2 py-8'>
               <div className='space-y-3'>
@@ -527,7 +530,7 @@ const RegisterForm = () => {
                 <Button
                   theme='solid'
                   type='primary'
-                  className='w-full h-12 flex items-center justify-center bg-black text-white !rounded-full hover:bg-gray-800 transition-colors'
+                  className='bf-primary-button w-full h-12 flex items-center justify-center text-white !rounded-full transition-colors'
                   icon={<IconMail size='large' />}
                   onClick={handleEmailRegisterClick}
                   loading={emailRegisterLoading}
@@ -678,7 +681,7 @@ const RegisterForm = () => {
                 <div className='space-y-2 pt-2'>
                   <Button
                     theme='solid'
-                    className='w-full !rounded-full'
+                    className='bf-primary-button w-full !rounded-full'
                     type='primary'
                     htmlType='submit'
                     onClick={handleSubmit}
@@ -687,7 +690,7 @@ const RegisterForm = () => {
                       (hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms
                     }
                   >
-                    {t('注册')}
+                    {t('创建账号')}
                   </Button>
                 </div>
               </Form>
@@ -770,33 +773,49 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className='relative overflow-hidden bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      {/* 背景模糊晕染球 */}
-      <div
-        className='blur-ball blur-ball-indigo'
-        style={{ top: '-80px', right: '-80px', transform: 'none' }}
-      />
-      <div
-        className='blur-ball blur-ball-teal'
-        style={{ top: '50%', left: '-120px' }}
-      />
-      <div className='w-full max-w-sm mt-[60px]'>
-        {showEmailRegister ||
-        !hasOAuthRegisterOptions
-          ? renderEmailRegisterForm()
-          : renderOAuthOptions()}
-        {renderWeChatLoginModal()}
-
-        {turnstileEnabled && (
-          <div className='flex justify-center mt-6'>
-            <Turnstile
-              sitekey={turnstileSiteKey}
-              onVerify={(token) => {
-                setTurnstileToken(token);
-              }}
-            />
+    <div className='bluefuture-login relative overflow-hidden flex items-center justify-center py-14 px-4 sm:px-6 lg:px-8'>
+      <div className='bf-login-shell grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center mt-[60px]'>
+        <div className='hidden lg:flex flex-col justify-center'>
+          <div className='bf-badge w-fit mb-5'>BlueFuture Account</div>
+          <h1 className='text-5xl font-bold leading-tight text-semi-color-text-0 mb-5'>
+            {t('从一个账号，')}
+            <br />
+            <span className='bluefuture-gradient-text'>
+              {t('连接你的 AI 未来')}
+            </span>
+          </h1>
+          <p className='bf-login-copy text-lg max-w-xl mb-8'>
+            {t(
+              '注册后即可进入工作台，统一管理模型入口、使用额度和个人创作工作流。',
+            )}
+          </p>
+          <div className='grid grid-cols-3 gap-3 max-w-xl'>
+            {[t('模型统一'), t('额度清晰'), t('随用随开')].map((item) => (
+              <div key={item} className='bf-stat-tile text-center'>
+                <div className='!text-base'>{item}</div>
+                <span>BlueFuture</span>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
+
+        <div>
+          {showEmailRegister || !hasOAuthRegisterOptions
+            ? renderEmailRegisterForm()
+            : renderOAuthOptions()}
+          {renderWeChatLoginModal()}
+
+          {turnstileEnabled && (
+            <div className='flex justify-center mt-6'>
+              <Turnstile
+                sitekey={turnstileSiteKey}
+                onVerify={(token) => {
+                  setTurnstileToken(token);
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -28,6 +28,10 @@
     @apply bg-background text-foreground has-[div[data-variant='inset']]:bg-sidebar min-h-svh w-full font-sans;
   }
 
+  body::selection {
+    background: color-mix(in oklch, var(--primary) 24%, transparent);
+  }
+
   /* Override Radix scroll locking for sticky headers */
   body[data-scroll-locked] {
     overflow: unset !important;

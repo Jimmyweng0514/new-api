@@ -22,9 +22,9 @@ export function Features(_props: FeaturesProps) {
     {
       id: 'fast',
       num: '01',
-      title: t('Lightning Fast'),
+      title: t('灵感启动更快'),
       desc: t(
-        'Optimized network architecture ensures millisecond response times'
+        '写作、学习、代码、自动化，一个入口就能调起合适的 AI 模型。'
       ),
       span: 'md:col-span-2',
       icon: <Zap className='size-4 text-blue-400' />,
@@ -46,9 +46,9 @@ export function Features(_props: FeaturesProps) {
     {
       id: 'secure',
       num: '02',
-      title: t('Secure & Reliable'),
+      title: t('密钥更好管'),
       desc: t(
-        'Enterprise-grade security with comprehensive permission management'
+        '把不同模型渠道收进后台，使用时只面对一个清晰的入口。'
       ),
       span: 'md:col-span-1',
       icon: <Shield className='size-4 text-emerald-400' />,
@@ -83,13 +83,13 @@ export function Features(_props: FeaturesProps) {
     {
       id: 'global',
       num: '03',
-      title: t('Global Coverage'),
-      desc: t('Multi-region deployment for stable global access'),
+      title: t('额度看得懂'),
+      desc: t('模型、额度、用量、成本统一查看，少一点猜，多一点掌控。'),
       span: 'md:col-span-1',
       icon: <Globe className='size-4 text-violet-400' />,
       visual: (
         <div className='mt-4 space-y-2'>
-          {[t('Load Balancing'), t('Rate Limiting'), t('Cost Tracking')].map(
+          {[t('模型选择'), t('额度控制'), t('用量记录')].map(
             (step, i) => (
               <div key={step} className='flex items-center gap-2'>
                 <div
@@ -112,14 +112,14 @@ export function Features(_props: FeaturesProps) {
     {
       id: 'developer',
       num: '04',
-      title: t('Developer Friendly'),
-      desc: t('Compatible API routes for common AI application workflows'),
+      title: t('开发也顺手'),
+      desc: t('兼容常见 AI 接口路线，做个人工具、Bot、自动化都更轻。'),
       span: 'md:col-span-2',
       icon: <Code className='size-4 text-amber-400' />,
       visual: (
         <div className='mt-4 flex items-center gap-3'>
           <div className='flex -space-x-2'>
-            {['API', 'SDK', 'CLI', 'Docs'].map((n) => (
+            {['API', 'Bot', 'App', 'Flow'].map((n) => (
               <div
                 key={n}
                 className='border-background from-muted to-muted/60 text-muted-foreground flex size-8 items-center justify-center rounded-full border-2 bg-gradient-to-br text-[9px] font-bold'
@@ -130,7 +130,7 @@ export function Features(_props: FeaturesProps) {
           </div>
           <div className='text-muted-foreground flex items-center gap-1.5 text-xs'>
             <Code className='size-3.5 text-blue-500' />
-            {t('Multi-protocol Compatible')}
+            {t('多模型兼容')}
           </div>
         </div>
       ),
@@ -140,23 +140,23 @@ export function Features(_props: FeaturesProps) {
   const additionalFeatures = [
     {
       icon: <Gauge className='size-5' strokeWidth={1.5} />,
-      title: t('High Performance'),
-      desc: t('Support for high concurrency with automatic load balancing'),
+      title: t('响应轻快'),
+      desc: t('把日常 AI 请求集中处理，打开就能用。'),
     },
     {
       icon: <DollarSign className='size-5' strokeWidth={1.5} />,
-      title: t('Transparent Billing'),
-      desc: t('Pay-as-you-go with real-time usage monitoring'),
+      title: t('花费透明'),
+      desc: t('适合个人和小团队控制模型使用成本。'),
     },
     {
       icon: <Users className='size-5' strokeWidth={1.5} />,
-      title: t('Team Collaboration'),
-      desc: t('Multi-user management with flexible permission allocation'),
+      title: t('多人共用'),
+      desc: t('朋友、社群、小团队可以按账号分配使用。'),
     },
     {
       icon: <HeartHandshake className='size-5' strokeWidth={1.5} />,
-      title: t('Open Source'),
-      desc: t('Community driven, self-hosted, and extensible'),
+      title: t('开源可控'),
+      desc: t('基于开源项目自建，品牌和体验都能继续延展。'),
     },
   ]
 
@@ -165,12 +165,12 @@ export function Features(_props: FeaturesProps) {
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='mb-16 max-w-lg'>
           <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
-            {t('Core Features')}
+            {t('BlueFuture 能做什么')}
           </p>
           <h2 className='text-2xl leading-tight font-bold tracking-tight md:text-3xl'>
-            {t('Built for developers,')}
+            {t('给年轻 AI 用户，')}
             <br />
-            {t('designed for scale')}
+            {t('一个更好看的模型入口')}
           </h2>
         </AnimateInView>
 

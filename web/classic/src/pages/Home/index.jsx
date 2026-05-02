@@ -80,6 +80,26 @@ const Home = () => {
   const endpointItems = API_ENDPOINTS.map((e) => ({ value: e }));
   const [endpointIndex, setEndpointIndex] = useState(0);
   const isChinese = i18n.language.startsWith('zh');
+  const heroTags = ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen'];
+  const creatorCards = [
+    {
+      title: t('灵感写作'),
+      desc: t('把标题、脚本、短视频文案和学习笔记，快速变成可用初稿。'),
+    },
+    {
+      title: t('代码搭子'),
+      desc: t('统一调用热门模型，写代码、查问题、做自动化更顺手。'),
+    },
+    {
+      title: t('创作提速'),
+      desc: t('同一个入口管理密钥和额度，少折腾配置，多完成作品。'),
+    },
+  ];
+  const marketStats = [
+    { value: '30+', label: t('热门模型接入') },
+    { value: '1', label: t('统一模型入口') },
+    { value: '24h', label: t('灵感随时在线') },
+  ];
 
   const displayHomePageContent = async () => {
     setHomePageContent(localStorage.getItem('home_page_content') || '');
@@ -156,30 +176,40 @@ const Home = () => {
         isMobile={isMobile}
       />
       {homePageContentLoaded && homePageContent === '' ? (
-        <div className='w-full overflow-x-hidden'>
-          {/* Banner 部分 */}
-          <div className='w-full border-b border-semi-color-border min-h-[500px] md:min-h-[600px] lg:min-h-[700px] relative overflow-x-hidden'>
-            {/* 背景模糊晕染球 */}
-            <div className='blur-ball blur-ball-indigo' />
-            <div className='blur-ball blur-ball-teal' />
-            <div className='flex items-center justify-center h-full px-4 py-20 md:py-24 lg:py-32 mt-10'>
-              {/* 居中内容区 */}
-              <div className='flex flex-col items-center justify-center text-center max-w-4xl mx-auto'>
+        <div className='bluefuture-home w-full overflow-x-hidden'>
+          <section className='bluefuture-hero w-full min-h-[620px] md:min-h-[720px] relative overflow-hidden'>
+            <div className='bluefuture-grid' aria-hidden='true' />
+            <div className='flex items-center justify-center h-full px-4 py-24 md:py-28 lg:py-36 mt-10'>
+              <div className='flex flex-col items-center justify-center text-center max-w-5xl mx-auto'>
+                <div className='bf-badge mb-5'>
+                  {t('BlueFuture Studio · 年轻人的 AI 能力入口')}
+                </div>
                 <div className='flex flex-col items-center justify-center mb-6 md:mb-8'>
                   <h1
                     className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-semi-color-text-0 leading-tight ${isChinese ? 'tracking-wide md:tracking-wider' : ''}`}
                   >
                     <>
-                      {t(' bluefuture.studio')}
+                      {t('BlueFuture Studio')}
                       <br />
-                      <span className='shine-text'>{t('大模型接口网关')}</span>
+                      <span className='bluefuture-gradient-text'>
+                        {t('把 AI 能力接到未来生活')}
+                      </span>
                     </>
                   </h1>
-                  <p className='text-base md:text-lg lg:text-xl text-semi-color-text-1 mt-4 md:mt-6 max-w-xl'>
-                    {t('一站式接入 OpenAI、Claude、Gemini、DeepSeek 等模型服务：')}
+                  <p className='text-base md:text-lg lg:text-xl text-semi-color-text-1 mt-5 md:mt-6 max-w-2xl leading-relaxed'>
+                    {t(
+                      '一个账号接入 OpenAI、Claude、Gemini、DeepSeek 等热门模型，把灵感、写作、代码和自动化都放进同一个清爽入口。',
+                    )}
                   </p>
-                  {/* BASE URL 与端点选择 */}
-                  <div className='flex flex-col md:flex-row items-center justify-center gap-4 w-full mt-4 md:mt-6 max-w-md'>
+                  <div className='flex flex-wrap items-center justify-center gap-2 mt-5'>
+                    {heroTags.map((tag) => (
+                      <span key={tag} className='bf-model-pill'>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className='bf-endpoint-box flex flex-col md:flex-row items-center justify-center gap-4 w-full mt-7 md:mt-8 max-w-xl'>
                     <Input
                       readonly
                       value={serverAddress}
@@ -211,17 +241,16 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* 操作按钮 */}
-                <div className='flex flex-row gap-4 justify-center items-center'>
+                <div className='flex flex-col sm:flex-row gap-3 justify-center items-center'>
                   <Link to='/console'>
                     <Button
                       theme='solid'
                       type='primary'
                       size={isMobile ? 'default' : 'large'}
-                      className='!rounded-3xl px-8 py-2'
+                      className='bf-primary-button !rounded-3xl px-8 py-2'
                       icon={<IconPlay />}
                     >
-                      {t('获取密钥')}
+                      {t('开始使用')}
                     </Button>
                   </Link>
                   {isDemoSiteMode && statusState?.status?.version ? (
@@ -242,7 +271,7 @@ const Home = () => {
                     docsLink && (
                       <Button
                         size={isMobile ? 'default' : 'large'}
-                        className='flex items-center !rounded-3xl px-6 py-2'
+                        className='bf-ghost-button flex items-center !rounded-3xl px-6 py-2'
                         icon={<IconFile />}
                         onClick={() => window.open(docsLink, '_blank')}
                       >
@@ -252,14 +281,30 @@ const Home = () => {
                   )}
                 </div>
 
-                {/* 框架兼容性图标 */}
-                <div className='mt-12 md:mt-16 lg:mt-20 w-full'>
+                <div className='bf-market-stats mt-10 md:mt-12 grid grid-cols-3 gap-3 w-full max-w-2xl'>
+                  {marketStats.map((item) => (
+                    <div key={item.label} className='bf-stat-tile'>
+                      <div>{item.value}</div>
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className='mt-12 md:mt-16 w-full'>
+                  <div className='grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-12'>
+                    {creatorCards.map((card) => (
+                      <div key={card.title} className='bf-feature-tile'>
+                        <h3>{card.title}</h3>
+                        <p>{card.desc}</p>
+                      </div>
+                    ))}
+                  </div>
                   <div className='flex items-center mb-6 md:mb-8 justify-center'>
                     <Text
                       type='tertiary'
                       className='text-lg md:text-xl lg:text-2xl font-light'
                     >
-                      {t('支持众多的大模型供应商')}
+                      {t('连接你正在用、马上会用的 AI 模型')}
                     </Text>
                   </div>
                   <div className='flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto px-4'>
@@ -332,7 +377,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       ) : (
         <div className='overflow-x-hidden w-full'>

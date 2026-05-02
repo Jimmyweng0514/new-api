@@ -15,16 +15,19 @@ export function SignIn() {
       <div className='w-full space-y-8'>
         <div className='space-y-2'>
           <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
-            {t('Sign in')}
+            {t('欢迎回到 BlueFuture')}
           </h2>
+          <p className='text-muted-foreground text-center text-sm leading-relaxed sm:text-left'>
+            {t('继续你的灵感、创作和 AI 自动化工作流。')}
+          </p>
           {!status?.self_use_mode_enabled && (
             <p className='text-muted-foreground text-left text-sm sm:text-base'>
-              {t("Don't have an account?")}{' '}
+              {t('还没有账号？')}{' '}
               <Link
                 to='/sign-up'
                 className='hover:text-primary font-medium underline underline-offset-4'
               >
-                {t('Sign up')}
+                {t('立即注册')}
               </Link>
               .
             </p>

@@ -80,10 +80,10 @@ export function Stats(_props: StatsProps) {
   const { t } = useTranslation()
 
   const stats: StatItem[] = [
-    { end: 50, suffix: '+', label: t('upstream services integrated') },
-    { end: 100, suffix: '+', label: t('model billing support') },
-    { end: 50, suffix: '+', label: t('compatible API routes') },
-    { end: 10, suffix: '+', label: t('scheduling controls') },
+    { end: 30, suffix: '+', label: t('热门模型接入') },
+    { end: 1, suffix: '', label: t('统一 AI 入口') },
+    { end: 24, suffix: 'h', label: t('灵感随时在线') },
+    { end: 100, suffix: '%', label: t('源码可继续定制') },
   ]
 
   return (
