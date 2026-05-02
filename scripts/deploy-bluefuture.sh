@@ -5,6 +5,7 @@ APP_DIR="/opt/new-api"
 SRC_DIR="/opt/new-api-src"
 REPO_URL="https://github.com/Jimmyweng0514/new-api.git"
 IMAGE_NAME="bluefuture-new-api:custom"
+RUNTIME_DOCKERFILE="Dockerfile.runtime"
 
 echo "==> Pull source"
 if [ ! -d "$SRC_DIR/.git" ]; then
@@ -16,7 +17,11 @@ cd "$SRC_DIR"
 git pull --ff-only origin main
 
 echo "==> Build Docker image"
-sudo docker build -t "$IMAGE_NAME" .
+if [ -f "$RUNTIME_DOCKERFILE" ]; then
+  sudo docker build -f "$RUNTIME_DOCKERFILE" -t "$IMAGE_NAME" .
+else
+  sudo docker build -t "$IMAGE_NAME" .
+fi
 
 echo "==> Switch compose image"
 cd "$APP_DIR"
@@ -51,8 +56,22 @@ ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
 INSERT INTO options (`key`, `value`) VALUES ('HomePageContent', '')
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
 SQL
-elif sudo test -f "$APP_DIR/data/one-api.db"; then
-  sudo docker run --rm -i -v "$APP_DIR/data:/data" alpine:3.20 sh <<'SH'
+else
+  SQLITE_DB=""
+  for candidate in \
+    "$APP_DIR/data/new-api/new-api.db" \
+    "$APP_DIR/data/new-api/one-api.db" \
+    "$APP_DIR/data/one-api.db" \
+    "$APP_DIR/data/new-api.db"
+  do
+    if sudo test -f "$candidate"; then
+      SQLITE_DB="$candidate"
+      break
+    fi
+  done
+
+  if [ -n "$SQLITE_DB" ]; then
+    sudo docker run --rm -i -v "$SQLITE_DB:/data/one-api.db" alpine:3.20 sh <<'SH'
 set -e
 apk add --no-cache sqlite >/dev/null
 sqlite3 /data/one-api.db <<'SQL'
@@ -64,8 +83,9 @@ INSERT INTO options (key, value) VALUES ('HomePageContent', '')
 ON CONFLICT(key) DO UPDATE SET value = excluded.value;
 SQL
 SH
-else
-  echo "未发现 postgres/mysql 容器或 SQLite 数据库，跳过数据库选项更新。"
+  else
+    echo "未发现 postgres/mysql 容器或 SQLite 数据库，跳过数据库选项更新。"
+  fi
 fi
 
 sudo docker compose up -d --force-recreate new-api
