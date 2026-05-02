@@ -42,7 +42,7 @@ if sudo docker ps --format '{{.Names}}' | grep -qx postgres; then
   sudo docker exec -i postgres psql -U root -d new-api <<'SQL'
 INSERT INTO options (key, value) VALUES ('SystemName', 'BlueFuture Studio')
 ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
-INSERT INTO options (key, value) VALUES ('Logo', '/bluefuture-logo.svg')
+INSERT INTO options (key, value) VALUES ('Logo', '/bluefuture-logo.png')
 ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
 INSERT INTO options (key, value) VALUES ('HomePageContent', '')
 ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
@@ -51,7 +51,7 @@ elif sudo docker ps --format '{{.Names}}' | grep -qx mysql; then
   sudo docker exec -i mysql mysql -uroot -p123456 new-api <<'SQL'
 INSERT INTO options (`key`, `value`) VALUES ('SystemName', 'BlueFuture Studio')
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
-INSERT INTO options (`key`, `value`) VALUES ('Logo', '/bluefuture-logo.svg')
+INSERT INTO options (`key`, `value`) VALUES ('Logo', '/bluefuture-logo.png')
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
 INSERT INTO options (`key`, `value`) VALUES ('HomePageContent', '')
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
@@ -77,7 +77,7 @@ apk add --no-cache sqlite >/dev/null
 sqlite3 /data/one-api.db <<'SQL'
 INSERT INTO options (key, value) VALUES ('SystemName', 'BlueFuture Studio')
 ON CONFLICT(key) DO UPDATE SET value = excluded.value;
-INSERT INTO options (key, value) VALUES ('Logo', '/bluefuture-logo.svg')
+INSERT INTO options (key, value) VALUES ('Logo', '/bluefuture-logo.png')
 ON CONFLICT(key) DO UPDATE SET value = excluded.value;
 INSERT INTO options (key, value) VALUES ('HomePageContent', '')
 ON CONFLICT(key) DO UPDATE SET value = excluded.value;

@@ -54,7 +54,7 @@ export function getSystemName() {
 
 export function getLogo() {
   let logo = localStorage.getItem('logo');
-  if (!logo) return '/bluefuture-logo.svg';
+  if (!logo) return '/bluefuture-logo.png';
   return logo;
 }
 
