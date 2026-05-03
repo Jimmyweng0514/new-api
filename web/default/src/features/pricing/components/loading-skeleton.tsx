@@ -27,34 +27,26 @@ export function LoadingSkeleton(props: LoadingSkeletonProps) {
 
 function CardContentSkeleton() {
   return (
-    <div className='grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3'>
-      {Array.from({ length: 9 }).map((_, i) => (
+    <div className='space-y-5'>
+      {Array.from({ length: 6 }).map((_, i) => (
         <div
           key={i}
-          className='bg-card/70 rounded-lg border border-border/70 p-4'
+          className='bg-card/70 rounded-lg border border-border/70 p-5'
         >
-          <div className='flex items-start justify-between gap-3'>
-            <div className='flex min-w-0 items-start gap-3'>
-              <Skeleton className='size-10 shrink-0 rounded-lg' />
+          <div className='flex items-start justify-between gap-4'>
+            <div className='flex min-w-0 flex-1 items-start gap-4'>
+              <Skeleton className='size-12 shrink-0 rounded-lg' />
               <div className='min-w-0 flex-1 space-y-2'>
-                <Skeleton className='h-5 w-36' />
-                <Skeleton className='h-3.5 w-48' />
+                <Skeleton className='h-5 w-52' />
+                <Skeleton className='h-3.5 w-full' />
+                <Skeleton className='h-3.5 w-4/5' />
               </div>
             </div>
-            <Skeleton className='h-8 w-16 rounded-md' />
+            <Skeleton className='h-5 w-44 rounded-md' />
           </div>
-          <div className='mt-4 space-y-2'>
-            <Skeleton className='h-3.5 w-full' />
-            <Skeleton className='h-3.5 w-4/5' />
-          </div>
-          <div className='mt-4 flex items-center gap-2'>
-            <Skeleton className='h-4 w-24' />
-            <Skeleton className='h-4 w-16' />
-          </div>
-          <div className='mt-2 flex items-center gap-3'>
-            <Skeleton className='h-3.5 w-14' />
-            <Skeleton className='h-3.5 w-14' />
-            <Skeleton className='h-3.5 w-8' />
+          <div className='mt-4 flex items-center justify-between border-t pt-3'>
+            <Skeleton className='h-4 w-72' />
+            <Skeleton className='h-4 w-20' />
           </div>
         </div>
       ))}

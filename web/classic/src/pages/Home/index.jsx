@@ -198,7 +198,7 @@ const Home = () => {
                   </h1>
                   <p className='text-base md:text-lg lg:text-xl text-semi-color-text-1 mt-5 md:mt-6 max-w-2xl leading-relaxed'>
                     {t(
-                      '一个账号接入 OpenAI、Claude、Gemini、DeepSeek 等热门模型，把灵感、写作、代码和自动化都放进同一个清爽入口。',
+                      '一个账号接入 OpenAI、Claude、Gemini、DeepSeek 等热门模型，让灵感、写作、代码和自动化在一处安静有序地流动。',
                     )}
                   </p>
                   <div className='flex flex-wrap items-center justify-center gap-2 mt-5'>

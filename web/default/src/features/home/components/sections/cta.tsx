@@ -43,7 +43,7 @@ export function CTA(props: CTAProps) {
         </h2>
         <p className='text-muted-foreground/80 mx-auto mt-5 max-w-md text-sm leading-relaxed md:text-base'>
           {t(
-            '从一个清爽入口开始，连接热门模型，管理额度和密钥，让灵感不用再卡在配置里。'
+            'Connect top models, manage credit and keys, and let ideas start moving the moment the page opens.'
           )}
         </p>
         <div className='mt-8 flex items-center justify-center gap-3'>

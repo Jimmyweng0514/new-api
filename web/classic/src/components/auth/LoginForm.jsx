@@ -517,7 +517,7 @@ const LoginForm = () => {
                 {t('一键进入 BlueFuture')}
               </Title>
               <Text className='bf-login-copy'>
-                {t('把常用模型、密钥和额度管理放进一个清爽入口。')}
+                {t('把常用模型、密钥和额度管理放进一处安静有序的工作台。')}
               </Text>
             </div>
             <div className='px-2 py-8'>

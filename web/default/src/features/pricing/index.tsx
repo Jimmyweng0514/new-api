@@ -7,7 +7,6 @@ import {
   EmptyState,
   SearchBar,
   PricingTable,
-  PricingSidebar,
   PricingToolbar,
   ModelCardGrid,
   ModelDetailsDrawer,
@@ -18,7 +17,9 @@ import { usePricingData } from './hooks/use-pricing-data'
 
 export function Pricing() {
   const { t } = useTranslation()
-  const [selectedModelName, setSelectedModelName] = useState<string | null>(null)
+  const [selectedModelName, setSelectedModelName] = useState<string | null>(
+    null
+  )
 
   const {
     models,
@@ -61,18 +62,16 @@ export function Pricing() {
     clearSearch,
   } = useFilters(models || [])
 
-  const handleModelClick = useCallback(
-    (modelName: string) => {
-      setSelectedModelName(modelName)
-    },
-    []
-  )
+  const handleModelClick = useCallback((modelName: string) => {
+    setSelectedModelName(modelName)
+  }, [])
 
   const selectedModel = useMemo(
     () =>
       selectedModelName
-        ? (models || []).find((model) => model.model_name === selectedModelName) ||
-          null
+        ? (models || []).find(
+            (model) => model.model_name === selectedModelName
+          ) || null
         : null,
     [models, selectedModelName]
   )
@@ -129,7 +128,7 @@ export function Pricing() {
   if (isLoading) {
     return (
       <PublicLayout showMainContainer={false}>
-        <div className='mx-auto w-full max-w-[1720px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
+        <div className='mx-auto w-full max-w-[1480px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
           <LoadingSkeleton viewMode={viewMode} />
         </div>
       </PublicLayout>
@@ -139,47 +138,41 @@ export function Pricing() {
   return (
     <PublicLayout showMainContainer={false}>
       <div className='relative border-t border-transparent'>
-        <PageTransition className='mx-auto w-full max-w-[1720px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
-          <header className='mb-4 border-b border-border/70 pb-4 sm:mb-5 sm:pb-5'>
-            <div className='flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between'>
-              <div className='max-w-3xl'>
-                <p className='text-muted-foreground text-xs font-medium'>
-                  {t('Models Directory')}
-                </p>
-                <h1 className='mt-1 text-2xl font-semibold tracking-tight sm:text-3xl'>
-                  {t('Model Square')}
-                </h1>
+        <PageTransition className='mx-auto w-full max-w-[1480px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
+          <header className='mb-6 border-b border-border/60 pb-5'>
+            <div className='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
+              <div className='min-w-0'>
+                <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
+                  <h1 className='text-2xl font-semibold tracking-tight sm:text-3xl'>
+                    {t('All Models')}
+                  </h1>
+                  <span className='text-muted-foreground font-mono text-sm'>
+                    workspace-models
+                  </span>
+                </div>
                 <p className='text-muted-foreground mt-2 max-w-2xl text-sm leading-relaxed'>
                   {t(
-                    'Discover curated AI models, compare pricing and capabilities, and choose the right model for every scenario.'
+                    'Browse models, compare prices, and open details quickly.'
                   )}
                 </p>
               </div>
 
-              <div className='grid grid-cols-3 gap-2 text-sm sm:flex'>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2'>
-                  <div className='text-muted-foreground text-[11px]'>
-                    {t('Model')}
-                  </div>
-                  <div className='font-mono text-lg font-semibold tabular-nums'>
-                    {(models?.length || 0).toLocaleString()}
-                  </div>
+              <div className='flex flex-wrap items-center gap-2 text-sm'>
+                <div className='text-muted-foreground inline-flex h-9 items-center gap-2 rounded-lg px-2'>
+                  <span className='size-2 rounded-full bg-emerald-500' />
+                  {t('Service normal')}
                 </div>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2'>
-                  <div className='text-muted-foreground text-[11px]'>
-                    {t('Groups')}
-                  </div>
-                  <div className='font-mono text-lg font-semibold tabular-nums'>
-                    {availableGroups.length.toLocaleString()}
-                  </div>
+                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-medium'>
+                  {t('Docs')}
                 </div>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2'>
-                  <div className='text-muted-foreground text-[11px]'>
-                    {t('Vendor')}
-                  </div>
-                  <div className='font-mono text-lg font-semibold tabular-nums'>
-                    {(vendors?.length || 0).toLocaleString()}
-                  </div>
+                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
+                  {t('Model')} {(models?.length || 0).toLocaleString()}
+                </div>
+                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
+                  {t('Groups')} {availableGroups.length.toLocaleString()}
+                </div>
+                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
+                  {t('Vendor')} {(vendors?.length || 0).toLocaleString()}
                 </div>
               </div>
             </div>
@@ -188,34 +181,15 @@ export function Pricing() {
               value={searchInput}
               onChange={setSearchInput}
               onClear={clearSearch}
-              placeholder={t('Search model name, provider, endpoint, or tag...')}
-              className='mt-4 max-w-3xl'
+              placeholder={t(
+                'Search model name, provider, endpoint, or tag...'
+              )}
+              className='mt-5 max-w-xl'
             />
           </header>
 
-          <div className='grid gap-4 xl:grid-cols-[280px_minmax(0,1fr)] 2xl:grid-cols-[300px_minmax(0,1fr)]'>
-            <PricingSidebar
-              quotaTypeFilter={quotaTypeFilter}
-              endpointTypeFilter={endpointTypeFilter}
-              vendorFilter={vendorFilter}
-              groupFilter={groupFilter}
-              tagFilter={tagFilter}
-              onQuotaTypeChange={setQuotaTypeFilter}
-              onEndpointTypeChange={setEndpointTypeFilter}
-              onVendorChange={setVendorFilter}
-              onGroupChange={setGroupFilter}
-              onTagChange={setTagFilter}
-              vendors={vendors || []}
-              groups={availableGroups}
-              groupRatios={groupRatio}
-              tags={availableTags}
-              models={models || []}
-              hasActiveFilters={hasActiveFilters}
-              onClearFilters={clearFilters}
-              className='sticky top-20 hidden max-h-[calc(100vh-6rem)] overflow-y-auto xl:block'
-            />
-
-            <main className='min-w-0 space-y-4'>
+          <div>
+            <main className='min-w-0 space-y-5'>
               <PricingToolbar
                 filteredCount={filteredModels.length}
                 totalCount={models?.length}
