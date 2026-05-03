@@ -85,7 +85,7 @@ function SegmentedControl(props: {
     <div
       role='group'
       aria-label={props.ariaLabel}
-      className='bg-muted/60 inline-flex h-8 items-center rounded-md border p-0.5'
+      className='bg-muted/40 inline-flex h-8 items-center rounded-md border border-border/70 p-0.5'
     >
       {props.options.map((option) => {
         const Icon = option.icon
@@ -147,7 +147,7 @@ export function PricingToolbar(props: PricingToolbarProps) {
   )
 
   return (
-    <div className='rounded-xl border p-3'>
+    <div className='bg-card/70 rounded-lg border border-border/70 p-3 shadow-[0_1px_2px_rgba(15,23,42,0.03)]'>
       <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between'>
         <div className='flex items-center gap-2'>
           <Button

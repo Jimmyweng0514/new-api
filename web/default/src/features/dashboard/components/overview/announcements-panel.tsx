@@ -47,10 +47,10 @@ export function AnnouncementsPanel() {
       loading={loading}
       empty={!list.length}
       emptyMessage={t('No announcements at this time')}
-      height='h-56 sm:h-64'
+      height='h-44 sm:h-52'
     >
-      <ScrollArea className='h-56 sm:h-64'>
-        <div className='-mx-3 sm:-mx-5'>
+      <ScrollArea className='h-44 sm:h-52'>
+        <div className='-mx-3 sm:-mx-4'>
           {list.map((item: AnnouncementItem, idx: number) => {
             const key = item.id ?? `announcement-${idx}`
             return (

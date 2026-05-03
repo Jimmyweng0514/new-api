@@ -81,10 +81,10 @@ function FilterChip(props: {
       type='button'
       onClick={props.onClick}
       className={cn(
-        'group inline-flex max-w-full items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-medium transition-all',
+        'group inline-flex max-w-full items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-medium transition-colors',
         props.active
-          ? 'border-foreground/30 bg-foreground/5 text-foreground shadow-sm'
-          : 'border-border/70 bg-background text-muted-foreground hover:border-border hover:bg-muted/50 hover:text-foreground'
+          ? 'border-primary/30 bg-primary/10 text-foreground'
+          : 'border-border/70 bg-background/70 text-muted-foreground hover:border-border hover:bg-muted/45 hover:text-foreground'
       )}
       title={props.option.label}
     >
@@ -108,7 +108,7 @@ function FilterChip(props: {
 
 function FilterSection(props: FilterSectionProps) {
   return (
-    <Collapsible defaultOpen className='border-border/70 border-b pb-3 last:border-b-0'>
+    <Collapsible defaultOpen className='border-border/60 border-b pb-3 last:border-b-0'>
       <CollapsibleTrigger className='group flex w-full items-center justify-between py-2.5 text-left'>
         <span className='text-foreground text-sm font-semibold'>
           {props.title}
@@ -222,7 +222,7 @@ export function PricingSidebar(props: PricingSidebarProps) {
   return (
     <aside
       className={cn(
-        'rounded-xl border p-3',
+        'bg-card/70 rounded-lg border border-border/70 p-3 shadow-[0_1px_2px_rgba(15,23,42,0.03)]',
         props.className
       )}
     >

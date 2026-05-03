@@ -20,7 +20,6 @@ import { ModelsChartPreferences } from './components/models/models-chart-prefere
 import { ModelsFilter } from './components/models/models-filter-dialog'
 import { AnnouncementsPanel } from './components/overview/announcements-panel'
 import { ApiInfoPanel } from './components/overview/api-info-panel'
-import { FAQPanel } from './components/overview/faq-panel'
 import { SummaryCards } from './components/overview/summary-cards'
 import { UptimePanel } from './components/overview/uptime-panel'
 import { DEFAULT_TIME_GRANULARITY } from './constants'
@@ -224,10 +223,7 @@ export function Dashboard() {
                 <CardStaggerItem>
                   <AnnouncementsPanel />
                 </CardStaggerItem>
-                <CardStaggerItem>
-                  <FAQPanel />
-                </CardStaggerItem>
-                <CardStaggerItem>
+                <CardStaggerItem className='lg:col-span-2'>
                   <UptimePanel />
                 </CardStaggerItem>
               </CardStaggerContainer>
