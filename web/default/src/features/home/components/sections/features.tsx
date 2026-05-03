@@ -44,7 +44,7 @@ export function Features(_props: FeaturesProps) {
           </h2>
           <p className='text-muted-foreground mt-4 max-w-xl text-sm leading-relaxed md:text-base'>
             {t(
-              '像 iPhone 一样，界面不解释自己。你打开页面，只需要知道现在能做什么，以及下一步点哪里。'
+              '好的界面不需要解释自己。你打开页面，就能看见重点、完成选择，并清楚下一步该往哪里走。'
             )}
           </p>
         </AnimateInView>
