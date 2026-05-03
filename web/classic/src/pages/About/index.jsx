@@ -63,7 +63,7 @@ const About = () => {
     <div style={{ textAlign: 'center' }}>
       <p>
         {t(
-          'BlueFuture Studio 是面向年轻创作者、学生、开发者和 AI 重度用户的一站式模型入口。',
+          'BlueFuture Studio 把模型接入、密钥、额度和用量收进一条清楚路径，让用户少理解系统，多完成自己的事。',
         )}
       </p>
       {t('本站基于开源项目构建：')}

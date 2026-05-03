@@ -38,7 +38,7 @@ const ApiInfoPanel = ({
   return (
     <Card
       {...CARD_PROPS}
-      className='bg-gray-50 border border-slate-200 !rounded-lg shadow-sm'
+      className='bluefuture-dashboard-card'
       title={
         <div className={FLEX_CENTER_GAP2}>
           <Server size={16} />
@@ -51,7 +51,7 @@ const ApiInfoPanel = ({
         {apiInfoData.length > 0 ? (
           apiInfoData.map((api) => (
             <React.Fragment key={api.id}>
-              <div className='flex p-2 hover:bg-white rounded-lg transition-colors cursor-pointer'>
+              <div className='bluefuture-dashboard-list-item flex p-2 rounded-lg transition-colors cursor-pointer'>
                 <div className='flex-shrink-0 mr-3'>
                   <Avatar size='extra-small' color={api.color}>
                     {api.route.substring(0, 2)}

@@ -128,7 +128,7 @@ export function Pricing() {
   if (isLoading) {
     return (
       <PublicLayout showMainContainer={false}>
-        <div className='mx-auto w-full max-w-[1480px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
+        <div className='mx-auto w-full max-w-[1180px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
           <LoadingSkeleton viewMode={viewMode} />
         </div>
       </PublicLayout>
@@ -138,22 +138,20 @@ export function Pricing() {
   return (
     <PublicLayout showMainContainer={false}>
       <div className='relative border-t border-transparent'>
-        <PageTransition className='mx-auto w-full max-w-[1480px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
+        <PageTransition className='mx-auto w-full max-w-[1180px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
           <header className='mb-6 border-b border-border/60 pb-5'>
             <div className='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
               <div className='min-w-0'>
                 <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
                   <h1 className='text-2xl font-semibold tracking-tight sm:text-3xl'>
-                    {t('All Models')}
+                    {t('模型广场')}
                   </h1>
-                  <span className='text-muted-foreground font-mono text-sm'>
-                    workspace-models
+                  <span className='text-muted-foreground text-sm'>
+                    {t('先找模型，再开始调用')}
                   </span>
                 </div>
                 <p className='text-muted-foreground mt-2 max-w-2xl text-sm leading-relaxed'>
-                  {t(
-                    'Browse models, compare prices, and open details quickly.'
-                  )}
+                  {t('搜索、比价、查看详情。只展示决策需要的信息。')}
                 </p>
               </div>
 
@@ -162,14 +160,8 @@ export function Pricing() {
                   <span className='size-2 rounded-full bg-emerald-500' />
                   {t('Service normal')}
                 </div>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-medium'>
-                  {t('Docs')}
-                </div>
                 <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
                   {t('Model')} {(models?.length || 0).toLocaleString()}
-                </div>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
-                  {t('Groups')} {availableGroups.length.toLocaleString()}
                 </div>
                 <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
                   {t('Vendor')} {(vendors?.length || 0).toLocaleString()}
@@ -181,10 +173,8 @@ export function Pricing() {
               value={searchInput}
               onChange={setSearchInput}
               onClear={clearSearch}
-              placeholder={t(
-                'Search model name, provider, endpoint, or tag...'
-              )}
-              className='mt-5 max-w-xl'
+              placeholder={t('搜索模型名称、供应商、端点或标签...')}
+              className='mt-5 max-w-lg'
             />
           </header>
 

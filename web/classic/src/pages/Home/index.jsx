@@ -18,13 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  Button,
-  Typography,
-  Input,
-  ScrollList,
-  ScrollItem,
-} from '@douyinfe/semi-ui';
+import { Button, Input, ScrollList, ScrollItem } from '@douyinfe/semi-ui';
 import { API, showError, copy, showSuccess } from '../../helpers';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
 import { API_ENDPOINTS } from '../../constants/common.constant';
@@ -40,31 +34,6 @@ import {
 } from '@douyinfe/semi-icons';
 import { Link } from 'react-router-dom';
 import NoticeModal from '../../components/layout/NoticeModal';
-import {
-  Moonshot,
-  OpenAI,
-  XAI,
-  Zhipu,
-  Volcengine,
-  Cohere,
-  Claude,
-  Gemini,
-  Suno,
-  Minimax,
-  Wenxin,
-  Spark,
-  Qingyan,
-  DeepSeek,
-  Qwen,
-  Midjourney,
-  Grok,
-  AzureAI,
-  Hunyuan,
-  Xinference,
-} from '@lobehub/icons';
-
-const { Text } = Typography;
-
 const Home = () => {
   const { t, i18n } = useTranslation();
   const [statusState] = useContext(StatusContext);
@@ -81,24 +50,19 @@ const Home = () => {
   const [endpointIndex, setEndpointIndex] = useState(0);
   const isChinese = i18n.language.startsWith('zh');
   const heroTags = ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen'];
-  const creatorCards = [
+  const productSteps = [
     {
-      title: t('灵感写作'),
-      desc: t('把标题、脚本、短视频文案和学习笔记，快速变成可用初稿。'),
+      title: t('找模型'),
+      desc: t('先看模型、价格和分组，少比较半天。'),
     },
     {
-      title: t('代码搭子'),
-      desc: t('统一调用热门模型，写代码、查问题、做自动化更顺手。'),
+      title: t('管入口'),
+      desc: t('密钥、额度和用量放在一起，不来回找。'),
     },
     {
-      title: t('创作提速'),
-      desc: t('同一个入口管理密钥和额度，少折腾配置，多完成作品。'),
+      title: t('开始调用'),
+      desc: t('把 API 地址接到你的工具里，马上开始用。'),
     },
-  ];
-  const marketStats = [
-    { value: '30+', label: t('热门模型接入') },
-    { value: '1', label: t('统一模型入口') },
-    { value: '24h', label: t('灵感随时在线') },
   ];
 
   const displayHomePageContent = async () => {
@@ -178,27 +142,24 @@ const Home = () => {
       {homePageContentLoaded && homePageContent === '' ? (
         <div className='bluefuture-home w-full overflow-x-hidden'>
           <section className='bluefuture-hero w-full min-h-[620px] md:min-h-[720px] relative overflow-hidden'>
-            <div className='bluefuture-grid' aria-hidden='true' />
             <div className='flex items-center justify-center h-full px-4 py-24 md:py-28 lg:py-36 mt-10'>
               <div className='flex flex-col items-center justify-center text-center max-w-5xl mx-auto'>
-                <div className='bf-badge mb-5'>
-                  {t('BlueFuture Studio · 年轻人的 AI 能力入口')}
-                </div>
+                <div className='bf-badge mb-5'>{t('Less is More')}</div>
                 <div className='flex flex-col items-center justify-center mb-6 md:mb-8'>
                   <h1
                     className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-semi-color-text-0 leading-tight ${isChinese ? 'tracking-wide md:tracking-wider' : ''}`}
                   >
                     <>
-                      {t('BlueFuture Studio')}
+                      {t('一个入口，')}
                       <br />
                       <span className='bluefuture-gradient-text'>
-                        {t('把 AI 能力接到未来生活')}
+                        {t('用好所有 AI')}
                       </span>
                     </>
                   </h1>
                   <p className='text-base md:text-lg lg:text-xl text-semi-color-text-1 mt-5 md:mt-6 max-w-2xl leading-relaxed'>
                     {t(
-                      '一个账号接入 OpenAI、Claude、Gemini、DeepSeek 等热门模型，让灵感、写作、代码和自动化在一处安静有序地流动。',
+                      '把选模型、管额度、接 API 变成三个清楚动作。复杂留在后台，页面只保留你下一步要做的事。',
                     )}
                   </p>
                   <div className='flex flex-wrap items-center justify-center gap-2 mt-5'>
@@ -281,99 +242,23 @@ const Home = () => {
                   )}
                 </div>
 
-                <div className='bf-market-stats mt-10 md:mt-12 grid grid-cols-3 gap-3 w-full max-w-2xl'>
-                  {marketStats.map((item) => (
-                    <div key={item.label} className='bf-stat-tile'>
-                      <div>{item.value}</div>
-                      <span>{item.label}</span>
+                <div className='bf-path-list mt-12 md:mt-14 w-full max-w-3xl'>
+                  {productSteps.map((card, index) => (
+                    <div key={card.title} className='bf-path-row'>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <h3>{card.title}</h3>
+                      <p>{card.desc}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className='mt-12 md:mt-16 w-full'>
-                  <div className='grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-12'>
-                    {creatorCards.map((card) => (
-                      <div key={card.title} className='bf-feature-tile'>
-                        <h3>{card.title}</h3>
-                        <p>{card.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className='flex items-center mb-6 md:mb-8 justify-center'>
-                    <Text
-                      type='tertiary'
-                      className='text-lg md:text-xl lg:text-2xl font-light'
-                    >
-                      {t('连接你正在用、马上会用的 AI 模型')}
-                    </Text>
-                  </div>
-                  <div className='flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto px-4'>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Moonshot size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <OpenAI size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <XAI size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Zhipu.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Volcengine.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Cohere.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Claude.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Gemini.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Suno size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Minimax.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Wenxin.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Spark.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Qingyan.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <DeepSeek.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Qwen.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Midjourney size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Grok size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <AzureAI.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Hunyuan.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Xinference.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Typography.Text className='!text-lg sm:!text-xl md:!text-2xl lg:!text-3xl font-bold'>
-                        30+
-                      </Typography.Text>
-                    </div>
-                  </div>
+                <div className='bf-model-strip mt-10 w-full max-w-3xl'>
+                  <span>{t('OpenAI')}</span>
+                  <span>{t('Claude')}</span>
+                  <span>{t('Gemini')}</span>
+                  <span>{t('DeepSeek')}</span>
+                  <span>{t('Qwen')}</span>
+                  <span>{t('更多模型')}</span>
                 </div>
               </div>
             </div>

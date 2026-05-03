@@ -152,7 +152,12 @@ export function Footer(props: FooterProps) {
 
   if (footerHtml) {
     return (
-      <footer className={cn('border-border/40 relative z-10 border-t', props.className)}>
+      <footer
+        className={cn(
+          'border-border/40 relative z-10 border-t',
+          props.className
+        )}
+      >
         <div className='mx-auto w-full max-w-6xl px-6 py-5'>
           <div className='bg-muted/20 border-border/50 flex flex-col items-center justify-between gap-4 rounded-2xl border px-4 py-4 backdrop-blur-sm sm:flex-row sm:px-5'>
             <div
@@ -180,14 +185,14 @@ export function Footer(props: FooterProps) {
               <img
                 src={displayLogo}
                 alt={displayName}
-              className='size-7 rounded-lg object-contain'
+                className='size-7 rounded-lg object-contain'
               />
               <span className='text-sm font-semibold tracking-tight'>
                 {displayName}
               </span>
             </Link>
             <p className='text-muted-foreground/60 mt-3 max-w-[200px] text-xs leading-relaxed'>
-              {t('年轻人的 AI 能力入口，连接模型、灵感和未来工作流。')}
+              {t('更少界面，更清楚地使用 AI。')}
             </p>
           </div>
 

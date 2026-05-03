@@ -39,21 +39,20 @@ const StatsCards = ({
           <Card
             key={idx}
             {...CARD_PROPS}
-            className={`${group.color} border border-slate-200 !rounded-lg w-full shadow-sm`}
+            className='bluefuture-dashboard-card w-full'
             title={group.title}
           >
             <div className='space-y-4'>
               {group.items.map((item, itemIdx) => (
                 <div
                   key={itemIdx}
-                  className='flex items-center justify-between cursor-pointer'
+                  className='bluefuture-dashboard-stat-row flex items-center justify-between cursor-pointer'
                   onClick={item.onClick}
                 >
                   <div className='flex items-center'>
                     <Avatar
-                      className='mr-3'
+                      className='bluefuture-dashboard-avatar mr-3'
                       size='small'
-                      color={item.avatarColor}
                     >
                       {item.icon}
                     </Avatar>

@@ -17,36 +17,20 @@ export function CTA(props: CTAProps) {
   }
 
   return (
-    <section className='relative z-10 overflow-hidden px-6 py-24 md:py-32'>
-      {/* Gradient mesh background */}
-      <div
-        aria-hidden
-        className='absolute inset-0 -z-10 opacity-20 dark:opacity-[0.08]'
-        style={{
-          background: [
-            'radial-gradient(ellipse 50% 50% at 30% 50%, oklch(0.7 0.15 250 / 70%) 0%, transparent 70%)',
-            'radial-gradient(ellipse 40% 40% at 70% 40%, oklch(0.65 0.12 200 / 50%) 0%, transparent 70%)',
-          ].join(', '),
-        }}
-      />
-
+    <section className='border-border/40 relative z-10 border-t px-6 py-20 md:py-28'>
       <AnimateInView
-        className='mx-auto max-w-2xl text-center'
+        className='mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 md:flex-row md:items-center'
         animation='scale-in'
       >
-        <h2 className='text-2xl leading-tight font-bold tracking-tight md:text-4xl'>
-          {t('准备好把')}
-          <br />
-          <span className='bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent dark:from-blue-300 dark:via-sky-300 dark:to-teal-200'>
-            {t('AI 放进你的未来生活？')}
-          </span>
-        </h2>
-        <p className='text-muted-foreground/80 mx-auto mt-5 max-w-md text-sm leading-relaxed md:text-base'>
-          {t(
-            'Connect top models, manage credit and keys, and let ideas start moving the moment the page opens.'
-          )}
-        </p>
-        <div className='mt-8 flex items-center justify-center gap-3'>
+        <div>
+          <h2 className='text-2xl leading-tight font-semibold tracking-tight md:text-4xl'>
+            {t('开始前，只做一个选择')}
+          </h2>
+          <p className='text-muted-foreground mt-3 max-w-lg text-sm leading-relaxed md:text-base'>
+            {t('先看模型，再决定怎么用。页面不打扰你，功能随时跟上。')}
+          </p>
+        </div>
+        <div className='flex shrink-0 items-center gap-3'>
           <Button className='group rounded-lg' asChild>
             <Link to='/sign-up'>
               {t('开始使用')}

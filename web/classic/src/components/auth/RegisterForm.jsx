@@ -405,10 +405,10 @@ const RegisterForm = () => {
           <Card className='bf-login-card border-0 !rounded-2xl overflow-hidden'>
             <div className='flex flex-col items-center text-center pt-7 pb-2 px-6'>
               <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                {t('创建 BlueFuture 账号')}
+                {t('创建账号')}
               </Title>
               <Text className='bf-login-copy'>
-                {t('把热门模型、额度和密钥管理放进一个入口。')}
+                {t('一个账号，管理模型、密钥和额度。')}
               </Text>
             </div>
             <div className='px-2 py-8'>
@@ -776,27 +776,17 @@ const RegisterForm = () => {
     <div className='bluefuture-login relative overflow-hidden flex items-center justify-center py-14 px-4 sm:px-6 lg:px-8'>
       <div className='bf-login-shell grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center mt-[60px]'>
         <div className='hidden lg:flex flex-col justify-center'>
-          <div className='bf-badge w-fit mb-5'>BlueFuture Account</div>
+          <div className='bf-badge w-fit mb-5'>Less is More</div>
           <h1 className='text-5xl font-bold leading-tight text-semi-color-text-0 mb-5'>
-            {t('从一个账号，')}
+            {t('一个账号，')}
             <br />
             <span className='bluefuture-gradient-text'>
-              {t('连接你的 AI 未来')}
+              {t('管理所有 AI 入口')}
             </span>
           </h1>
           <p className='bf-login-copy text-lg max-w-xl mb-8'>
-            {t(
-              '注册后即可进入工作台，统一管理模型入口、使用额度和个人创作工作流。',
-            )}
+            {t('注册后直接进入工作台。先使用，再慢慢配置。')}
           </p>
-          <div className='grid grid-cols-3 gap-3 max-w-xl'>
-            {[t('模型统一'), t('额度清晰'), t('随用随开')].map((item) => (
-              <div key={item} className='bf-stat-tile text-center'>
-                <div className='!text-base'>{item}</div>
-                <span>BlueFuture</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div>

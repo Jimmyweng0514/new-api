@@ -50,7 +50,7 @@ const UptimePanel = ({
   return (
     <Card
       {...CARD_PROPS}
-      className={`shadow-sm !rounded-lg ${className}`}
+      className={`bluefuture-dashboard-card ${className}`}
       title={
         <div className='flex items-center justify-between w-full gap-2'>
           <div className='flex items-center gap-2'>
@@ -132,7 +132,7 @@ const UptimePanel = ({
 
       {/* 图例 */}
       {uptimeData.length > 0 && (
-        <div className='p-3 bg-gray-50 rounded-b-2xl'>
+        <div className='bluefuture-dashboard-legend p-3'>
           <div className='flex flex-wrap gap-3 text-xs justify-center'>
             {uptimeLegendData.map((legend, index) => (
               <div key={index} className='flex items-center gap-1'>

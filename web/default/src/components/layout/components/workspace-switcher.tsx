@@ -23,7 +23,7 @@ import { useWorkspace } from '../context/workspace-context'
 import { getWorkspaceByPath, WORKSPACE_IDS } from '../lib/workspace-registry'
 import { type Workspace } from '../types'
 
-const BLUEFUTURE_VERSION = 'BlueFuture v1.0'
+const BLUEFUTURE_VERSION = 'BlueFuture v1.1'
 
 type WorkspaceSwitcherProps = {
   workspaces: Workspace[]

@@ -33,9 +33,9 @@ const DashboardHeader = ({
     '!rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50';
 
   return (
-    <div className='flex items-center justify-between mb-4'>
+    <div className='bluefuture-dashboard-header flex items-center justify-between mb-4'>
       <h2
-        className='text-2xl font-semibold text-gray-800 transition-opacity duration-1000 ease-in-out'
+        className='text-2xl font-semibold text-slate-900 transition-opacity duration-1000 ease-in-out'
         style={{ opacity: greetingVisible ? 1 : 0 }}
       >
         {getGreeting}

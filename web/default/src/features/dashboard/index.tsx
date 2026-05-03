@@ -95,16 +95,16 @@ const SECTION_META: Record<
   { titleKey: string; descriptionKey: string }
 > = {
   overview: {
-    titleKey: 'Overview',
-    descriptionKey: 'View dashboard overview and statistics',
+    titleKey: '概览',
+    descriptionKey: '余额、用量、接口状态，一屏看完。',
   },
   models: {
-    titleKey: 'Model Call Analytics',
-    descriptionKey: 'View model call count analytics and charts',
+    titleKey: '模型分析',
+    descriptionKey: '只看调用、消耗和趋势，快速判断哪个模型值得继续用。',
   },
   users: {
-    titleKey: 'User Analytics',
-    descriptionKey: 'View user consumption statistics and charts',
+    titleKey: '用户分析',
+    descriptionKey: '管理员查看用户消耗和调用情况。',
   },
 }
 
@@ -167,7 +167,8 @@ export function Dashboard() {
     },
     [navigate]
   )
-  const showSectionTabs = activeSection !== 'overview' && visibleSections.length > 1
+  const showSectionTabs =
+    activeSection !== 'overview' && visibleSections.length > 1
   const modelActions =
     activeSection === 'models' ? (
       <>

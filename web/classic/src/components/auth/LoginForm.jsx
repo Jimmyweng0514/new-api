@@ -733,10 +733,10 @@ const LoginForm = () => {
           <Card className='bf-login-card border-0 !rounded-2xl overflow-hidden'>
             <div className='flex flex-col items-center text-center pt-7 pb-2 px-6'>
               <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                {t('欢迎回到 BlueFuture')}
+                {t('欢迎回来')}
               </Title>
               <Text className='bf-login-copy'>
-                {t('继续你的灵感、创作和 AI 自动化工作流。')}
+                {t('继续管理模型、密钥和用量。')}
               </Text>
             </div>
             <div className='px-2 py-8'>
@@ -958,33 +958,17 @@ const LoginForm = () => {
     <div className='bluefuture-login relative overflow-hidden flex items-center justify-center py-14 px-4 sm:px-6 lg:px-8'>
       <div className='bf-login-shell grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center mt-[60px]'>
         <div className='hidden lg:flex flex-col justify-center'>
-          <div className='bf-badge w-fit mb-5'>
-            {t('BlueFuture Account')}
-          </div>
+          <div className='bf-badge w-fit mb-5'>{t('Less is More')}</div>
           <h1 className='text-5xl font-bold leading-tight text-semi-color-text-0 mb-5'>
-            {t('让每次登录，')}
+            {t('继续上次的')}
             <br />
-            <span className='bluefuture-gradient-text'>
-              {t('都直接进入创作状态')}
-            </span>
+            <span className='bluefuture-gradient-text'>{t('AI 工作流')}</span>
           </h1>
           <p className='bf-login-copy text-lg max-w-xl mb-8'>
             {t(
-              '为 20-30 岁的创作者、学生、开发者和 AI 重度用户准备：少一点配置，多一点产出。',
+              '登录后直接回到模型、密钥、额度和用量。页面不制造噪音，只保留完成任务需要的入口。',
             )}
           </p>
-          <div className='grid grid-cols-3 gap-3 max-w-xl'>
-            {[
-              t('模型统一'),
-              t('额度清晰'),
-              t('随用随开'),
-            ].map((item) => (
-              <div key={item} className='bf-stat-tile text-center'>
-                <div className='!text-base'>{item}</div>
-                <span>{t('BlueFuture')}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div>

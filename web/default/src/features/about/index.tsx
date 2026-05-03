@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Markdown } from '@/components/ui/markdown'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -25,19 +24,31 @@ function EmptyAboutState() {
 
   return (
     <div className='flex min-h-[60vh] items-center justify-center p-8'>
-      <div className='max-w-2xl space-y-6 text-center'>
-        <div className='flex justify-center'>
-          <Sparkles className='text-sky-500 h-20 w-20' />
-        </div>
-        <div className='space-y-2'>
-          <h2 className='text-2xl font-bold'>{t('关于 BlueFuture Studio')}</h2>
-          <p className='text-muted-foreground'>
+      <div className='max-w-3xl space-y-8'>
+        <div className='space-y-3'>
+          <p className='text-muted-foreground text-xs font-medium uppercase'>
+            {t('About')}
+          </p>
+          <h2 className='text-3xl font-semibold tracking-tight'>
+            {t('少即是多，能力不必复杂')}
+          </h2>
+          <p className='text-muted-foreground max-w-2xl leading-relaxed'>
             {t(
-              'BlueFuture Studio 是面向年轻创作者、学生、开发者和 AI 重度用户的一站式模型入口。我们希望把复杂的模型接入、密钥管理和额度查看，变成一个清爽、好用、可持续扩展的体验。'
+              'BlueFuture Studio 面向创作者、学生、开发者和 AI 高频用户。我们把模型接入、密钥、额度和用量收进一条清楚路径，让用户少理解系统，多完成自己的事。'
             )}
           </p>
         </div>
-        <div className='space-y-4 text-sm'>
+        <div className='grid gap-3 text-sm md:grid-cols-3'>
+          {[t('信息少一层'), t('操作少一步'), t('结果更清楚')].map((item) => (
+            <div
+              key={item}
+              className='rounded-lg border border-border/70 bg-card px-4 py-4 font-medium'
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+        <div className='text-muted-foreground space-y-3 text-sm'>
           <p>
             {t('本站基于开源项目构建：')}{' '}
             <a
@@ -50,7 +61,9 @@ function EmptyAboutState() {
             </a>
           </p>
           <p className='text-muted-foreground'>
-            © {currentYear} BlueFuture Studio. {t('开源许可遵循')}{' '}
+            © {currentYear} BlueFuture Studio. {t('当前版本')}:{' '}
+            <span className='text-foreground font-medium'>BlueFuture v1.1</span>
+            . {t('开源许可遵循')}{' '}
             <a
               href='https://github.com/QuantumNous/new-api/blob/main/LICENSE'
               target='_blank'
