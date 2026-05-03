@@ -35,6 +35,7 @@ import {
 import ScrollableContainer from '../common/ui/ScrollableContainer';
 
 const UptimePanel = ({
+  className = 'lg:col-span-2',
   uptimeData,
   uptimeLoading,
   activeUptimeTab,
@@ -49,7 +50,7 @@ const UptimePanel = ({
   return (
     <Card
       {...CARD_PROPS}
-      className='shadow-sm !rounded-2xl lg:col-span-1'
+      className={`shadow-sm !rounded-lg ${className}`}
       title={
         <div className='flex items-center justify-between w-full gap-2'>
           <div className='flex items-center gap-2'>

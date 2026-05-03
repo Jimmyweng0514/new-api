@@ -27,7 +27,6 @@ import StatsCards from './StatsCards';
 import ChartsPanel from './ChartsPanel';
 import ApiInfoPanel from './ApiInfoPanel';
 import AnnouncementsPanel from './AnnouncementsPanel';
-import FaqPanel from './FaqPanel';
 import UptimePanel from './UptimePanel';
 import SearchModal from './modals/SearchModal';
 
@@ -135,8 +134,6 @@ const Dashboard = () => {
       };
     },
   );
-  const faqData = statusState?.status?.faq || [];
-
   const uptimeLegendData = Object.entries(UPTIME_STATUS_MAP).map(
     ([status, info]) => ({
       status: Number(status),
@@ -144,6 +141,8 @@ const Dashboard = () => {
       label: dashboardData.t(info.label),
     }),
   );
+  const showInfoPanels =
+    dashboardData.announcementsEnabled || dashboardData.uptimeEnabled;
 
   // ========== Effects ==========
   useEffect(() => {
@@ -218,8 +217,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* 系统公告和常见问答卡片 */}
-      {dashboardData.hasInfoPanels && (
+      {/* 系统公告和服务可用性卡片 */}
+      {showInfoPanels && (
         <div className='mb-4'>
           <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
             {/* 公告卡片 */}
@@ -238,20 +237,14 @@ const Dashboard = () => {
               />
             )}
 
-            {/* 常见问答卡片 */}
-            {dashboardData.faqEnabled && (
-              <FaqPanel
-                faqData={faqData}
-                CARD_PROPS={CARD_PROPS}
-                FLEX_CENTER_GAP2={FLEX_CENTER_GAP2}
-                ILLUSTRATION_SIZE={ILLUSTRATION_SIZE}
-                t={dashboardData.t}
-              />
-            )}
-
             {/* 服务可用性卡片 */}
             {dashboardData.uptimeEnabled && (
               <UptimePanel
+                className={
+                  dashboardData.announcementsEnabled
+                    ? 'lg:col-span-2'
+                    : 'lg:col-span-4'
+                }
                 uptimeData={dashboardData.uptimeData}
                 uptimeLoading={dashboardData.uptimeLoading}
                 activeUptimeTab={dashboardData.activeUptimeTab}

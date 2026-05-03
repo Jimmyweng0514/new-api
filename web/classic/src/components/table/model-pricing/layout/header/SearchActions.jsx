@@ -18,8 +18,16 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { memo, useCallback } from 'react';
-import { Input, Button, Switch, Select, Divider } from '@douyinfe/semi-ui';
+import {
+  Input,
+  Button,
+  Switch,
+  Select,
+  Divider,
+  Tooltip,
+} from '@douyinfe/semi-ui';
 import { IconSearch, IconCopy, IconFilter } from '@douyinfe/semi-icons';
+import { LayoutGrid, Table2 } from 'lucide-react';
 
 const SearchActions = memo(
   ({
@@ -65,8 +73,8 @@ const SearchActions = memo(
     }, [tokenUnit, setTokenUnit]);
 
     return (
-      <div className='flex items-center gap-2 w-full'>
-        <div className='flex-1'>
+      <div className='bluefuture-pricing-toolbar'>
+        <div className='bluefuture-pricing-search'>
           <Input
             prefix={<IconSearch />}
             placeholder={t('模糊搜索模型名称')}
@@ -75,28 +83,30 @@ const SearchActions = memo(
             onCompositionEnd={handleCompositionEnd}
             onChange={handleChange}
             showClear
+            size='large'
           />
         </div>
 
-        <Button
-          theme='outline'
-          type='primary'
-          icon={<IconCopy />}
-          onClick={handleCopyClick}
-          disabled={selectedRowKeys.length === 0}
-          className='!bg-blue-500 hover:!bg-blue-600 !text-white disabled:!bg-gray-300 disabled:!text-gray-500'
-        >
-          {t('复制')}
-        </Button>
+        <Tooltip content={t('复制已选模型')}>
+          <Button
+            theme='outline'
+            type='tertiary'
+            icon={<IconCopy />}
+            onClick={handleCopyClick}
+            disabled={selectedRowKeys.length === 0}
+            className='bluefuture-icon-button'
+            aria-label={t('复制')}
+          />
+        </Tooltip>
 
         {!isMobile && (
-          <>
+          <div className='bluefuture-pricing-controls'>
             <Divider layout='vertical' margin='8px' />
 
             {/* 充值价格显示开关 */}
             {supportsCurrencyDisplay && (
-              <div className='flex items-center gap-2'>
-                <span className='text-sm text-gray-600'>{t('充值价格显示')}</span>
+              <div className='bluefuture-switch-control'>
+                <span>{t('充值价')}</span>
                 <Switch
                   checked={showWithRecharge}
                   onChange={setShowWithRecharge}
@@ -109,6 +119,7 @@ const SearchActions = memo(
               <Select
                 value={currency}
                 onChange={setCurrency}
+                size='small'
                 optionList={[
                   { value: 'USD', label: 'USD' },
                   { value: 'CNY', label: 'CNY' },
@@ -118,29 +129,45 @@ const SearchActions = memo(
             )}
 
             {/* 显示倍率开关 */}
-            <div className='flex items-center gap-2'>
-              <span className='text-sm text-gray-600'>{t('倍率')}</span>
+            <div className='bluefuture-switch-control'>
+              <span>{t('倍率')}</span>
               <Switch checked={showRatio} onChange={setShowRatio} />
             </div>
 
             {/* 视图模式切换按钮 */}
-            <Button
-              theme={viewMode === 'table' ? 'solid' : 'outline'}
-              type={viewMode === 'table' ? 'primary' : 'tertiary'}
-              onClick={handleViewModeToggle}
+            <Tooltip
+              content={
+                viewMode === 'table' ? t('切换卡片视图') : t('切换表格视图')
+              }
             >
-              {t('表格视图')}
-            </Button>
+              <Button
+                theme='outline'
+                type='tertiary'
+                icon={
+                  viewMode === 'table' ? (
+                    <LayoutGrid size={14} />
+                  ) : (
+                    <Table2 size={14} />
+                  )
+                }
+                onClick={handleViewModeToggle}
+                className='bluefuture-icon-button'
+                aria-label={
+                  viewMode === 'table' ? t('卡片视图') : t('表格视图')
+                }
+              />
+            </Tooltip>
 
             {/* Token单位切换按钮 */}
             <Button
-              theme={tokenUnit === 'K' ? 'solid' : 'outline'}
-              type={tokenUnit === 'K' ? 'primary' : 'tertiary'}
+              theme='outline'
+              type='tertiary'
               onClick={handleTokenUnitToggle}
+              className='bluefuture-unit-button'
             >
-              {tokenUnit}
+              /1{tokenUnit}
             </Button>
-          </>
+          </div>
         )}
 
         {isMobile && (
@@ -149,6 +176,7 @@ const SearchActions = memo(
             type='tertiary'
             icon={<IconFilter />}
             onClick={handleFilterClick}
+            className='!rounded-lg'
           >
             {t('筛选')}
           </Button>
