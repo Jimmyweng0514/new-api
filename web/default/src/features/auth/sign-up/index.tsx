@@ -1,13 +1,25 @@
+import { useEffect } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useStatus } from '@/hooks/use-status'
 import { AuthLayout } from '../auth-layout'
 import { TermsFooter } from '../components/terms-footer'
+import { saveAffiliateCode } from '../lib/storage'
 import { SignUpForm } from './components/sign-up-form'
 
 export function SignUp() {
   const { t } = useTranslation()
   const { status } = useStatus()
+
+  useEffect(() => {
+    const affCode = new URLSearchParams(window.location.search)
+      .get('aff')
+      ?.trim()
+
+    if (affCode) {
+      saveAffiliateCode(affCode)
+    }
+  }, [])
 
   return (
     <AuthLayout>
