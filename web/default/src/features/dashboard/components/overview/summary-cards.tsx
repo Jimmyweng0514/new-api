@@ -52,7 +52,7 @@ export function SummaryCards() {
   }))
 
   return (
-    <div className='bg-card/70 overflow-hidden rounded-lg border border-border/70 shadow-[0_1px_2px_rgba(15,23,42,0.03)]'>
+    <div className='overflow-hidden rounded-lg border'>
       <StaggerContainer className='divide-border/60 grid grid-cols-3 divide-x'>
         {items.map((it) => (
           <StaggerItem key={it.title} className='px-3 py-3 sm:px-5 sm:py-4'>
@@ -68,12 +68,10 @@ export function SummaryCards() {
                     variant='outline'
                     size='sm'
                     className='hidden h-6 gap-1 px-2 text-xs sm:inline-flex'
-                    asChild
+                    render={<Link to='/wallet' />}
                   >
-                    <Link to='/wallet'>
-                      <CreditCard className='size-3' />
-                      {t('Recharge')}
-                    </Link>
+                    <CreditCard className='size-3' />
+                    {t('Recharge')}
                   </Button>
                 ) : undefined
               }

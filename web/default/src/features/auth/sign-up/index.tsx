@@ -1,43 +1,28 @@
-import { useEffect } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useStatus } from '@/hooks/use-status'
 import { AuthLayout } from '../auth-layout'
 import { TermsFooter } from '../components/terms-footer'
-import { saveAffiliateCode } from '../lib/storage'
 import { SignUpForm } from './components/sign-up-form'
 
 export function SignUp() {
   const { t } = useTranslation()
   const { status } = useStatus()
 
-  useEffect(() => {
-    const affCode = new URLSearchParams(window.location.search)
-      .get('aff')
-      ?.trim()
-
-    if (affCode) {
-      saveAffiliateCode(affCode)
-    }
-  }, [])
-
   return (
     <AuthLayout>
       <div className='w-full space-y-8'>
         <div className='space-y-2'>
           <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
-            {t('创建账号')}
+            {t('Create an account')}
           </h2>
-          <p className='text-muted-foreground text-center text-sm leading-relaxed sm:text-left'>
-            {t('一个账号，管理模型、密钥和额度。')}
-          </p>
           <p className='text-muted-foreground text-left text-sm sm:text-base'>
-            {t('已有账号？')}{' '}
+            {t('Already have an account?')}{' '}
             <Link
               to='/sign-in'
               className='hover:text-primary font-medium underline underline-offset-4'
             >
-              {t('直接登录')}
+              {t('Sign in')}
             </Link>
             .
           </p>

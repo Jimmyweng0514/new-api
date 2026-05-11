@@ -33,20 +33,32 @@ const { Paragraph } = Typography;
 
 const CONFIG = {
   CAROUSEL_INTERVAL: 2000,
-  ICON_SIZE: 28,
+  ICON_SIZE: 40,
   UNKNOWN_VENDOR: 'unknown',
+};
+
+const THEME_COLORS = {
+  allVendors: {
+    primary: '37 99 235',
+    background: 'rgba(59, 130, 246, 0.08)',
+  },
+  specific: {
+    primary: '16 185 129',
+    background: 'rgba(16, 185, 129, 0.1)',
+  },
 };
 
 const COMPONENT_STYLES = {
   tag: {
-    backgroundColor: 'rgba(248,250,252,0.92)',
-    color: '#334155',
-    border: '1px solid rgba(203,213,225,0.86)',
-    fontWeight: 600,
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    color: '#1f2937',
+    border: '1px solid rgba(255,255,255,0.8)',
+    fontWeight: '500',
   },
   avatarContainer:
-    'w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center',
-  descriptionText: { color: 'var(--semi-color-text-2)' },
+    'w-16 h-16 rounded-2xl bg-white/90 shadow-md backdrop-blur-sm flex items-center justify-center',
+  titleText: { color: 'white' },
+  descriptionText: { color: 'rgba(255,255,255,0.9)' },
 };
 
 const CONTENT_TEXTS = {
@@ -74,11 +86,16 @@ const getVendorDisplayName = (vendorName, t) => {
 
 const createDefaultAvatar = () => (
   <div className={COMPONENT_STYLES.avatarContainer}>
-    <Avatar size='small' color='transparent'>
+    <Avatar size='large' color='transparent'>
       AI
     </Avatar>
   </div>
 );
+
+const getAvatarBackgroundColor = (isAllVendors) =>
+  isAllVendors
+    ? THEME_COLORS.allVendors.background
+    : THEME_COLORS.specific.background;
 
 const getAvatarText = (vendorName) =>
   vendorName === CONFIG.UNKNOWN_VENDOR
@@ -92,13 +109,8 @@ const createAvatarContent = (vendor, isAllVendors) => {
 
   return (
     <Avatar
-      size='small'
-      style={{
-        backgroundColor: isAllVendors
-          ? 'rgba(37, 99, 235, 0.08)'
-          : 'rgba(15, 23, 42, 0.06)',
-        color: '#0f172a',
-      }}
+      size='large'
+      style={{ backgroundColor: getAvatarBackgroundColor(isAllVendors) }}
     >
       {getAvatarText(vendor.name)}
     </Avatar>
@@ -138,7 +150,6 @@ const PricingVendorIntro = memo(
     setShowWithRecharge,
     currency,
     setCurrency,
-    siteDisplayType,
     showRatio,
     setShowRatio,
     viewMode,
@@ -248,6 +259,17 @@ const PricingVendorIntro = memo(
       [vendorInfo, t],
     );
 
+    const createCoverStyle = useCallback(
+      (primaryColor) => ({
+        '--palette-primary-darkerChannel': primaryColor,
+        backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }),
+      [],
+    );
+
     const renderSearchActions = useCallback(
       () => (
         <SearchActions
@@ -263,7 +285,6 @@ const PricingVendorIntro = memo(
           setShowWithRecharge={setShowWithRecharge}
           currency={currency}
           setCurrency={setCurrency}
-          siteDisplayType={siteDisplayType}
           showRatio={showRatio}
           setShowRatio={setShowRatio}
           viewMode={viewMode}
@@ -286,7 +307,6 @@ const PricingVendorIntro = memo(
         setShowWithRecharge,
         currency,
         setCurrency,
-        siteDisplayType,
         showRatio,
         setShowRatio,
         viewMode,
@@ -298,46 +318,51 @@ const PricingVendorIntro = memo(
     );
 
     const renderHeaderCard = useCallback(
-      ({ title, count, description, rightContent }) => (
-        <Card className='bluefuture-pricing-intro' bordered={false}>
-          <div className='flex flex-col gap-4'>
-            <div className='flex items-start justify-between gap-4'>
-              <div className='min-w-0'>
-                <div className='text-xs font-semibold text-sky-700 mb-1'>
-                  BlueFuture Studio
-                </div>
-                <div className='flex flex-row flex-wrap items-center gap-2 sm:gap-3 mb-1'>
-                  <h2 className='text-xl sm:text-2xl font-bold text-gray-950 truncate'>
-                    {title}
-                  </h2>
-                  <Tag
-                    style={COMPONENT_STYLES.tag}
-                    shape='circle'
-                    size='small'
-                    className='self-center'
+      ({ title, count, description, rightContent, primaryDarkerChannel }) => (
+        <Card
+          className='!rounded-2xl shadow-sm border-0'
+          cover={
+            <div
+              className='relative h-full'
+              style={createCoverStyle(primaryDarkerChannel)}
+            >
+              <div className='relative z-10 h-full flex items-center justify-between p-4'>
+                <div className='flex-1 min-w-0 mr-4'>
+                  <div className='flex flex-row flex-wrap items-center gap-2 sm:gap-3 mb-2'>
+                    <h2
+                      className='text-lg sm:text-xl font-bold truncate'
+                      style={COMPONENT_STYLES.titleText}
+                    >
+                      {title}
+                    </h2>
+                    <Tag
+                      style={COMPONENT_STYLES.tag}
+                      shape='circle'
+                      size='small'
+                      className='self-center'
+                    >
+                      {t('共 {{count}} 个模型', { count })}
+                    </Tag>
+                  </div>
+                  <Paragraph
+                    className='text-xs sm:text-sm leading-relaxed !mb-0 cursor-pointer'
+                    style={COMPONENT_STYLES.descriptionText}
+                    ellipsis={{ rows: 2 }}
+                    onClick={() => handleOpenDescModal(description)}
                   >
-                    {t('共 {{count}} 个模型', { count })}
-                  </Tag>
+                    {description}
+                  </Paragraph>
                 </div>
-                <Paragraph
-                  className='text-xs sm:text-sm leading-relaxed !mb-0 cursor-pointer max-w-3xl'
-                  style={COMPONENT_STYLES.descriptionText}
-                  ellipsis={{ rows: 2 }}
-                  onClick={() => handleOpenDescModal(description)}
-                >
-                  {description}
-                </Paragraph>
-              </div>
 
-              <div className='flex-shrink-0 hidden sm:block'>
-                {rightContent}
+                <div className='flex-shrink-0'>{rightContent}</div>
               </div>
             </div>
-          </div>
+          }
+        >
           {renderSearchActions()}
         </Card>
       ),
-      [renderSearchActions, handleOpenDescModal, t],
+      [renderSearchActions, createCoverStyle, handleOpenDescModal, t],
     );
 
     const renderAllVendorsAvatar = useCallback(() => {
@@ -350,12 +375,11 @@ const PricingVendorIntro = memo(
 
     if (filterVendor === 'all') {
       const headerCard = renderHeaderCard({
-        title: t('模型广场'),
+        title: t('全部供应商'),
         count: currentModelCount,
-        description: t(
-          '用更少操作找到合适模型，按供应商、分组、价格和端点快速比较。',
-        ),
+        description: getVendorDescription('all'),
         rightContent: renderAllVendorsAvatar(),
+        primaryDarkerChannel: THEME_COLORS.allVendors.primary,
       });
       return (
         <>
@@ -378,6 +402,7 @@ const PricingVendorIntro = memo(
       description:
         currentVendor.description || getVendorDescription(currentVendor.name),
       rightContent: renderVendorAvatar(currentVendor, t, false),
+      primaryDarkerChannel: THEME_COLORS.specific.primary,
     });
 
     return (

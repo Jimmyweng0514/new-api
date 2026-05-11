@@ -67,7 +67,7 @@ function ProjectAttribution(props: { currentYear: number }) {
           href='https://github.com/QuantumNous/new-api'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-foreground/70 font-medium transition-colors hover:text-foreground'
+          className='text-foreground/70 hover:text-foreground font-medium transition-colors'
         >
           {t('New API')}
         </a>
@@ -87,7 +87,7 @@ export function Footer(props: FooterProps) {
   } = useSystemConfig()
 
   const displayLogo = systemLogo || props.logo || '/logo.png'
-  const displayName = systemName || props.name || 'BlueFuture Studio'
+  const displayName = systemName || props.name || 'New API'
   const isDemoSiteMode = Boolean(demoSiteEnabled)
   const currentYear = new Date().getFullYear()
 
@@ -192,7 +192,7 @@ export function Footer(props: FooterProps) {
               </span>
             </Link>
             <p className='text-muted-foreground/60 mt-3 max-w-[200px] text-xs leading-relaxed'>
-              {t('更少界面，更清楚地使用 AI。')}
+              {t('Powerful API Management Platform')}
             </p>
           </div>
 

@@ -61,30 +61,73 @@ const About = () => {
 
   const customDescription = (
     <div style={{ textAlign: 'center' }}>
-      <p>
-        {t(
-          'BlueFuture Studio 把模型接入、密钥、额度和用量收进一条清楚路径，让用户少理解系统，多完成自己的事。',
-        )}
-      </p>
-      {t('本站基于开源项目构建：')}
+      <p>{t('可在设置页面设置关于内容，支持 HTML & Markdown')}</p>
+      {t('New API项目仓库地址：')}
       <a
         href='https://github.com/QuantumNous/new-api'
         target='_blank'
         rel='noopener noreferrer'
         className='!text-semi-color-primary'
       >
-        QuantumNous/new-api
+        https://github.com/QuantumNous/new-api
       </a>
       <p>
-        © {currentYear} BlueFuture Studio. {t('开源许可遵循')}{' '}
         <a
-          href='https://github.com/QuantumNous/new-api/blob/main/LICENSE'
+          href='https://github.com/QuantumNous/new-api'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='!text-semi-color-primary'
+        >
+          NewAPI
+        </a>{' '}
+        {t('© {{currentYear}}', { currentYear })}{' '}
+        <a
+          href='https://github.com/QuantumNous'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='!text-semi-color-primary'
+        >
+          QuantumNous
+        </a>{' '}
+        {t('| 基于')}{' '}
+        <a
+          href='https://github.com/songquanpeng/one-api/releases/tag/v0.5.4'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='!text-semi-color-primary'
+        >
+          One API v0.5.4
+        </a>{' '}
+        © 2023{' '}
+        <a
+          href='https://github.com/songquanpeng'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='!text-semi-color-primary'
+        >
+          JustSong
+        </a>
+      </p>
+      <p>
+        {t('本项目根据')}
+        <a
+          href='https://github.com/songquanpeng/one-api/blob/v0.5.4/LICENSE'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='!text-semi-color-primary'
+        >
+          {t('MIT许可证')}
+        </a>
+        {t('授权，需在遵守')}
+        <a
+          href='https://www.gnu.org/licenses/agpl-3.0.html'
           target='_blank'
           rel='noopener noreferrer'
           className='!text-semi-color-primary'
         >
           {t('AGPL v3.0协议')}
         </a>
+        {t('的前提下使用。')}
       </p>
     </div>
   );
@@ -102,7 +145,7 @@ const About = () => {
                 style={{ width: 150, height: 150 }}
               />
             }
-            description={t('关于 BlueFuture Studio')}
+            description={t('管理员暂时未设置任何关于内容')}
             style={emptyStyle}
           >
             {customDescription}

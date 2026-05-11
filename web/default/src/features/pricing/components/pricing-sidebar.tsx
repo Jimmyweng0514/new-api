@@ -81,14 +81,16 @@ function FilterChip(props: {
       type='button'
       onClick={props.onClick}
       className={cn(
-        'group inline-flex max-w-full items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-medium transition-colors',
+        'group inline-flex max-w-full items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-medium transition-all',
         props.active
-          ? 'border-primary/30 bg-primary/10 text-foreground'
-          : 'border-border/70 bg-background/70 text-muted-foreground hover:border-border hover:bg-muted/45 hover:text-foreground'
+          ? 'border-foreground/30 bg-foreground/5 text-foreground shadow-sm'
+          : 'border-border/70 bg-background text-muted-foreground hover:border-border hover:bg-muted/50 hover:text-foreground'
       )}
       title={props.option.label}
     >
-      {props.option.icon && <span className='shrink-0'>{props.option.icon}</span>}
+      {props.option.icon && (
+        <span className='shrink-0'>{props.option.icon}</span>
+      )}
       <span className='truncate'>{props.option.label}</span>
       {(props.option.suffix || props.option.count != null) && (
         <span
@@ -108,12 +110,15 @@ function FilterChip(props: {
 
 function FilterSection(props: FilterSectionProps) {
   return (
-    <Collapsible defaultOpen className='border-border/60 border-b pb-3 last:border-b-0'>
+    <Collapsible
+      defaultOpen
+      className='border-border/70 border-b pb-3 last:border-b-0'
+    >
       <CollapsibleTrigger className='group flex w-full items-center justify-between py-2.5 text-left'>
         <span className='text-foreground text-sm font-semibold'>
           {props.title}
         </span>
-        <ChevronDown className='text-muted-foreground size-4 transition-transform group-data-[state=open]:rotate-180' />
+        <ChevronDown className='text-muted-foreground size-4 transition-transform group-data-[panel-open]:rotate-180' />
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className='flex flex-wrap gap-1.5'>
@@ -213,19 +218,15 @@ export function PricingSidebar(props: PricingSidebarProps) {
       .map(([value, label]) => ({
         value,
         label,
-        count: countBy(props.models, (model) =>
-          model.supported_endpoint_types?.includes(value) ?? false
+        count: countBy(
+          props.models,
+          (model) => model.supported_endpoint_types?.includes(value) ?? false
         ),
       })),
   ]
 
   return (
-    <aside
-      className={cn(
-        'bg-card/70 rounded-lg border border-border/70 p-3 shadow-[0_1px_2px_rgba(15,23,42,0.03)]',
-        props.className
-      )}
-    >
+    <aside className={cn('rounded-xl border p-3', props.className)}>
       <div className='mb-2.5 flex items-center justify-between gap-2'>
         <div>
           <h2 className='text-foreground text-sm font-bold'>{t('Filter')}</h2>

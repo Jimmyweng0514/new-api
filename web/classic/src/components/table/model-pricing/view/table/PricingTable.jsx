@@ -95,10 +95,7 @@ const PricingTable = ({
 
   const ModelTable = useMemo(
     () => (
-      <Card
-        className='bluefuture-pricing-table overflow-hidden'
-        bordered={false}
-      >
+      <Card className='!rounded-xl overflow-hidden' bordered={false}>
         <Table
           columns={processedColumns}
           dataSource={filteredModels}

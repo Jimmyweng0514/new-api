@@ -75,7 +75,7 @@ export function PricingTable(props: PricingTableProps) {
 
   return (
     <div className='space-y-4'>
-      <div className='bg-card/70 overflow-hidden rounded-lg border border-border/70 shadow-[0_1px_2px_rgba(15,23,42,0.03)]'>
+      <div className='overflow-hidden rounded-lg border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

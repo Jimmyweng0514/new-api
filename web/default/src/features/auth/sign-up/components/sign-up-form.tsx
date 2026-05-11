@@ -209,9 +209,9 @@ export function SignUpForm({
           name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('用户名')}</FormLabel>
+              <FormLabel>{t('Username')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('输入用户名')} {...field} />
+                <Input placeholder={t('Enter your username')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -224,10 +224,10 @@ export function SignUpForm({
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('密码')}</FormLabel>
+              <FormLabel>{t('Password')}</FormLabel>
               <FormControl>
                 <PasswordInput
-                  placeholder={t('输入密码，8-20 位')}
+                  placeholder={t('Enter password (8-20 characters)')}
                   {...field}
                 />
               </FormControl>
@@ -242,9 +242,9 @@ export function SignUpForm({
           name='confirmPassword'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('确认密码')}</FormLabel>
+              <FormLabel>{t('Confirm password')}</FormLabel>
               <FormControl>
-                <PasswordInput placeholder={t('再次输入密码')} {...field} />
+                <PasswordInput placeholder={t('Confirm password')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -261,7 +261,7 @@ export function SignUpForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                  {t('邮箱（用于验证）')}
+                    {t('Email (required for verification)')}
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -279,7 +279,7 @@ export function SignUpForm({
             <div className='flex items-end gap-2'>
               <div className='flex-1'>
                 <Input
-                  placeholder={t('验证码')}
+                  placeholder={t('Verification code')}
                   value={verificationCode}
                   onChange={(e) => setVerificationCode(e.target.value)}
                 />
@@ -295,7 +295,7 @@ export function SignUpForm({
                 ) : isSendingCode ? (
                   <Loader2 className='h-4 w-4 animate-spin' />
                 ) : (
-                  t('发送验证码')
+                  t('Send code')
                 )}
               </Button>
             </div>
@@ -321,11 +321,12 @@ export function SignUpForm({
 
         {/* Submit Button */}
         <Button
-          className='mt-2 w-full justify-center gap-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700'
+          type='submit'
+          className='mt-2 w-full justify-center gap-2'
           disabled={isLoading || (requiresLegalConsent && !agreedToLegal)}
         >
           {isLoading ? <Loader2 className='h-4 w-4 animate-spin' /> : null}
-          {t('创建账号')}
+          {t('Create account')}
         </Button>
 
         {oauthRegisterEnabled && (

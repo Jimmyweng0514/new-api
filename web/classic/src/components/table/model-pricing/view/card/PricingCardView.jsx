@@ -48,10 +48,10 @@ import { useIsMobile } from '../../../../../hooks/common/useIsMobile';
 
 const CARD_STYLES = {
   container:
-    'w-11 h-11 rounded-lg flex items-center justify-center relative border border-slate-200 bg-white',
+    'w-12 h-12 rounded-2xl flex items-center justify-center relative shadow-md',
   icon: 'w-8 h-8 flex items-center justify-center',
   selected: 'border-blue-500 bg-blue-50',
-  default: 'border-slate-200 hover:border-slate-300',
+  default: 'border-gray-200 hover:border-gray-300',
 };
 
 const PricingCardView = ({
@@ -134,9 +134,9 @@ const PricingCardView = ({
         <Avatar
           size='large'
           style={{
-            width: 44,
-            height: 44,
-            borderRadius: 8,
+            width: 48,
+            height: 48,
+            borderRadius: 16,
             fontSize: 16,
             fontWeight: 'bold',
           }}
@@ -236,7 +236,7 @@ const PricingCardView = ({
 
   return (
     <div className='px-2 pt-2'>
-      <div className='grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-3'>
+      <div className='grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4'>
         {paginatedModels.map((model, index) => {
           const modelKey = getModelKey(model);
           const isSelected = selectedRowKeys.includes(modelKey);
@@ -254,7 +254,7 @@ const PricingCardView = ({
           return (
             <Card
               key={modelKey || index}
-              className={`bluefuture-model-card transition-all duration-200 border cursor-pointer ${isSelected ? CARD_STYLES.selected : CARD_STYLES.default}`}
+              className={`!rounded-2xl transition-all duration-200 hover:shadow-lg border cursor-pointer ${isSelected ? CARD_STYLES.selected : CARD_STYLES.default}`}
               bodyStyle={{ height: '100%' }}
               onClick={() => openModelDetail && openModelDetail(model)}
             >
@@ -264,17 +264,15 @@ const PricingCardView = ({
                   <div className='flex items-start space-x-3 flex-1 min-w-0'>
                     {getModelIcon(model)}
                     <div className='flex-1 min-w-0'>
-                      <h3 className='text-base font-semibold text-gray-950 truncate'>
+                      <h3 className='text-lg font-bold text-gray-900 truncate'>
                         {model.model_name}
                       </h3>
                       <div className='flex flex-col gap-1 text-xs mt-1'>
-                        {priceData.isDynamicPricing
-                          ? formatDynamicPriceSummary(
-                              priceData.billingExpr,
-                              t,
-                              priceData.usedGroupRatio,
-                            )
-                          : formatPriceInfo(priceData, t, siteDisplayType)}
+                        {priceData.isDynamicPricing ? (
+                          formatDynamicPriceSummary(priceData.billingExpr, t, priceData.usedGroupRatio)
+                        ) : (
+                          formatPriceInfo(priceData, t, siteDisplayType)
+                        )}
                       </div>
                     </div>
                   </div>

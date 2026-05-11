@@ -15,19 +15,16 @@ export function SignIn() {
       <div className='w-full space-y-8'>
         <div className='space-y-2'>
           <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
-            {t('欢迎回来')}
+            {t('Sign in')}
           </h2>
-          <p className='text-muted-foreground text-center text-sm leading-relaxed sm:text-left'>
-            {t('继续管理模型、密钥和用量。')}
-          </p>
           {!status?.self_use_mode_enabled && (
             <p className='text-muted-foreground text-left text-sm sm:text-base'>
-              {t('还没有账号？')}{' '}
+              {t("Don't have an account?")}{' '}
               <Link
                 to='/sign-up'
                 className='hover:text-primary font-medium underline underline-offset-4'
               >
-                {t('立即注册')}
+                {t('Sign up')}
               </Link>
               .
             </p>

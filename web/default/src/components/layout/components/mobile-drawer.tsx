@@ -40,7 +40,7 @@ function BrandLogo({
     >
       <div className='relative h-6 w-6'>
         {loading || !logoLoaded ? (
-          <Skeleton className='absolute inset-0 rounded-lg' />
+          <Skeleton className='absolute inset-0 rounded-full' />
         ) : null}
         {displayLogo}
       </div>
@@ -137,10 +137,13 @@ interface MobileSignInButtonProps {
 function MobileSignInButton({ onNavigate }: MobileSignInButtonProps) {
   const { t } = useTranslation()
   return (
-    <Button variant='secondary' size='sm' asChild className='h-10 w-full'>
-      <Link to='/sign-in' onClick={onNavigate}>
-        {t('登录')}
-      </Link>
+    <Button
+      variant='secondary'
+      size='sm'
+      className='h-10 w-full'
+      render={<Link to='/sign-in' onClick={onNavigate} />}
+    >
+      {t('Sign in')}
     </Button>
   )
 }

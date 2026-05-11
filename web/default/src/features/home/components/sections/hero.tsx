@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSystemConfig } from '@/hooks/use-system-config'
 import { Button } from '@/components/ui/button'
+import { HeroTerminalDemo } from '../hero-terminal-demo'
 
 interface HeroProps {
   className?: string
@@ -14,74 +15,83 @@ export function Hero(props: HeroProps) {
   const { systemName } = useSystemConfig()
 
   return (
-    <section className='relative z-10 flex min-h-[72vh] flex-col items-center justify-center overflow-hidden px-6 pt-28 pb-20 md:pt-36 md:pb-28'>
+    <section className='relative z-10 flex flex-col items-center overflow-hidden px-6 pt-28 pb-16 md:pt-36 md:pb-24'>
+      {/* Radial gradient background */}
       <div
         aria-hidden
-        className='pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent'
+        className='pointer-events-none absolute inset-0 -z-10 opacity-25 dark:opacity-[0.12]'
+        style={{
+          background: [
+            'radial-gradient(ellipse 60% 50% at 20% 20%, oklch(0.72 0.18 250 / 80%) 0%, transparent 70%)',
+            'radial-gradient(ellipse 50% 40% at 80% 15%, oklch(0.65 0.15 200 / 60%) 0%, transparent 70%)',
+            'radial-gradient(ellipse 40% 35% at 40% 80%, oklch(0.70 0.12 280 / 40%) 0%, transparent 70%)',
+          ].join(', '),
+        }}
+      />
+      {/* Grid pattern */}
+      <div
+        aria-hidden
+        className='absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_30%,black_20%,transparent_100%)] bg-[size:4rem_4rem] opacity-[0.08]'
       />
 
       <div className='flex max-w-3xl flex-col items-center text-center'>
         <h1
-          className='landing-animate-fade-up text-[clamp(2.4rem,7vw,4.8rem)] leading-[1.05] font-semibold tracking-tight'
-          style={{ animationDelay: '40ms' }}
+          className='landing-animate-fade-up text-[clamp(2rem,5.5vw,3.5rem)] leading-[1.15] font-bold tracking-tight'
+          style={{ animationDelay: '0ms' }}
         >
-          {t('一个入口，')}
+          {t('Unified API Gateway for')}
           <br />
-          <span className='bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 bg-clip-text text-transparent dark:from-blue-300 dark:via-sky-300 dark:to-teal-200'>
-            {t('用好所有 AI')}
+          <span className='bg-gradient-to-r from-blue-400 via-violet-400 to-purple-500 bg-clip-text text-transparent'>
+            {t('All Your AI Models')}
           </span>
         </h1>
         <p
-          className='landing-animate-fade-up text-muted-foreground/80 mt-6 max-w-xl text-base leading-relaxed opacity-0 md:text-lg'
-          style={{ animationDelay: '120ms' }}
+          className='landing-animate-fade-up text-muted-foreground/80 mt-5 max-w-lg text-base leading-relaxed opacity-0 md:text-lg'
+          style={{ animationDelay: '80ms' }}
         >
-          <span className='text-foreground font-medium'>
-            {systemName || 'BlueFuture Studio'}
-          </span>{' '}
+          {systemName}{' '}
           {t(
-            '把选模型、管额度、接 API 变成三个清楚动作。复杂留在后台，页面只保留你下一步要做的事。'
+            'is an open-source AI API gateway for self-hosted deployments. Connect multiple upstream services, manage models, keys, quotas, logs, and routing policies in one place.'
           )}
         </p>
         <div
-          className='landing-animate-fade-up text-muted-foreground mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm opacity-0'
+          className='landing-animate-fade-up mt-8 flex items-center gap-3 opacity-0'
           style={{ animationDelay: '160ms' }}
         >
-          {[t('找模型'), t('管额度'), t('开始调用')].map((item) => (
-            <span key={item}>{item}</span>
-          ))}
-        </div>
-        <div
-          className='landing-animate-fade-up mt-8 flex items-center gap-3 opacity-0'
-          style={{ animationDelay: '220ms' }}
-        >
           {props.isAuthenticated ? (
-            <Button className='group rounded-lg' asChild>
-              <Link to='/dashboard'>
-                {t('进入工作台')}
-                <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
-              </Link>
+            <Button
+              className='group rounded-lg'
+              render={<Link to='/dashboard' />}
+            >
+              {t('Go to Dashboard')}
+              <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
             </Button>
           ) : (
             <>
               <Button
-                className='group rounded-lg bg-blue-600 text-white hover:bg-blue-700'
-                asChild
+                className='group rounded-lg'
+                render={<Link to='/sign-up' />}
               >
-                <Link to='/sign-up'>
-                  {t('开始使用')}
-                  <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
-                </Link>
+                {t('Get Started')}
+                <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
               </Button>
               <Button
                 variant='outline'
-                className='border-border/50 hover:border-border hover:bg-muted/50 rounded-lg bg-background'
-                asChild
+                className='border-border/50 hover:border-border hover:bg-muted/50 rounded-lg'
+                render={<Link to='/pricing' />}
               >
-                <Link to='/pricing'>{t('查看模型')}</Link>
+                {t('View Pricing')}
               </Button>
             </>
           )}
         </div>
+      </div>
+
+      <div
+        className='landing-animate-fade-up w-full opacity-0'
+        style={{ animationDelay: '300ms' }}
+      >
+        <HeroTerminalDemo />
       </div>
     </section>
   )

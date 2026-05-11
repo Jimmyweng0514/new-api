@@ -91,21 +91,14 @@ const PricingSidebar = ({
     });
 
   return (
-    <div className='bluefuture-pricing-sidebar-inner'>
-      <div className='flex items-start justify-between gap-3 mb-5'>
-        <div>
-          <div className='text-base font-semibold text-gray-950'>
-            {t('筛选')}
-          </div>
-          <div className='text-xs text-gray-500 mt-1'>
-            {t('按供应商、分组、类型和标签细化模型。')}
-          </div>
-        </div>
+    <div className='p-2'>
+      <div className='flex items-center justify-between mb-6'>
+        <div className='text-lg font-semibold text-gray-800'>{t('筛选')}</div>
         <Button
           theme='outline'
           type='tertiary'
           onClick={handleResetFilters}
-          className='!rounded-lg text-gray-500 hover:text-gray-700'
+          className='text-gray-500 hover:text-gray-700'
         >
           {t('重置')}
         </Button>

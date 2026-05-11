@@ -40,7 +40,7 @@ const PricingPage = () => {
   };
 
   return (
-    <div className='bluefuture-pricing-page'>
+    <div className='bg-white'>
       <Layout className='pricing-layout'>
         {!isMobile && (
           <Sider className='pricing-scroll-hide pricing-sidebar'>

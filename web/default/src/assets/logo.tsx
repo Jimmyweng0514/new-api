@@ -17,11 +17,8 @@ export function Logo({ className, ...props }: SVGProps<SVGSVGElement>) {
       className={cn('size-6', className)}
       {...props}
     >
-      <title>BlueFuture Studio</title>
-      <path d='M4 17.5c4.5-8 9.5-11 16-11' />
-      <path d='M5 7.5c4.5 2 8.5 2 14 0' />
-      <path d='M12 4v16' />
-      <path d='M7.5 19.5h9' />
+      <title>New API</title>
+      <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
     </svg>
   )
 }

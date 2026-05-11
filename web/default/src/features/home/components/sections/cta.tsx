@@ -17,32 +17,46 @@ export function CTA(props: CTAProps) {
   }
 
   return (
-    <section className='border-border/40 relative z-10 border-t px-6 py-20 md:py-28'>
+    <section className='relative z-10 overflow-hidden px-6 py-24 md:py-32'>
+      {/* Gradient mesh background */}
+      <div
+        aria-hidden
+        className='absolute inset-0 -z-10 opacity-20 dark:opacity-[0.08]'
+        style={{
+          background: [
+            'radial-gradient(ellipse 50% 50% at 30% 50%, oklch(0.7 0.15 250 / 70%) 0%, transparent 70%)',
+            'radial-gradient(ellipse 40% 40% at 70% 40%, oklch(0.65 0.12 200 / 50%) 0%, transparent 70%)',
+          ].join(', '),
+        }}
+      />
+
       <AnimateInView
-        className='mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 md:flex-row md:items-center'
+        className='mx-auto max-w-2xl text-center'
         animation='scale-in'
       >
-        <div>
-          <h2 className='text-2xl leading-tight font-semibold tracking-tight md:text-4xl'>
-            {t('开始前，只做一个选择')}
-          </h2>
-          <p className='text-muted-foreground mt-3 max-w-lg text-sm leading-relaxed md:text-base'>
-            {t('先看模型，再决定怎么用。页面不打扰你，功能随时跟上。')}
-          </p>
-        </div>
-        <div className='flex shrink-0 items-center gap-3'>
-          <Button className='group rounded-lg' asChild>
-            <Link to='/sign-up'>
-              {t('开始使用')}
-              <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
-            </Link>
+        <h2 className='text-2xl leading-tight font-bold tracking-tight md:text-4xl'>
+          {t('Ready to simplify')}
+          <br />
+          <span className='bg-gradient-to-r from-blue-400 via-violet-400 to-purple-500 bg-clip-text text-transparent'>
+            {t('your AI integration?')}
+          </span>
+        </h2>
+        <p className='text-muted-foreground/80 mx-auto mt-5 max-w-md text-sm leading-relaxed md:text-base'>
+          {t(
+            'Deploy your own gateway and start routing requests through your configured upstream services.'
+          )}
+        </p>
+        <div className='mt-8 flex items-center justify-center gap-3'>
+          <Button className='group rounded-lg' render={<Link to='/sign-up' />}>
+            {t('Get Started')}
+            <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
           </Button>
           <Button
             variant='outline'
             className='border-border/50 hover:border-border hover:bg-muted/50 rounded-lg'
-            asChild
+            render={<Link to='/pricing' />}
           >
-            <Link to='/pricing'>{t('查看模型')}</Link>
+            {t('View Pricing')}
           </Button>
         </div>
       </AnimateInView>

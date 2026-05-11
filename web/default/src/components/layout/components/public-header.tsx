@@ -180,9 +180,9 @@ export function PublicHeader(props: PublicHeaderProps) {
                     <Button
                       size='sm'
                       className='h-8 rounded-lg px-3.5 text-xs font-medium'
-                      asChild
+                      render={<Link to='/sign-in' />}
                     >
-                      <Link to='/sign-in'>{t('登录')}</Link>
+                      {t('Sign in')}
                     </Button>
                   )}
                 </>
@@ -276,7 +276,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                 onClick={() => setMobileOpen(false)}
                 className='bg-foreground text-background inline-flex h-10 items-center justify-center rounded-lg text-sm font-medium transition-opacity hover:opacity-90 active:opacity-80'
               >
-                {isAuthenticated ? t('进入工作台') : t('登录')}
+                {isAuthenticated ? t('Go to Dashboard') : t('Sign in')}
               </Link>
             )}
           </div>

@@ -15,8 +15,62 @@ const DEFAULT_HEADER_NAV_MODULES = {
   home: true,
   console: true,
   pricing: { enabled: true, requireAuth: false },
+  rankings: { enabled: true, requireAuth: false },
   docs: true,
   about: true,
+}
+
+function parseAccessModule(
+  raw: unknown,
+  fallback: { enabled: boolean; requireAuth: boolean }
+) {
+  if (
+    typeof raw === 'boolean' ||
+    typeof raw === 'string' ||
+    typeof raw === 'number'
+  ) {
+    return {
+      enabled: raw === true || raw === 'true' || raw === '1' || raw === 1,
+      requireAuth: fallback.requireAuth,
+    }
+  }
+  if (raw && typeof raw === 'object') {
+    const record = raw as Record<string, unknown>
+    return {
+      enabled:
+        typeof record.enabled === 'boolean' ? record.enabled : fallback.enabled,
+      requireAuth:
+        typeof record.requireAuth === 'boolean'
+          ? record.requireAuth
+          : fallback.requireAuth,
+    }
+  }
+  return { ...fallback }
+}
+
+function parseHeaderNavModules(
+  raw: unknown
+): typeof DEFAULT_HEADER_NAV_MODULES {
+  if (!raw || String(raw).trim() === '') {
+    return DEFAULT_HEADER_NAV_MODULES
+  }
+  try {
+    const parsed = JSON.parse(String(raw)) as Record<string, unknown>
+    return {
+      ...DEFAULT_HEADER_NAV_MODULES,
+      ...parsed,
+      pricing: parseAccessModule(
+        parsed.pricing,
+        DEFAULT_HEADER_NAV_MODULES.pricing
+      ),
+      rankings: parseAccessModule(
+        parsed.rankings,
+        DEFAULT_HEADER_NAV_MODULES.rankings
+      ),
+    }
+  } catch {
+    return DEFAULT_HEADER_NAV_MODULES
+  }
 }
 
 /**
@@ -26,6 +80,7 @@ const DEFAULT_HEADER_NAV_MODULES = {
  *   home: true,
  *   console: true,
  *   pricing: { enabled: true, requireAuth: false },
+ *   rankings: { enabled: true, requireAuth: false },
  *   docs: true,
  *   about: true
  * }
@@ -37,17 +92,7 @@ export function useTopNavLinks(): TopNavLink[] {
 
   // Parse HeaderNavModules
   const modules = useMemo(() => {
-    const raw = status?.HeaderNavModules
-    // If empty string, null, or undefined, use default config
-    if (!raw || (raw as string).trim() === '') {
-      return DEFAULT_HEADER_NAV_MODULES
-    }
-    try {
-      return JSON.parse(raw as string)
-    } catch {
-      // Parse failed, use default config
-      return DEFAULT_HEADER_NAV_MODULES
-    }
+    return parseHeaderNavModules(status?.HeaderNavModules)
   }, [status?.HeaderNavModules])
 
   // Documentation link (may be external)
@@ -59,33 +104,40 @@ export function useTopNavLinks(): TopNavLink[] {
 
   // Home
   if (modules?.home !== false) {
-    links.push({ title: t('首页'), href: '/' })
+    links.push({ title: t('Home'), href: '/' })
   }
 
   // Console -> /dashboard (new console path)
   if (modules?.console !== false) {
-    links.push({ title: t('工作台'), href: '/dashboard' })
+    links.push({ title: t('Console'), href: '/dashboard' })
   }
 
   // Pricing
   const pricing = modules?.pricing
   if (pricing && typeof pricing === 'object' && pricing.enabled) {
     const disabled = pricing.requireAuth && !isAuthed
-    links.push({ title: t('模型广场'), href: '/pricing', disabled })
+    links.push({ title: t('Model Square'), href: '/pricing', disabled })
+  }
+
+  // Rankings
+  const rankings = modules?.rankings
+  if (rankings && typeof rankings === 'object' && rankings.enabled) {
+    const disabled = rankings.requireAuth && !isAuthed
+    links.push({ title: t('Rankings'), href: '/rankings', disabled })
   }
 
   // Docs (supports external links)
   if (modules?.docs !== false) {
     if (docsLink) {
-      links.push({ title: t('文档'), href: docsLink, external: true })
+      links.push({ title: t('Docs'), href: docsLink, external: true })
     } else {
-      links.push({ title: t('文档'), href: '/docs' })
+      links.push({ title: t('Docs'), href: '/docs' })
     }
   }
 
   // About
   if (modules?.about !== false) {
-    links.push({ title: t('关于'), href: '/about' })
+    links.push({ title: t('About'), href: '/about' })
   }
 
   return links

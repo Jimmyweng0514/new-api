@@ -7,6 +7,7 @@ import {
   EmptyState,
   SearchBar,
   PricingTable,
+  PricingSidebar,
   PricingToolbar,
   ModelCardGrid,
   ModelDetailsDrawer,
@@ -128,7 +129,7 @@ export function Pricing() {
   if (isLoading) {
     return (
       <PublicLayout showMainContainer={false}>
-        <div className='mx-auto w-full max-w-[1180px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
+        <div className='mx-auto w-full max-w-[1800px] px-3 pt-16 pb-8 sm:px-6 sm:pt-20 sm:pb-10 xl:px-8'>
           <LoadingSkeleton viewMode={viewMode} />
         </div>
       </PublicLayout>
@@ -137,49 +138,74 @@ export function Pricing() {
 
   return (
     <PublicLayout showMainContainer={false}>
-      <div className='relative border-t border-transparent'>
-        <PageTransition className='mx-auto w-full max-w-[1180px] px-4 pt-24 pb-8 sm:px-6 sm:pb-10 lg:px-8'>
-          <header className='mb-6 border-b border-border/60 pb-5'>
-            <div className='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
-              <div className='min-w-0'>
-                <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
-                  <h1 className='text-2xl font-semibold tracking-tight sm:text-3xl'>
-                    {t('模型广场')}
-                  </h1>
-                  <span className='text-muted-foreground text-sm'>
-                    {t('先找模型，再开始调用')}
-                  </span>
-                </div>
-                <p className='text-muted-foreground mt-2 max-w-2xl text-sm leading-relaxed'>
-                  {t('搜索、比价、查看详情。只展示决策需要的信息。')}
-                </p>
-              </div>
-
-              <div className='flex flex-wrap items-center gap-2 text-sm'>
-                <div className='text-muted-foreground inline-flex h-9 items-center gap-2 rounded-lg px-2'>
-                  <span className='size-2 rounded-full bg-emerald-500' />
-                  {t('Service normal')}
-                </div>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
-                  {t('Model')} {(models?.length || 0).toLocaleString()}
-                </div>
-                <div className='rounded-lg border border-border/70 bg-card/70 px-3 py-2 font-mono font-semibold'>
-                  {t('Vendor')} {(vendors?.length || 0).toLocaleString()}
-                </div>
-              </div>
-            </div>
-
+      <div className='relative'>
+        <div
+          aria-hidden
+          className='pointer-events-none absolute inset-x-0 top-0 h-[600px] opacity-20 dark:opacity-[0.10]'
+          style={{
+            background: [
+              'radial-gradient(ellipse 60% 50% at 20% 20%, oklch(0.72 0.18 250 / 80%) 0%, transparent 70%)',
+              'radial-gradient(ellipse 50% 40% at 80% 15%, oklch(0.65 0.15 200 / 60%) 0%, transparent 70%)',
+              'radial-gradient(ellipse 40% 35% at 50% 70%, oklch(0.70 0.12 280 / 40%) 0%, transparent 70%)',
+            ].join(', '),
+            maskImage:
+              'linear-gradient(to bottom, black 40%, transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to bottom, black 40%, transparent 100%)',
+          }}
+        />
+        <PageTransition className='relative mx-auto w-full max-w-[1800px] px-3 pt-16 pb-8 sm:px-6 sm:pt-20 sm:pb-10 xl:px-8'>
+          <header className='mx-auto mb-5 max-w-3xl pt-5 text-center sm:mb-10 sm:pt-10'>
+            <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
+              {t('Models Directory')}
+            </p>
+            <h1 className='text-[clamp(2rem,5.5vw,3.5rem)] leading-[1.15] font-bold tracking-tight'>
+              {t('Model Square')}
+            </h1>
+            <p className='text-muted-foreground/80 mt-3 text-sm sm:mt-4 sm:text-base'>
+              {t('This site currently has {{count}} models enabled', {
+                count: models?.length || 0,
+              })}
+            </p>
+            <p className='text-muted-foreground/60 mx-auto mt-2 max-w-2xl text-xs leading-relaxed sm:text-sm'>
+              {t(
+                'Discover curated AI models, compare pricing and capabilities, and choose the right model for every scenario.'
+              )}
+            </p>
             <SearchBar
               value={searchInput}
               onChange={setSearchInput}
               onClear={clearSearch}
-              placeholder={t('搜索模型名称、供应商、端点或标签...')}
-              className='mt-5 max-w-lg'
+              placeholder={t(
+                'Search model name, provider, endpoint, or tag...'
+              )}
+              className='mx-auto mt-4 max-w-2xl sm:mt-6'
             />
           </header>
 
-          <div>
-            <main className='min-w-0 space-y-5'>
+          <div className='grid gap-4 xl:grid-cols-[330px_minmax(0,1fr)]'>
+            <PricingSidebar
+              quotaTypeFilter={quotaTypeFilter}
+              endpointTypeFilter={endpointTypeFilter}
+              vendorFilter={vendorFilter}
+              groupFilter={groupFilter}
+              tagFilter={tagFilter}
+              onQuotaTypeChange={setQuotaTypeFilter}
+              onEndpointTypeChange={setEndpointTypeFilter}
+              onVendorChange={setVendorFilter}
+              onGroupChange={setGroupFilter}
+              onTagChange={setTagFilter}
+              vendors={vendors || []}
+              groups={availableGroups}
+              groupRatios={groupRatio}
+              tags={availableTags}
+              models={models || []}
+              hasActiveFilters={hasActiveFilters}
+              onClearFilters={clearFilters}
+              className='hover-scrollbar sticky top-4 hidden max-h-[calc(100dvh-2rem)] self-start overflow-y-auto xl:block'
+            />
+
+            <main className='min-w-0 space-y-4'>
               <PricingToolbar
                 filteredCount={filteredModels.length}
                 totalCount={models?.length}

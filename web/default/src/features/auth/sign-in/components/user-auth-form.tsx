@@ -270,10 +270,10 @@ export function UserAuthForm({
           name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('账号或邮箱')}</FormLabel>
+              <FormLabel>{t('Username or Email')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('输入你的用户名或邮箱')}
+                  placeholder={t('Enter your username or email')}
                   {...field}
                 />
               </FormControl>
@@ -288,16 +288,16 @@ export function UserAuthForm({
           name='password'
           render={({ field }) => (
             <FormItem className='relative'>
-              <FormLabel>{t('密码')}</FormLabel>
+              <FormLabel>{t('Password')}</FormLabel>
               <FormControl>
-                <PasswordInput placeholder={t('输入密码')} {...field} />
+                <PasswordInput placeholder={t('Enter password')} {...field} />
               </FormControl>
               <FormMessage />
               <Link
                 to='/forgot-password'
                 className='text-muted-foreground absolute end-0 -top-0.5 text-sm font-medium hover:opacity-75'
               >
-                {t('忘记密码？')}
+                {t('Forgot password?')}
               </Link>
             </FormItem>
           )}
@@ -305,11 +305,12 @@ export function UserAuthForm({
 
         {/* Submit Button */}
         <Button
-          className='mt-2 w-full justify-center gap-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700'
+          type='submit'
+          className='mt-2 w-full justify-center gap-2'
           disabled={isLoading || (requiresLegalConsent && !agreedToLegal)}
         >
           {isLoading ? <Loader2 className='animate-spin' /> : <LogIn />}
-          {t('进入 BlueFuture')}
+          {t('Sign in')}
         </Button>
 
         {/* Turnstile */}

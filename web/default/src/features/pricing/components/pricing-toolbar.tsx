@@ -79,7 +79,7 @@ function SegmentedControl(props: {
     <div
       role='group'
       aria-label={props.ariaLabel}
-      className='bg-muted/40 inline-flex h-8 items-center rounded-md border border-border/70 p-0.5'
+      className='bg-muted/60 inline-flex h-8 items-center rounded-lg border p-0.5'
     >
       {props.options.map((option) => {
         const Icon = option.icon
@@ -91,10 +91,10 @@ function SegmentedControl(props: {
             onClick={() => props.onChange(option.value)}
             aria-pressed={isActive}
             className={cn(
-              'inline-flex h-full items-center justify-center rounded-[5px] text-xs font-medium transition-all',
+              'inline-flex h-full items-center justify-center rounded-md text-xs font-medium transition-all',
               Icon && !option.label ? 'w-7' : 'gap-1.5 px-3',
               isActive
-                ? 'bg-foreground text-background shadow-sm'
+                ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
             )}
           >
@@ -109,7 +109,7 @@ function SegmentedControl(props: {
 
         return (
           <Tooltip key={option.value}>
-            <TooltipTrigger asChild>{button}</TooltipTrigger>
+            <TooltipTrigger render={button}></TooltipTrigger>
             <TooltipContent side='bottom' className='text-xs'>
               {option.tooltip}
             </TooltipContent>
@@ -141,7 +141,7 @@ export function PricingToolbar(props: PricingToolbarProps) {
   )
 
   return (
-    <div className='bg-card/70 rounded-lg border border-border/70 p-3 shadow-[0_1px_2px_rgba(15,23,42,0.03)]'>
+    <div className='rounded-xl border p-3'>
       <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between'>
         <div className='flex items-center gap-2'>
           <Button
@@ -149,7 +149,7 @@ export function PricingToolbar(props: PricingToolbarProps) {
             variant='outline'
             size='sm'
             onClick={() => setMobileFiltersOpen(true)}
-            className='gap-1.5'
+            className='gap-1.5 xl:hidden'
           >
             <Filter className='size-4' />
             {t('Filter')}
@@ -196,18 +196,18 @@ export function PricingToolbar(props: PricingToolbarProps) {
           </div>
 
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                type='button'
-                variant='outline'
-                size='sm'
-                className='h-8 gap-1.5 px-3 text-xs'
-              >
-                <ArrowUpDown className='size-3.5' />
-                <span>
-                  {sortLabels[props.sortBy as SortOption] || t('Sort')}
-                </span>
-              </Button>
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  type='button'
+                  variant='outline'
+                  size='sm'
+                  className='h-8 gap-1.5 px-3 text-xs'
+                />
+              }
+            >
+              <ArrowUpDown className='size-3.5' />
+              <span>{sortLabels[props.sortBy as SortOption] || t('Sort')}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-44'>
               {Object.entries(sortLabels).map(([value, label]) => (

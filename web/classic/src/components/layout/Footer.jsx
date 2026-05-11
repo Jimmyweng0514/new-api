@@ -197,7 +197,7 @@ const FooterBar = () => {
 
           <div className='text-sm'>
             <span className='!text-semi-color-text-1'>
-              {t('Powered by')}{' '}
+              {t('设计与开发由')}{' '}
             </span>
             <a
               href='https://github.com/QuantumNous/new-api'
@@ -205,7 +205,7 @@ const FooterBar = () => {
               rel='noopener noreferrer'
               className='!text-semi-color-primary font-medium'
             >
-              BlueFuture Studio
+              New API
             </a>
           </div>
         </div>
@@ -229,7 +229,7 @@ const FooterBar = () => {
             ></div>
             <div className='text-sm flex-shrink-0'>
               <span className='!text-semi-color-text-1'>
-                {t('Powered by')}{' '}
+                {t('设计与开发由')}{' '}
               </span>
               <a
                 href='https://github.com/QuantumNous/new-api'
@@ -237,7 +237,7 @@ const FooterBar = () => {
                 rel='noopener noreferrer'
                 className='!text-semi-color-primary font-medium'
               >
-                BlueFuture Studio
+                New API
               </a>
             </div>
           </div>
