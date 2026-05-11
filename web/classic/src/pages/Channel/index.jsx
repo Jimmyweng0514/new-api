@@ -19,10 +19,15 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import ChannelsTable from '../../components/table/channels';
+import BlueFuturePageHeader from '../../components/common/BlueFuturePageHeader';
 
 const File = () => {
   return (
     <div className='mt-[60px] px-2'>
+      <BlueFuturePageHeader
+        title='Channels / 渠道'
+        description='接入和管理上游模型号池，配置优先级、分组、倍率和健康状态。'
+      />
       <ChannelsTable />
     </div>
   );

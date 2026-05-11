@@ -64,6 +64,7 @@ import { UserContext } from '../../context/User';
 import { StatusContext } from '../../context/Status';
 import { useTranslation } from 'react-i18next';
 import { SiDiscord } from 'react-icons/si';
+import { BLUE_FUTURE_BRAND } from '../../constants/brand';
 
 const RegisterForm = () => {
   let navigate = useNavigate();
@@ -111,8 +112,8 @@ const RegisterForm = () => {
   const githubTimeoutRef = useRef(null);
   const githubButtonText = t(githubButtonTextKeyByState[githubButtonState]);
 
-  const logo = getLogo();
-  const systemName = getSystemName();
+  const logo = BLUE_FUTURE_BRAND.icon || getLogo();
+  const systemName = BLUE_FUTURE_BRAND.name || getSystemName();
 
   let affCode = new URLSearchParams(window.location.search).get('aff');
   if (affCode) {
@@ -395,17 +396,20 @@ const RegisterForm = () => {
     return (
       <div className='flex flex-col items-center'>
         <div className='w-full max-w-md'>
-          <div className='flex items-center justify-center mb-6 gap-2'>
-            <img src={logo} alt='Logo' className='h-10 rounded-full' />
-            <Title heading={3} className='!text-gray-800'>
+          <div className='mb-6 flex flex-col items-center justify-center gap-3 text-center'>
+            <img src={logo} alt='Logo' className='bluefuture-brand-icon h-[72px] w-[72px]' />
+            <Title heading={3} className='!m-0 !text-[#F7FBFF]'>
               {systemName}
             </Title>
+            <Text className='!text-sm !text-[#9FB4C7]'>
+              {BLUE_FUTURE_BRAND.registerSubtitle}
+            </Text>
           </div>
 
-          <Card className='border-0 !rounded-2xl overflow-hidden'>
+          <Card className='bluefuture-auth-card overflow-hidden'>
             <div className='flex justify-center pt-6 pb-2'>
-              <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                {t('注 册')}
+              <Title heading={3} className='!text-[#F7FBFF]'>
+                {BLUE_FUTURE_BRAND.registerTitle}
               </Title>
             </div>
             <div className='px-2 py-8'>
@@ -558,17 +562,20 @@ const RegisterForm = () => {
     return (
       <div className='flex flex-col items-center'>
         <div className='w-full max-w-md'>
-          <div className='flex items-center justify-center mb-6 gap-2'>
-            <img src={logo} alt='Logo' className='h-10 rounded-full' />
-            <Title heading={3} className='!text-gray-800'>
+          <div className='mb-6 flex flex-col items-center justify-center gap-3 text-center'>
+            <img src={logo} alt='Logo' className='bluefuture-brand-icon h-[72px] w-[72px]' />
+            <Title heading={3} className='!m-0 !text-[#F7FBFF]'>
               {systemName}
             </Title>
+            <Text className='!text-sm !text-[#9FB4C7]'>
+              {BLUE_FUTURE_BRAND.registerSubtitle}
+            </Text>
           </div>
 
-          <Card className='border-0 !rounded-2xl overflow-hidden'>
+          <Card className='bluefuture-auth-card overflow-hidden'>
             <div className='flex justify-center pt-6 pb-2'>
-              <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                {t('注 册')}
+              <Title heading={3} className='!text-[#F7FBFF]'>
+                {BLUE_FUTURE_BRAND.registerTitle}
               </Title>
             </div>
             <div className='px-2 py-8'>
@@ -770,16 +777,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className='relative overflow-hidden bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      {/* 背景模糊晕染球 */}
-      <div
-        className='blur-ball blur-ball-indigo'
-        style={{ top: '-80px', right: '-80px', transform: 'none' }}
-      />
-      <div
-        className='blur-ball blur-ball-teal'
-        style={{ top: '50%', left: '-120px' }}
-      />
+    <div className='bluefuture-auth-page relative flex items-center justify-center overflow-hidden px-4 py-12 sm:px-6 lg:px-8'>
       <div className='w-full max-w-sm mt-[60px]'>
         {showEmailRegister ||
         !hasOAuthRegisterOptions

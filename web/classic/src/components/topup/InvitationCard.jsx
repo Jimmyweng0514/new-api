@@ -61,10 +61,10 @@ const InvitationCard = ({
           className='!rounded-xl w-full'
           cover={
             <div
-              className='relative h-30'
+              className='bluefuture-reward-cover relative h-30'
               style={{
-                '--palette-primary-darkerChannel': '0 75 80',
-                backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
+                backgroundImage:
+                  'radial-gradient(circle at 14% 8%, rgba(53, 208, 127, 0.2), transparent 34%), linear-gradient(135deg, rgba(6, 17, 31, 0.96), rgba(10, 47, 54, 0.9))',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',

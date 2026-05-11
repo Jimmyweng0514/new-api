@@ -17,6 +17,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
+import React from 'react';
 import TopUp from '../../components/topup';
+import BlueFuturePageHeader from '../../components/common/BlueFuturePageHeader';
 
-export default TopUp;
+const TopUpPage = () =>
+  React.createElement(
+    'div',
+    { className: 'mt-[60px] px-2' },
+    React.createElement(BlueFuturePageHeader, {
+      title: 'Billing / 账单',
+      description: '透明计费，按量使用，实时扣费。充值后可在这里查看余额变动。',
+    }),
+    React.createElement(TopUp),
+  );
+
+export default TopUpPage;

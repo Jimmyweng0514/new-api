@@ -125,10 +125,10 @@ const RechargeCard = ({
         className='!rounded-xl w-full'
         cover={
           <div
-            className='relative h-30'
+            className='bluefuture-billing-cover relative h-30'
             style={{
-              '--palette-primary-darkerChannel': '37 99 235',
-              backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
+              backgroundImage:
+                'radial-gradient(circle at 10% 15%, rgba(22, 217, 245, 0.18), transparent 34%), linear-gradient(135deg, rgba(6, 17, 31, 0.96), rgba(13, 32, 51, 0.92))',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',

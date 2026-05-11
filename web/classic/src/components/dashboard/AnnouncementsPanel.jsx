@@ -34,6 +34,14 @@ const AnnouncementsPanel = ({
   ILLUSTRATION_SIZE,
   t,
 }) => {
+  const timelineTypes = new Set([
+    'ongoing',
+    'success',
+    'warning',
+    'error',
+    'default',
+  ]);
+
   return (
     <Card
       {...CARD_PROPS}
@@ -84,7 +92,7 @@ const AnnouncementsPanel = ({
               return (
                 <Timeline.Item
                   key={idx}
-                  type={item.type || 'default'}
+                  type={timelineTypes.has(item.type) ? item.type : 'default'}
                   time={`${item.relative ? item.relative + ' ' : ''}${item.time}`}
                   extra={
                     item.extra ? (

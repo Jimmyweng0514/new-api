@@ -39,7 +39,7 @@ const StatsCards = ({
           <Card
             key={idx}
             {...CARD_PROPS}
-            className={`${group.color} border-0 !rounded-2xl w-full`}
+            className={`${group.color} bluefuture-card border-0 !rounded-lg w-full`}
             title={group.title}
           >
             <div className='space-y-4'>
@@ -51,14 +51,14 @@ const StatsCards = ({
                 >
                   <div className='flex items-center'>
                     <Avatar
-                      className='mr-3'
+                      className='mr-3 !bg-[rgba(22,217,245,0.14)] !text-[#16D9F5]'
                       size='small'
                       color={item.avatarColor}
                     >
                       {item.icon}
                     </Avatar>
                     <div>
-                      <div className='text-xs text-gray-500'>{item.title}</div>
+                      <div className='text-xs text-semi-color-text-2'>{item.title}</div>
                       <div className='text-lg font-semibold'>
                         <Skeleton
                           loading={loading}
@@ -82,8 +82,8 @@ const StatsCards = ({
                   </div>
                   {item.title === t('当前余额') ? (
                     <Tag
-                      color='white'
-                      shape='circle'
+                      color='cyan'
+                      shape='square'
                       size='large'
                       onClick={(e) => {
                         e.stopPropagation();

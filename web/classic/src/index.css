@@ -367,7 +367,9 @@ code {
   line-height: 1;
   background-color: var(--semi-color-fill-0);
   color: var(--semi-color-text-2);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .sbg-badge-active {
@@ -885,7 +887,8 @@ html.dark .with-pastel-balls::before {
     max-width: 80px;
   }
 
-  .semi-input-prefix-text, .semi-input-suffix-text {
+  .semi-input-prefix-text,
+  .semi-input-suffix-text {
     margin: 0;
   }
 
@@ -983,6 +986,370 @@ html.dark .with-pastel-balls::before {
   gap: 0.25rem;
 }
 
+/* ==================== Blue Future 品牌主题 ==================== */
+:root {
+  --bf-deep-navy: #06111f;
+  --bf-midnight: #081827;
+  --bf-panel: #0d2033;
+  --bf-panel-soft: #102840;
+  --bf-cyan: #16d9f5;
+  --bf-cyan-hover: #4debff;
+  --bf-trust-blue: #1e6bff;
+  --bf-text-primary: #f7fbff;
+  --bf-text-secondary: #9fb4c7;
+  --bf-border: rgba(127, 205, 255, 0.16);
+  --bf-border-strong: rgba(22, 217, 245, 0.34);
+  --bf-success: #35d07f;
+  --bf-warning: #f5b84b;
+  --bf-error: #ff5a6b;
+  --semi-color-primary: var(--bf-trust-blue);
+  --semi-color-primary-hover: #2f7aff;
+  --semi-color-primary-active: #155ae6;
+  --semi-color-link: var(--bf-trust-blue);
+  --semi-border-radius-small: 6px;
+  --semi-border-radius-medium: 8px;
+  --semi-border-radius-large: 8px;
+}
+
+body[theme-mode='dark'] {
+  --semi-color-bg-0: var(--bf-deep-navy);
+  --semi-color-bg-1: var(--bf-midnight);
+  --semi-color-bg-2: var(--bf-panel);
+  --semi-color-bg-3: var(--bf-panel-soft);
+  --semi-color-fill-0: rgba(127, 205, 255, 0.07);
+  --semi-color-fill-1: rgba(127, 205, 255, 0.11);
+  --semi-color-fill-2: rgba(127, 205, 255, 0.16);
+  --semi-color-border: var(--bf-border);
+  --semi-color-text-0: var(--bf-text-primary);
+  --semi-color-text-1: var(--bf-text-secondary);
+  --semi-color-text-2: rgba(159, 180, 199, 0.76);
+  --semi-color-primary: var(--bf-cyan);
+  --semi-color-primary-hover: var(--bf-cyan-hover);
+  --semi-color-primary-light-default: rgba(22, 217, 245, 0.14);
+}
+
+body {
+  background: radial-gradient(
+      circle at 18% 0%,
+      rgba(22, 217, 245, 0.08),
+      transparent 28%
+    ),
+    var(--semi-color-bg-0);
+}
+
+.bluefuture-shell {
+  min-height: 100%;
+  background: radial-gradient(
+      circle at 18% 0%,
+      rgba(22, 217, 245, 0.13),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 82% 10%,
+      rgba(30, 107, 255, 0.1),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      var(--bf-deep-navy),
+      var(--bf-midnight) 42%,
+      #071220
+    );
+  color: var(--bf-text-primary);
+}
+
+.bluefuture-brand-icon {
+  object-fit: contain;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.bluefuture-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.bluefuture-header {
+  background: rgba(6, 17, 31, 0.9);
+  color: var(--bf-text-primary);
+}
+
+.bluefuture-header a,
+.bluefuture-header span,
+.bluefuture-header .semi-typography,
+.bluefuture-header .semi-typography h1,
+.bluefuture-header .semi-typography h2,
+.bluefuture-header .semi-typography h3,
+.bluefuture-header .semi-typography h4,
+.bluefuture-header .semi-typography h5,
+.bluefuture-header .semi-button-content,
+.bluefuture-header .semi-icon {
+  color: var(--bf-text-primary) !important;
+}
+
+.bluefuture-header a:hover,
+.bluefuture-header button:hover .semi-icon,
+.bluefuture-header button:hover .semi-button-content {
+  color: var(--bf-cyan) !important;
+}
+
+.bluefuture-header .semi-button {
+  background: rgba(127, 205, 255, 0.08) !important;
+  border-color: rgba(127, 205, 255, 0.14) !important;
+}
+
+.bluefuture-header .semi-button-primary {
+  background: linear-gradient(
+    135deg,
+    var(--bf-trust-blue),
+    var(--bf-cyan)
+  ) !important;
+  border-color: rgba(22, 217, 245, 0.62) !important;
+}
+
+.bluefuture-header-user-name {
+  color: rgba(247, 251, 255, 0.82) !important;
+}
+
+.bluefuture-header .semi-button:hover .bluefuture-header-user-name {
+  color: var(--bf-text-primary) !important;
+}
+
+.bluefuture-panel {
+  border: 1px solid var(--bf-border);
+  background: rgba(13, 32, 51, 0.72);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(14px);
+}
+
+.bluefuture-card {
+  border: 1px solid var(--bf-border);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 8px;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.bluefuture-card:hover {
+  border-color: var(--bf-border-strong);
+  transform: translateY(-1px);
+  background: rgba(247, 251, 255, 0.98);
+}
+
+.bluefuture-shell .bluefuture-card,
+body[theme-mode='dark'] .bluefuture-card {
+  background: rgba(13, 32, 51, 0.62);
+  color: var(--bf-text-primary);
+}
+
+.bluefuture-shell .bluefuture-card:hover,
+body[theme-mode='dark'] .bluefuture-card:hover {
+  background: rgba(13, 32, 51, 0.78);
+}
+
+.bluefuture-shell .bluefuture-card .semi-typography,
+.bluefuture-shell .bluefuture-card .semi-card-title,
+body[theme-mode='dark'] .bluefuture-card .semi-typography,
+body[theme-mode='dark'] .bluefuture-card .semi-card-title {
+  color: var(--bf-text-primary) !important;
+}
+
+.bluefuture-shell .bluefuture-card .text-semi-color-text-2,
+body[theme-mode='dark'] .bluefuture-card .text-semi-color-text-2 {
+  color: var(--bf-text-secondary) !important;
+}
+
+.bluefuture-code {
+  border: 1px solid rgba(22, 217, 245, 0.2);
+  background: linear-gradient(
+      180deg,
+      rgba(8, 24, 39, 0.96),
+      rgba(6, 17, 31, 0.96)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 26px
+    );
+  color: #dff8ff;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.bluefuture-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bf-success);
+  box-shadow: 0 0 0 0 rgba(53, 208, 127, 0.48);
+  animation: bluefuturePulse 2.8s ease-out infinite;
+}
+
+@keyframes bluefuturePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(53, 208, 127, 0.42);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(53, 208, 127, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(53, 208, 127, 0);
+  }
+}
+
+.bluefuture-fade-up {
+  animation: bluefutureFadeUp 180ms ease-out both;
+}
+
+@keyframes bluefutureFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body[theme-mode='dark'] .semi-card,
+body[theme-mode='dark'] .semi-table-container,
+body[theme-mode='dark'] .semi-modal-content {
+  border-color: var(--bf-border) !important;
+  background: rgba(13, 32, 51, 0.86) !important;
+}
+
+body[theme-mode='dark']
+  .semi-table-thead
+  > .semi-table-row
+  > .semi-table-row-head {
+  background: rgba(8, 24, 39, 0.92) !important;
+  color: var(--bf-text-secondary) !important;
+}
+
+body[theme-mode='dark']
+  .semi-table-tbody
+  > .semi-table-row:hover
+  > .semi-table-row-cell {
+  background: rgba(22, 217, 245, 0.07) !important;
+}
+
+body[theme-mode='dark'] .semi-input-wrapper,
+body[theme-mode='dark'] .semi-select,
+body[theme-mode='dark'] .semi-datepicker-range-input {
+  border-color: var(--bf-border) !important;
+  background: rgba(6, 17, 31, 0.68) !important;
+}
+
+body[theme-mode='dark'] .semi-button-primary {
+  border-color: rgba(22, 217, 245, 0.72) !important;
+  background: linear-gradient(
+    135deg,
+    var(--bf-trust-blue),
+    var(--bf-cyan)
+  ) !important;
+  box-shadow: 0 0 0 0 rgba(22, 217, 245, 0);
+}
+
+body[theme-mode='dark'] .semi-button-primary:hover {
+  box-shadow: 0 0 0 3px rgba(22, 217, 245, 0.16);
+  filter: brightness(1.06);
+}
+
+.sidebar-container,
+.sidebar-nav,
+.sidebar-collapse-button {
+  background: var(--semi-color-bg-1);
+}
+
+body[theme-mode='dark'] .sidebar-container,
+body[theme-mode='dark'] .sidebar-nav,
+body[theme-mode='dark'] .sidebar-collapse-button {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 24, 39, 0.98),
+    rgba(6, 17, 31, 0.98)
+  );
+  border-right: 1px solid var(--bf-border);
+}
+
+body[theme-mode='dark'] .sidebar-nav-item-selected {
+  background: rgba(22, 217, 245, 0.13) !important;
+  color: var(--bf-cyan) !important;
+  box-shadow: inset 2px 0 0 var(--bf-cyan);
+}
+
+body[theme-mode='dark'] .sidebar-nav-item:hover {
+  background: rgba(22, 217, 245, 0.08) !important;
+}
+
+.bluefuture-auth-page {
+  min-height: 100vh;
+  background: radial-gradient(
+      circle at 24% 14%,
+      rgba(22, 217, 245, 0.14),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 76% 8%,
+      rgba(30, 107, 255, 0.13),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #06111f 0%, #081827 56%, #07111e 100%);
+}
+
+.bluefuture-auth-card {
+  border: 1px solid rgba(127, 205, 255, 0.18) !important;
+  background: rgba(13, 32, 51, 0.88) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.3);
+}
+
+.bluefuture-auth-card .semi-form-field-label,
+.bluefuture-auth-card .semi-form-field-label-text,
+.bluefuture-auth-card .semi-checkbox-addon,
+.bluefuture-auth-card .semi-typography,
+.bluefuture-auth-card .semi-button-content {
+  color: var(--bf-text-primary) !important;
+}
+
+.bluefuture-auth-card .semi-input-wrapper {
+  border-color: rgba(127, 205, 255, 0.18) !important;
+  background: rgba(6, 17, 31, 0.72) !important;
+}
+
+.bluefuture-auth-card .semi-input,
+.bluefuture-auth-card input,
+.bluefuture-auth-card textarea {
+  color: var(--bf-text-primary) !important;
+  background: transparent !important;
+}
+
+.bluefuture-auth-card input::placeholder,
+.bluefuture-auth-card textarea::placeholder {
+  color: rgba(159, 180, 199, 0.72) !important;
+}
+
+.bluefuture-auth-card .semi-form-field-extra,
+.bluefuture-auth-card .semi-form-field-error-message,
+.bluefuture-auth-card .semi-typography-tertiary,
+.bluefuture-auth-card .semi-typography-secondary {
+  color: var(--bf-text-secondary) !important;
+}
+
+.bluefuture-billing-cover,
+.bluefuture-reward-cover {
+  border-bottom: 1px solid rgba(127, 205, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 /* ==================== 自定义圆角样式 ==================== */
 .semi-radio,
 .semi-tagInput,
@@ -997,7 +1364,7 @@ html.dark .with-pastel-balls::before {
 .semi-select,
 .semi-button,
 .semi-datepicker-range-input {
-  border-radius: 10px !important;
+  border-radius: 8px !important;
 }
 
 @keyframes slideInLeft {
@@ -1023,4 +1390,6 @@ html.dark .with-pastel-balls::before {
   }
 }
 
-.ec-dbcd0a3c01b55203 { forced-color-adjust: auto; }
+.ec-dbcd0a3c01b55203 {
+  forced-color-adjust: auto;
+}

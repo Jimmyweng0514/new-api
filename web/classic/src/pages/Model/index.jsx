@@ -18,10 +18,15 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import React from 'react';
 import ModelsTable from '../../components/table/models';
+import BlueFuturePageHeader from '../../components/common/BlueFuturePageHeader';
 
 const ModelPage = () => {
   return (
     <div className='mt-[60px] px-2'>
+      <BlueFuturePageHeader
+        title='Models / 模型'
+        description='查看可用模型、价格、上下文长度与实时状态。'
+      />
       <ModelsTable />
     </div>
   );

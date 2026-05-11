@@ -71,7 +71,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const workspaceItems = useMemo(() => {
     const items = [
       {
-        text: t('数据看板'),
+        text: t('Overview / 总览'),
         itemKey: 'detail',
         to: '/detail',
         className:
@@ -80,17 +80,17 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             : 'tableHiddle',
       },
       {
-        text: t('令牌管理'),
+        text: t('API Keys / API 密钥'),
         itemKey: 'token',
         to: '/token',
       },
       {
-        text: t('使用日志'),
+        text: t('Logs / 请求日志'),
         itemKey: 'log',
         to: '/log',
       },
       {
-        text: t('绘图日志'),
+        text: t('Image Logs / 绘图日志'),
         itemKey: 'midjourney',
         to: '/midjourney',
         className:
@@ -99,7 +99,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             : 'tableHiddle',
       },
       {
-        text: t('任务日志'),
+        text: t('Task Logs / 任务日志'),
         itemKey: 'task',
         to: '/task',
         className:
@@ -125,12 +125,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const financeItems = useMemo(() => {
     const items = [
       {
-        text: t('钱包管理'),
+        text: t('Billing / 账单'),
         itemKey: 'topup',
         to: '/topup',
       },
       {
-        text: t('个人设置'),
+        text: t('Profile / 个人设置'),
         itemKey: 'personal',
         to: '/personal',
       },
@@ -148,43 +148,43 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const adminItems = useMemo(() => {
     const items = [
       {
-        text: t('渠道管理'),
+        text: t('Channels / 渠道'),
         itemKey: 'channel',
         to: '/channel',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('订阅管理'),
+        text: t('Subscriptions / 订阅'),
         itemKey: 'subscription',
         to: '/subscription',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('模型管理'),
+        text: t('Models / 模型'),
         itemKey: 'models',
         to: '/console/models',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('模型部署'),
+        text: t('Deployments / 部署'),
         itemKey: 'deployment',
         to: '/deployment',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('兑换码管理'),
+        text: t('Redeem Codes / 兑换码'),
         itemKey: 'redemption',
         to: '/redemption',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('用户管理'),
+        text: t('Users / 用户'),
         itemKey: 'user',
         to: '/user',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('系统设置'),
+        text: t('Settings / 设置'),
         itemKey: 'setting',
         to: '/setting',
         className: isRoot() ? '' : 'tableHiddle',
@@ -203,12 +203,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const chatMenuItems = useMemo(() => {
     const items = [
       {
-        text: t('操练场'),
+        text: t('Playground / 操练场'),
         itemKey: 'playground',
         to: '/playground',
       },
       {
-        text: t('聊天'),
+        text: t('Chat / 聊天'),
         itemKey: 'chat',
         items: chatItems,
       },
@@ -443,7 +443,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
           {hasSectionVisibleModules('chat') && (
             <div className='sidebar-section'>
               {!collapsed && (
-                <div className='sidebar-group-label'>{t('聊天')}</div>
+                <div className='sidebar-group-label'>{t('Chat')}</div>
               )}
               {chatMenuItems.map((item) => renderSubItem(item))}
             </div>
@@ -455,7 +455,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               <Divider className='sidebar-divider' />
               <div>
                 {!collapsed && (
-                  <div className='sidebar-group-label'>{t('控制台')}</div>
+                  <div className='sidebar-group-label'>{t('Workspace')}</div>
                 )}
                 {workspaceItems.map((item) => renderNavItem(item))}
               </div>
@@ -468,7 +468,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               <Divider className='sidebar-divider' />
               <div>
                 {!collapsed && (
-                  <div className='sidebar-group-label'>{t('个人中心')}</div>
+                  <div className='sidebar-group-label'>{t('Account')}</div>
                 )}
                 {financeItems.map((item) => renderNavItem(item))}
               </div>
@@ -481,7 +481,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               <Divider className='sidebar-divider' />
               <div>
                 {!collapsed && (
-                  <div className='sidebar-group-label'>{t('管理员')}</div>
+                  <div className='sidebar-group-label'>{t('Admin')}</div>
                 )}
                 {adminItems.map((item) => renderNavItem(item))}
               </div>

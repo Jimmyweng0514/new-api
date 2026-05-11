@@ -18,6 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import { useMemo } from 'react';
+import { BLUE_FUTURE_NAV_LABELS } from '../../constants/brand';
 
 export const useNavigation = (t, docsLink, headerNavModules) => {
   const mainNavLinks = useMemo(() => {
@@ -35,24 +36,24 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
 
     const allLinks = [
       {
-        text: t('首页'),
+        text: t(BLUE_FUTURE_NAV_LABELS.home),
         itemKey: 'home',
         to: '/',
       },
       {
-        text: t('控制台'),
+        text: t(BLUE_FUTURE_NAV_LABELS.console),
         itemKey: 'console',
         to: '/console',
       },
       {
-        text: t('模型广场'),
+        text: t(BLUE_FUTURE_NAV_LABELS.pricing),
         itemKey: 'pricing',
         to: '/pricing',
       },
       ...(docsLink
         ? [
             {
-              text: t('文档'),
+              text: t(BLUE_FUTURE_NAV_LABELS.docs),
               itemKey: 'docs',
               isExternal: true,
               externalLink: docsLink,
@@ -60,7 +61,7 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
           ]
         : []),
       {
-        text: t('关于'),
+        text: t(BLUE_FUTURE_NAV_LABELS.about),
         itemKey: 'about',
         to: '/about',
       },

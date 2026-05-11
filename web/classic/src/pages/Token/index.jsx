@@ -19,10 +19,15 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import TokensTable from '../../components/table/tokens';
+import BlueFuturePageHeader from '../../components/common/BlueFuturePageHeader';
 
 const Token = () => {
   return (
     <div className='mt-[60px] px-2'>
+      <BlueFuturePageHeader
+        title='API Keys / API 密钥'
+        description='创建、管理和限制你的 API Key，按项目隔离调用权限。'
+      />
       <TokensTable />
     </div>
   );

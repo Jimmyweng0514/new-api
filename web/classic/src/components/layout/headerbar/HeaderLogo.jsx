@@ -21,6 +21,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Tag } from '@douyinfe/semi-ui';
 import SkeletonWrapper from '../components/SkeletonWrapper';
+import { BLUE_FUTURE_BRAND } from '../../../constants/brand';
 
 const HeaderLogo = ({
   isMobile,
@@ -39,12 +40,12 @@ const HeaderLogo = ({
 
   return (
     <Link to='/' className='group flex items-center gap-2'>
-      <div className='relative w-8 h-8 md:w-8 md:h-8'>
+      <div className='relative w-8 h-8 md:w-9 md:h-9'>
         <SkeletonWrapper loading={isLoading || !logoLoaded} type='image' />
         <img
-          src={logo}
+          src={BLUE_FUTURE_BRAND.icon || logo}
           alt='logo'
-          className={`absolute inset-0 w-full h-full transition-all duration-200 group-hover:scale-110 rounded-full ${!isLoading && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`bluefuture-brand-icon absolute inset-0 w-full h-full transition-all duration-200 group-hover:scale-105 ${!isLoading && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
         />
       </div>
       <div className='hidden md:flex items-center gap-2'>
@@ -57,9 +58,9 @@ const HeaderLogo = ({
           >
             <Typography.Title
               heading={4}
-              className='!text-lg !font-semibold !mb-0'
+              className='!text-lg !font-semibold !mb-0 tracking-normal'
             >
-              {systemName}
+              {BLUE_FUTURE_BRAND.name || systemName}
             </Typography.Title>
           </SkeletonWrapper>
           {(isSelfUseMode || isDemoSiteMode) && !isLoading && (

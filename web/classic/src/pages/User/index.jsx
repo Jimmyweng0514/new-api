@@ -19,10 +19,15 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import UsersTable from '../../components/table/users';
+import BlueFuturePageHeader from '../../components/common/BlueFuturePageHeader';
 
 const User = () => {
   return (
     <div className='mt-[60px] px-2'>
+      <BlueFuturePageHeader
+        title='Users / 用户'
+        description='管理团队成员、分组、额度、邀请关系与访问权限。'
+      />
       <UsersTable />
     </div>
   );

@@ -21,47 +21,29 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   Button,
   Typography,
-  Input,
-  ScrollList,
-  ScrollItem,
+  Tag,
 } from '@douyinfe/semi-ui';
 import { API, showError, copy, showSuccess } from '../../helpers';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
-import { API_ENDPOINTS } from '../../constants/common.constant';
 import { StatusContext } from '../../context/Status';
 import { useActualTheme } from '../../context/Theme';
 import { marked } from 'marked';
 import { useTranslation } from 'react-i18next';
 import {
-  IconGithubLogo,
   IconPlay,
   IconFile,
   IconCopy,
 } from '@douyinfe/semi-icons';
 import { Link } from 'react-router-dom';
 import NoticeModal from '../../components/layout/NoticeModal';
+import { Activity, Gauge, KeyRound, Layers3, ReceiptText, ShieldCheck } from 'lucide-react';
 import {
-  Moonshot,
-  OpenAI,
-  XAI,
-  Zhipu,
-  Volcengine,
-  Cohere,
-  Claude,
-  Gemini,
-  Suno,
-  Minimax,
-  Wenxin,
-  Spark,
-  Qingyan,
-  DeepSeek,
-  Qwen,
-  Midjourney,
-  Grok,
-  AzureAI,
-  Hunyuan,
-  Xinference,
-} from '@lobehub/icons';
+  BLUE_FUTURE_BRAND,
+  BLUE_FUTURE_CAPABILITIES,
+  BLUE_FUTURE_CODE_SAMPLE,
+  BLUE_FUTURE_FEATURES,
+  BLUE_FUTURE_STEPS,
+} from '../../constants/brand';
 
 const { Text } = Typography;
 
@@ -73,13 +55,9 @@ const Home = () => {
   const [homePageContent, setHomePageContent] = useState('');
   const [noticeVisible, setNoticeVisible] = useState(false);
   const isMobile = useIsMobile();
-  const isDemoSiteMode = statusState?.status?.demo_site_enabled || false;
   const docsLink = statusState?.status?.docs_link || '';
   const serverAddress =
     statusState?.status?.server_address || `${window.location.origin}`;
-  const endpointItems = API_ENDPOINTS.map((e) => ({ value: e }));
-  const [endpointIndex, setEndpointIndex] = useState(0);
-  const isChinese = i18n.language.startsWith('zh');
 
   const displayHomePageContent = async () => {
     setHomePageContent(localStorage.getItem('home_page_content') || '');
@@ -141,13 +119,6 @@ const Home = () => {
     displayHomePageContent().then();
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setEndpointIndex((prev) => (prev + 1) % endpointItems.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, [endpointItems.length]);
-
   return (
     <div className='w-full overflow-x-hidden'>
       <NoticeModal
@@ -156,183 +127,168 @@ const Home = () => {
         isMobile={isMobile}
       />
       {homePageContentLoaded && homePageContent === '' ? (
-        <div className='w-full overflow-x-hidden'>
-          {/* Banner 部分 */}
-          <div className='w-full border-b border-semi-color-border min-h-[500px] md:min-h-[600px] lg:min-h-[700px] relative overflow-x-hidden'>
-            {/* 背景模糊晕染球 */}
-            <div className='blur-ball blur-ball-indigo' />
-            <div className='blur-ball blur-ball-teal' />
-            <div className='flex items-center justify-center h-full px-4 py-20 md:py-24 lg:py-32 mt-10'>
-              {/* 居中内容区 */}
-              <div className='flex flex-col items-center justify-center text-center max-w-4xl mx-auto'>
-                <div className='flex flex-col items-center justify-center mb-6 md:mb-8'>
-                  <h1
-                    className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-semi-color-text-0 leading-tight ${isChinese ? 'tracking-wide md:tracking-wider' : ''}`}
-                  >
-                    <>
-                      {t('统一的')}
-                      <br />
-                      <span className='shine-text'>{t('大模型接口网关')}</span>
-                    </>
+        <div className='bluefuture-shell bluefuture-fade-up w-full overflow-x-hidden pt-16'>
+          <section className='mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl grid-cols-1 items-center gap-10 px-5 py-14 md:grid-cols-[1.02fr_0.98fr] md:px-8 lg:px-10'>
+            <div>
+              <div className='mb-8 inline-flex items-center gap-3 rounded-md border border-[rgba(127,205,255,0.18)] bg-[rgba(13,32,51,0.64)] px-3 py-2 text-sm text-[#9FB4C7]'>
+                <span className='bluefuture-status-dot' />
+                <span>{BLUE_FUTURE_BRAND.statusText}</span>
+              </div>
+
+              <div className='mb-6 flex items-center gap-3'>
+                <img
+                  src={BLUE_FUTURE_BRAND.icon}
+                  alt='Blue Future'
+                  className='bluefuture-brand-icon h-14 w-14'
+                />
+                <div>
+                  <Text className='!text-sm !text-[#9FB4C7]'>
+                    {BLUE_FUTURE_BRAND.domain}
+                  </Text>
+                  <h1 className='m-0 text-4xl font-semibold leading-tight text-[#F7FBFF] md:text-6xl'>
+                    {BLUE_FUTURE_BRAND.name}
                   </h1>
-                  <p className='text-base md:text-lg lg:text-xl text-semi-color-text-1 mt-4 md:mt-6 max-w-xl'>
-                    {t('更好的价格，更好的稳定性，只需要将模型基址替换为：')}
-                  </p>
-                  {/* BASE URL 与端点选择 */}
-                  <div className='flex flex-col md:flex-row items-center justify-center gap-4 w-full mt-4 md:mt-6 max-w-md'>
-                    <Input
-                      readonly
-                      value={serverAddress}
-                      className='flex-1 !rounded-full'
-                      size={isMobile ? 'default' : 'large'}
-                      suffix={
-                        <div className='flex items-center gap-2'>
-                          <ScrollList
-                            bodyHeight={32}
-                            style={{ border: 'unset', boxShadow: 'unset' }}
-                          >
-                            <ScrollItem
-                              mode='wheel'
-                              cycled={true}
-                              list={endpointItems}
-                              selectedIndex={endpointIndex}
-                              onSelect={({ index }) => setEndpointIndex(index)}
-                            />
-                          </ScrollList>
-                          <Button
-                            type='primary'
-                            onClick={handleCopyBaseURL}
-                            icon={<IconCopy />}
-                            className='!rounded-full'
-                          />
-                        </div>
-                      }
-                    />
-                  </div>
-                </div>
-
-                {/* 操作按钮 */}
-                <div className='flex flex-row gap-4 justify-center items-center'>
-                  <Link to='/console'>
-                    <Button
-                      theme='solid'
-                      type='primary'
-                      size={isMobile ? 'default' : 'large'}
-                      className='!rounded-3xl px-8 py-2'
-                      icon={<IconPlay />}
-                    >
-                      {t('获取密钥')}
-                    </Button>
-                  </Link>
-                  {isDemoSiteMode && statusState?.status?.version ? (
-                    <Button
-                      size={isMobile ? 'default' : 'large'}
-                      className='flex items-center !rounded-3xl px-6 py-2'
-                      icon={<IconGithubLogo />}
-                      onClick={() =>
-                        window.open(
-                          'https://github.com/QuantumNous/new-api',
-                          '_blank',
-                        )
-                      }
-                    >
-                      {statusState.status.version}
-                    </Button>
-                  ) : (
-                    docsLink && (
-                      <Button
-                        size={isMobile ? 'default' : 'large'}
-                        className='flex items-center !rounded-3xl px-6 py-2'
-                        icon={<IconFile />}
-                        onClick={() => window.open(docsLink, '_blank')}
-                      >
-                        {t('文档')}
-                      </Button>
-                    )
-                  )}
-                </div>
-
-                {/* 框架兼容性图标 */}
-                <div className='mt-12 md:mt-16 lg:mt-20 w-full'>
-                  <div className='flex items-center mb-6 md:mb-8 justify-center'>
-                    <Text
-                      type='tertiary'
-                      className='text-lg md:text-xl lg:text-2xl font-light'
-                    >
-                      {t('支持众多的大模型供应商')}
-                    </Text>
-                  </div>
-                  <div className='flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto px-4'>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Moonshot size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <OpenAI size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <XAI size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Zhipu.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Volcengine.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Cohere.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Claude.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Gemini.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Suno size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Minimax.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Wenxin.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Spark.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Qingyan.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <DeepSeek.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Qwen.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Midjourney size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Grok size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <AzureAI.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Hunyuan.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Xinference.Color size={40} />
-                    </div>
-                    <div className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center'>
-                      <Typography.Text className='!text-lg sm:!text-xl md:!text-2xl lg:!text-3xl font-bold'>
-                        30+
-                      </Typography.Text>
-                    </div>
-                  </div>
                 </div>
               </div>
+
+              <h2 className='mb-5 max-w-2xl text-2xl font-medium leading-snug text-[#F7FBFF] md:text-4xl'>
+                {BLUE_FUTURE_BRAND.tagline}
+              </h2>
+              <p className='mb-8 max-w-2xl text-base leading-8 text-[#9FB4C7] md:text-lg'>
+                {BLUE_FUTURE_BRAND.description}
+              </p>
+
+              <div className='mb-7 flex flex-col gap-3 sm:flex-row'>
+                <Link to='/console'>
+                  <Button
+                    theme='solid'
+                    type='primary'
+                    size={isMobile ? 'default' : 'large'}
+                    icon={<IconPlay />}
+                    className='w-full sm:w-auto'
+                  >
+                    开始接入
+                  </Button>
+                </Link>
+                <Button
+                  size={isMobile ? 'default' : 'large'}
+                  icon={<IconFile />}
+                  className='w-full border-[rgba(127,205,255,0.22)] !bg-transparent !text-[#F7FBFF] sm:w-auto'
+                  onClick={() =>
+                    window.open(docsLink || BLUE_FUTURE_BRAND.docsUrl, '_blank')
+                  }
+                >
+                  查看文档
+                </Button>
+              </div>
+
+              <div className='mb-8 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
+                {BLUE_FUTURE_FEATURES.map((item) => (
+                  <div
+                    key={item}
+                    className='bluefuture-card flex items-center gap-2 px-3 py-2 text-sm text-[#DFF8FF]'
+                  >
+                    <ShieldCheck size={15} className='text-[#16D9F5]' />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className='flex flex-col gap-2 text-sm text-[#9FB4C7] sm:flex-row sm:items-center'>
+                <span>Base URL</span>
+                <button
+                  type='button'
+                  onClick={handleCopyBaseURL}
+                  className='inline-flex items-center gap-2 rounded-md border border-[rgba(127,205,255,0.18)] bg-[rgba(13,32,51,0.72)] px-3 py-2 text-left font-mono text-[#F7FBFF] transition hover:border-[rgba(22,217,245,0.52)]'
+                >
+                  <span>{serverAddress}</span>
+                  <IconCopy />
+                </button>
+              </div>
             </div>
-          </div>
+
+            <div className='bluefuture-panel rounded-lg p-4 md:p-6'>
+              <div className='mb-4 flex items-center justify-between'>
+                <div>
+                  <Text className='!text-xs uppercase tracking-[0.18em] !text-[#9FB4C7]'>
+                    OpenAI SDK Compatible
+                  </Text>
+                  <h3 className='m-0 mt-1 text-xl font-semibold text-[#F7FBFF]'>
+                    替换 Base URL 即可调用
+                  </h3>
+                </div>
+                <Tag color='green' shape='circle'>
+                  在线
+                </Tag>
+              </div>
+              <pre className='bluefuture-code overflow-x-auto p-4 text-xs leading-6 md:text-sm'>
+                <code>{BLUE_FUTURE_CODE_SAMPLE}</code>
+              </pre>
+              <div className='mt-5 grid grid-cols-3 gap-3 text-center'>
+                {[
+                  ['99.9%', '服务可用'],
+                  ['OpenAI', '格式兼容'],
+                  ['Real-time', '用量统计'],
+                ].map(([value, label]) => (
+                  <div key={label} className='bluefuture-card p-3'>
+                    <div className='text-lg font-semibold text-[#16D9F5]'>
+                      {value}
+                    </div>
+                    <div className='mt-1 text-xs text-[#9FB4C7]'>{label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className='md:col-span-2 grid grid-cols-1 gap-4 md:grid-cols-3'>
+              {BLUE_FUTURE_STEPS.map((step, index) => (
+                <div key={step.title} className='bluefuture-card p-5'>
+                  <div className='mb-4 flex h-8 w-8 items-center justify-center rounded-md bg-[rgba(22,217,245,0.14)] text-sm font-semibold text-[#16D9F5]'>
+                    {index + 1}
+                  </div>
+                  <h3 className='mb-2 text-lg font-semibold text-[#F7FBFF]'>
+                    {step.title}
+                  </h3>
+                  <p className='m-0 text-sm leading-6 text-[#9FB4C7]'>
+                    {step.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className='mx-auto max-w-7xl px-5 pb-16 md:px-8 lg:px-10'>
+            <div className='mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end'>
+              <div>
+                <Text className='!text-sm uppercase tracking-[0.18em] !text-[#16D9F5]'>
+                  Capabilities
+                </Text>
+                <h2 className='m-0 mt-2 text-3xl font-semibold text-[#F7FBFF]'>
+                  为长期运行的 API 服务而设计
+                </h2>
+              </div>
+              <p className='m-0 max-w-xl text-sm leading-6 text-[#9FB4C7]'>
+                请求内容默认不展示，敏感信息可隐藏；用量、模型状态和计费明细实时可查。
+              </p>
+            </div>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+              {BLUE_FUTURE_CAPABILITIES.map((item, index) => {
+                const icons = [Layers3, Activity, Gauge, KeyRound, ReceiptText, ShieldCheck];
+                const Icon = icons[index % icons.length];
+                return (
+                  <div key={item.title} className='bluefuture-card p-5'>
+                    <Icon className='mb-4 text-[#16D9F5]' size={22} />
+                    <h3 className='mb-2 text-lg font-semibold text-[#F7FBFF]'>
+                      {item.title}
+                    </h3>
+                    <p className='m-0 text-sm leading-6 text-[#9FB4C7]'>
+                      {item.desc}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
         </div>
       ) : (
         <div className='overflow-x-hidden w-full'>

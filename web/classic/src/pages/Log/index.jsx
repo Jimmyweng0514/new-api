@@ -19,9 +19,14 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import UsageLogsTable from '../../components/table/usage-logs';
+import BlueFuturePageHeader from '../../components/common/BlueFuturePageHeader';
 
 const Token = () => (
   <div className='mt-[60px] px-2'>
+    <BlueFuturePageHeader
+      title='Logs / 请求日志'
+      description='追踪请求状态、模型、Token 消耗、费用与延迟。'
+    />
     <UsageLogsTable />
   </div>
 );
