@@ -3,6 +3,7 @@ import {
   createRootRouteWithContext,
   Outlet,
   redirect,
+  useLocation,
 } from '@tanstack/react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
@@ -17,13 +18,15 @@ import { getSetupStatus } from '@/features/setup/api'
 function RootComponent() {
   // Load system configuration (logo, system name, etc.) from backend
   useSystemConfig({ autoLoad: true })
+  const location = useLocation()
+  const isStandalonePreview = location.pathname.startsWith('/image-console')
 
   return (
     <ThemeCustomizationProvider>
       <NavigationProgress />
       <Outlet />
       <Toaster duration={5000} />
-      {import.meta.env.MODE === 'development' && (
+      {import.meta.env.MODE === 'development' && !isStandalonePreview && (
         <>
           <ReactQueryDevtools buttonPosition='bottom-left' />
           <TanStackRouterDevtools position='bottom-right' />
@@ -72,7 +75,9 @@ export const Route = createRootRouteWithContext<{
   beforeLoad: async ({ location }) => {
     const pathname = location?.pathname || ''
     const needsSetupCheck =
-      !setupStatusChecked && !pathname.startsWith('/setup')
+      !setupStatusChecked &&
+      !pathname.startsWith('/setup') &&
+      !pathname.startsWith('/image-console')
 
     // 用户信息已通过 auth-store 从 localStorage 恢复
     // 如果 auth.user 存在，说明用户已登录（有缓存的用户数据）
