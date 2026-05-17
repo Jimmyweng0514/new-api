@@ -1,55 +1,51 @@
-import { useTranslation } from 'react-i18next'
-import { useAuthStore } from '@/stores/auth-store'
-import { Markdown } from '@/components/ui/markdown'
-import { PublicLayout } from '@/components/layout'
-import { Footer } from '@/components/layout/components/footer'
-import { CTA, Features, Hero, HowItWorks, Stats } from './components'
-import { useHomePageContent } from './hooks'
+import { useEffect, useRef } from 'react'
 
 export function Home() {
-  const { t } = useTranslation()
-  const { auth } = useAuthStore()
-  const isAuthenticated = !!auth.user
-  const { content, isLoaded, isUrl } = useHomePageContent()
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  if (!isLoaded) {
-    return (
-      <PublicLayout showMainContainer={false}>
-        <main className='flex min-h-screen items-center justify-center'>
-          <div className='text-muted-foreground'>{t('Loading...')}</div>
-        </main>
-      </PublicLayout>
-    )
-  }
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow) return
+      if (event.data?.type !== 'navigate' || !event.data.href) return
 
-  if (content) {
-    return (
-      <PublicLayout showMainContainer={false}>
-        <main className='overflow-x-hidden'>
-          {isUrl ? (
-            <iframe
-              src={content}
-              className='h-screen w-full border-none'
-              title={t('Custom Home Page')}
-            />
-          ) : (
-            <div className='container mx-auto py-8'>
-              <Markdown className='custom-home-content'>{content}</Markdown>
-            </div>
-          )}
-        </main>
-      </PublicLayout>
-    )
-  }
+      const href = String(event.data.href)
+      if (href.startsWith('#')) return
+      if (/^https?:\/\//.test(href)) {
+        window.location.href = href
+        return
+      }
+      window.location.href = href
+    }
+
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
 
   return (
-    <PublicLayout showMainContainer={false}>
-      <Hero isAuthenticated={isAuthenticated} />
-      <Stats />
-      <Features />
-      <HowItWorks />
-      <CTA isAuthenticated={isAuthenticated} />
-      <Footer />
-    </PublicLayout>
+    <iframe
+      ref={iframeRef}
+      src='/bluefuture/index.html?v=imagegen-lab'
+      className='block min-h-screen w-full border-none'
+      title='BlueFuture Studio'
+      allow='clipboard-read; clipboard-write'
+      onLoad={() => {
+        const iframe = iframeRef.current
+        try {
+          const doc = iframe?.contentDocument
+          if (!iframe || !doc?.documentElement) return
+          const setHeight = () => {
+            iframe.style.height = `${Math.max(
+              doc.documentElement.scrollHeight,
+              doc.body?.scrollHeight || 0,
+              window.innerHeight
+            )}px`
+          }
+          setHeight()
+          new ResizeObserver(setHeight).observe(doc.documentElement)
+        } catch {
+          /* Cross-origin fallback: keep viewport height. */
+        }
+      }}
+    />
   )
 }

@@ -16,10 +16,12 @@ import { NotFoundError } from '@/features/errors/not-found-error'
 import { getSetupStatus } from '@/features/setup/api'
 
 function RootComponent() {
-  // Load system configuration (logo, system name, etc.) from backend
-  useSystemConfig({ autoLoad: true })
   const location = useLocation()
+  const isBlueFutureHome = location.pathname === '/'
   const isStandalonePreview = location.pathname.startsWith('/image-console')
+  // Load system configuration (logo, system name, etc.) from backend.
+  // The BlueFuture landing and image console pages are self-contained.
+  useSystemConfig({ autoLoad: !isBlueFutureHome && !isStandalonePreview })
 
   return (
     <ThemeCustomizationProvider>
@@ -76,6 +78,7 @@ export const Route = createRootRouteWithContext<{
     const pathname = location?.pathname || ''
     const needsSetupCheck =
       !setupStatusChecked &&
+      pathname !== '/' &&
       !pathname.startsWith('/setup') &&
       !pathname.startsWith('/image-console')
 

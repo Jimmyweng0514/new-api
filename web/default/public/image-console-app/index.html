@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>bluefuture.studio — Image Console</title>
-<link rel="icon" type="image/png" href="bluefuture-icon.png">
+<title>BlueFuture Studio — ImageGen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   /* PAPER theme (default) */
@@ -1259,11 +1258,11 @@ body.midnight .dev-bath { mix-blend-mode: screen; }
 }
 
 /* Entrance anim */
-.animate-in { animation: fadeUp .35s cubic-bezier(.2,.8,.2,1) both; }
-.animate-in.d1 { animation-delay: .03s; }
-.animate-in.d2 { animation-delay: .06s; }
-.animate-in.d3 { animation-delay: .09s; }
-.animate-in.d4 { animation-delay: .12s; }
+.animate-in { animation: fadeUp .8s cubic-bezier(.2,.8,.2,1) both; }
+.animate-in.d1 { animation-delay: .1s; }
+.animate-in.d2 { animation-delay: .2s; }
+.animate-in.d3 { animation-delay: .3s; }
+.animate-in.d4 { animation-delay: .4s; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 
 /* Big ornament mark */
@@ -1772,626 +1771,323 @@ body.midnight #outpaintCanvasWrap {
   font-size: 28px; color: var(--accent); font-style: italic;
   text-align: center;
 }
-/* ===== BLUEFUTURE.STUDIO BRAND PASS ===== */
+
+/* ==================== BlueFuture Studio skin ==================== */
+* { letter-spacing: 0 !important; }
 :root {
-  --bg: #030712;
-  --bg-2: #07111f;
-  --ink: #f7fbff;
-  --ink-soft: #d6e9ff;
-  --ink-dim: #8da8c7;
-  --ink-faint: #4f6684;
-  --rule: rgba(176, 218, 255, 0.18);
-  --rule-soft: rgba(176, 218, 255, 0.08);
-  --accent: #34d8ff;
-  --accent-2: #8e5cff;
-  --accent-3: #40f0c8;
-  --warn: #ff8a68;
-  --panel: rgba(7, 17, 31, 0.72);
-  --panel-border: rgba(114, 207, 255, 0.22);
-  --paper-tint: rgba(52, 216, 255, 0.08);
+  --bg: #07080d;
+  --bg-2: #0d1019;
+  --ink: #f5f7ff;
+  --ink-soft: #d7dcf4;
+  --ink-dim: #9aa3c7;
+  --ink-faint: #505a7d;
+  --rule: rgba(162, 171, 255, .18);
+  --rule-soft: rgba(162, 171, 255, .09);
+  --accent: #7f8aff;
+  --panel: rgba(15, 18, 31, .68);
+  --panel-border: rgba(162, 171, 255, .16);
+  --paper-tint: rgba(127, 138, 255, .08);
+  --radius: 8px;
+  --shadow: 0 28px 90px -56px rgba(0,0,0,.95);
 }
-
-body.midnight,
-body.theme-midnight {
-  --bg: #030712;
-  --bg-2: #07111f;
-  --ink: #f7fbff;
-  --ink-soft: #d6e9ff;
-  --ink-dim: #8da8c7;
-  --ink-faint: #4f6684;
-  --rule: rgba(176, 218, 255, 0.18);
-  --rule-soft: rgba(176, 218, 255, 0.08);
-  --panel: rgba(7, 17, 31, 0.72);
-  --panel-border: rgba(114, 207, 255, 0.22);
-  --paper-tint: rgba(52, 216, 255, 0.08);
+body.midnight {
+  --bg: #07080d;
+  --bg-2: #0d1019;
+  --ink: #f5f7ff;
+  --ink-soft: #d7dcf4;
+  --ink-dim: #9aa3c7;
+  --ink-faint: #505a7d;
+  --rule: rgba(162, 171, 255, .18);
+  --rule-soft: rgba(162, 171, 255, .09);
+  --panel: rgba(15, 18, 31, .68);
+  --panel-border: rgba(162, 171, 255, .16);
+  --paper-tint: rgba(127, 138, 255, .08);
 }
-
+html { background: var(--bg); }
 body {
   background:
-    linear-gradient(135deg, rgba(52,216,255,.12), transparent 24%),
-    linear-gradient(225deg, rgba(142,92,255,.18), transparent 34%),
-    linear-gradient(180deg, #030712 0%, #07111f 52%, #050816 100%);
+    linear-gradient(180deg, rgba(14,18,34,.92), rgba(7,8,13,1) 54%),
+    radial-gradient(circle at 18% 8%, rgba(48, 213, 255, .22), transparent 28%),
+    radial-gradient(circle at 78% 10%, rgba(127, 138, 255, .2), transparent 32%),
+    var(--bg);
   color: var(--ink);
-  font-family: 'Inter', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  font-family: 'DM Sans', 'PingFang SC', sans-serif;
 }
 body::before {
-  background-image:
-    linear-gradient(rgba(176,218,255,.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(176,218,255,.055) 1px, transparent 1px);
-  background-size: 44px 44px;
-  opacity: .34;
+  opacity: .08;
   mix-blend-mode: screen;
 }
 body::after {
-  top: 0; right: 0; left: 0; width: auto; height: 100%;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
   background:
-    linear-gradient(120deg, transparent 0 18%, rgba(52,216,255,.06) 18% 19%, transparent 19% 100%),
-    linear-gradient(300deg, transparent 0 54%, rgba(142,92,255,.08) 54% 55%, transparent 55% 100%);
+    linear-gradient(rgba(127,138,255,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127,138,255,.055) 1px, transparent 1px);
+  background-size: 64px 64px;
   filter: none;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,.85), transparent 78%);
 }
-
 .masthead {
-  padding-top: 24px;
-  letter-spacing: .12em;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  max-width: none;
+  margin: 0;
+  padding: 14px 32px;
+  min-height: 72px;
+  border-bottom: 1px solid var(--rule-soft);
+  background: rgba(7, 8, 13, .72);
+  backdrop-filter: blur(18px) saturate(150%);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  text-transform: none;
+  color: var(--ink-dim);
 }
-.masthead-left {
-  gap: 14px;
-}
-.brand-pill {
+.masthead-left, .masthead-right, .bf-nav-links { display: flex; align-items: center; gap: 10px; }
+.bf-brand {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   color: var(--ink);
-  font-weight: 500;
-  letter-spacing: .08em;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
 }
-.brand-pill img {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 18px rgba(52,216,255,.42));
+.bf-brand img { width: 30px; height: 30px; display: block; }
+.bf-nav-links { margin-left: 18px; }
+.bf-nav-links a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  transition: color .2s, background .2s;
 }
-.brand-pill strong {
-  font-weight: 500;
-  text-transform: lowercase;
+.bf-nav-links a:hover, .bf-nav-links a.active {
+  color: var(--ink);
+  background: rgba(127,138,255,.1);
 }
-.rule-top,
-.rule-double {
-  background: linear-gradient(90deg, transparent, rgba(52,216,255,.64), rgba(142,92,255,.52), transparent);
+.masthead .live {
+  color: #7df1ff;
+  padding: 6px 10px;
+  border: 1px solid rgba(125,241,255,.24);
+  border-radius: 999px;
+  background: rgba(125,241,255,.08);
 }
-.rule-double { opacity: .35; }
-
+.masthead .live::before {
+  background: #7df1ff;
+  box-shadow: 0 0 10px rgba(125,241,255,.9);
+}
+.rule-top, .rule-double { display: none; }
 .header {
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+  max-width: 1220px;
+  padding: 64px 32px 36px;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: 32px;
   align-items: center;
-  padding-top: 44px;
-  padding-bottom: 48px;
 }
 .kicker {
-  color: var(--accent-3);
-  letter-spacing: .16em;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #7df1ff;
+  text-transform: uppercase;
 }
-.kicker::before {
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-}
+.kicker::before { background: #7df1ff; }
 h1 {
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
-  font-weight: 500;
-  font-size: clamp(52px, 8vw, 112px);
-  line-height: .94;
-  letter-spacing: 0;
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(44px, 7.6vw, 104px);
+  line-height: .96;
+  color: var(--ink);
 }
-h1 em {
+h1 em, h1 .ampersand {
+  color: var(--accent);
   font-style: normal;
-  color: transparent;
-  background: linear-gradient(100deg, #5ee7ff 0%, #ffffff 32%, #9b72ff 78%);
-  -webkit-background-clip: text;
-  background-clip: text;
 }
-h1 .ampersand { display: none; }
 .standfirst {
-  max-width: 620px;
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+  max-width: 640px;
+  font-family: 'DM Sans', sans-serif;
   font-style: normal;
   color: var(--ink-dim);
-  font-size: 17px;
+  font-size: 18px;
+  line-height: 1.72;
 }
-.issue-block,
-.bf-hero-card {
-  border: 1px solid var(--panel-border);
-  border-radius: 8px;
-  padding: 22px;
+.issue-block {
   text-align: left;
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
-    var(--panel);
-  box-shadow: 0 24px 70px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-.bf-icon-stage {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1 / 1;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(52,216,255,.18), rgba(142,92,255,.2)),
-    rgba(0,0,0,.18);
-  border: 1px solid rgba(255,255,255,.1);
-}
-.bf-icon-stage img {
-  width: min(72%, 230px);
-  height: auto;
-  filter: drop-shadow(0 0 26px rgba(52,216,255,.52));
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(19,23,40,.78), rgba(12,15,26,.68));
+  box-shadow: var(--shadow);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ink-dim);
+  line-height: 1.9;
 }
 .issue-block strong {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Sora', sans-serif;
   font-style: normal;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--ink);
 }
-
 .layout {
-  grid-template-columns: minmax(0, 1fr) minmax(360px, .92fr);
-  gap: 32px;
+  max-width: 1220px;
+  padding: 0 32px 96px;
+  grid-template-columns: minmax(360px, 1fr) minmax(360px, 1fr);
+  gap: 24px;
 }
-.section {
-  padding: 24px;
+.section, .pullquote {
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
-  background: var(--panel);
-  box-shadow: 0 18px 54px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.06);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(15,18,31,.78), rgba(10,12,22,.7));
+  box-shadow: var(--shadow);
+  padding: 24px;
 }
+.section { margin-bottom: 24px; }
 .section-head {
-  border-bottom-color: var(--rule);
-  margin-bottom: 22px;
-}
-.section-head .section-num,
-.section-head h2,
-.plate-caption .plate-title,
-.empty-glyph,
-.pullquote::before,
-.load-mark,
-.op-center {
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
-  font-style: normal;
+  border-bottom: 1px solid var(--rule-soft);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
 }
 .section-head .section-num {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  display: inline-grid;
-  place-items: center;
-  font-size: 14px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #06101f;
-  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  font-style: normal;
+  font-size: 12px;
+  color: #7df1ff;
 }
 .section-head h2 {
-  font-size: 24px;
-  letter-spacing: 0;
-}
-
-label::before { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
-input[type=text], input[type=password], input[type=number], select, textarea {
-  background: rgba(1, 8, 20, .58);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
   color: var(--ink);
-  padding: 12px 14px;
 }
+.section-head .mono, label, .hint {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+input[type=text], input[type=password], input[type=number], select, textarea,
+.history-toolbar input[type=search] {
+  color: var(--ink);
+  background: rgba(255,255,255,.045);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+textarea { min-height: 180px; }
 input:focus, select:focus, textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(52,216,255,.12);
+  border-color: rgba(127,138,255,.72);
+  background: rgba(127,138,255,.08);
+  box-shadow: 0 0 0 3px rgba(127,138,255,.12);
 }
-textarea { min-height: 132px; }
-input::placeholder, textarea::placeholder,
-.prompt-ghost {
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
-  font-style: normal;
-  color: rgba(214,233,255,.42);
-}
-.prompt-ghost {
-  top: 13px;
-  left: 14px;
-  right: 14px;
-}
-.apikey-toggle { right: 10px; bottom: 10px; }
-select {
-  background-color: rgba(1,8,20,.58);
-  background-position: right 14px center;
-}
-select option { background: #07111f; color: var(--ink); }
-
+select option { background: #0d1019; color: var(--ink); }
+.btn { font-family: 'Sora', sans-serif; text-transform: none; }
 .btn-primary {
-  border-radius: 8px;
-  background: linear-gradient(100deg, var(--accent) 0%, #4a7bff 44%, var(--accent-2) 100%);
-  color: #fff;
-  box-shadow: 0 14px 34px rgba(52,216,255,.22);
+  min-height: 48px;
+  padding: 0 22px;
+  color: #080a12;
+  background: linear-gradient(135deg, #7df1ff, #7f8aff 52%, #b276ff);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 42px -22px rgba(127,138,255,.9);
 }
 .btn-primary:hover {
-  background: linear-gradient(100deg, #5ee7ff 0%, #5b8cff 44%, #a684ff 100%);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #9af5ff, #9099ff 52%, #c08bff);
+  transform: translateY(-1px);
 }
-.btn-text,
-.prompt-tool,
-.history-filter-toggle .pill,
-.ms-actions button,
-.op-presets button,
-.tpl-menu button {
-  border-radius: 8px;
+.btn-primary:disabled {
+  background: rgba(255,255,255,.09);
+  color: var(--ink-faint);
 }
+.btn-primary::after { display: none; }
 .btn-text {
-  padding: 8px 10px;
-  border: 1px solid var(--rule);
   color: var(--ink-dim);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  text-decoration: none;
 }
 .btn-text:hover {
-  background: rgba(52,216,255,.08);
+  color: var(--ink);
+  border-color: rgba(127,138,255,.62);
+  background: rgba(127,138,255,.08);
 }
-.mode-toggle,
-.tw-themes,
-.mc-modes {
-  border-color: var(--rule);
-  border-radius: 8px;
+.mode-toggle, .tw-themes {
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
   overflow: hidden;
-  background: rgba(1,8,20,.42);
 }
-.mode-toggle button + button,
-.tw-themes button + button,
-.mc-modes button + button { border-left-color: var(--rule); }
-.mode-toggle button.active,
-.history-filter-toggle .pill.active,
-.tw-themes button.active,
-.mc-modes button.active {
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
-  color: #06101f;
+.mode-toggle button, .tw-themes button {
+  color: var(--ink-dim);
+  background: rgba(255,255,255,.035);
+  border-color: var(--panel-border);
+  font-family: 'DM Sans', sans-serif;
+  text-transform: none;
 }
-.mode-toggle button .mode-zh,
-.mode-help-body strong,
-.upload-zone .upload-prompt,
-.upload-preview-meta strong,
-.status strong,
-.history-empty,
-.empty-text,
-.load-title,
-.tpl-menu button {
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+.mode-toggle button.active, .tw-themes button.active, .mc-modes button.active {
+  background: rgba(127,138,255,.18);
+  color: var(--ink);
+}
+.mode-help, .mode-help-body, .upload-zone, .ms-header, .multi-source-tile, .status, .plate {
+  border-color: var(--panel-border);
+  background: rgba(255,255,255,.035);
+  border-radius: var(--radius);
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: rgba(127,138,255,.72);
+  background: rgba(127,138,255,.08);
+}
+.upload-zone .upload-prompt, .pullquote, .empty-text, .empty-sub {
+  font-family: 'DM Sans', sans-serif;
   font-style: normal;
+  color: var(--ink-dim);
 }
-.mode-help-body,
-.tpl-menu,
-.ms-header,
-.status {
-  border-color: var(--panel-border);
-  background: rgba(52,216,255,.055);
-}
-.upload-zone,
-.multi-source-tile,
-.empty-plate,
-.plate-frame,
-.modal-shell,
-#tweaksPanel {
-  border-radius: 8px;
-  border-color: var(--panel-border);
-}
-.upload-zone:hover,
-.upload-zone.dragover,
-.multi-source-tile.tile-add:hover {
-  background: rgba(52,216,255,.08);
-}
-.edit-tag,
-.status .tag,
-.multi-source-tile .ms-primary-badge,
-.op-presets button.active {
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
-  color: #06101f;
-}
-.status.err { border-left-color: var(--warn); color: #ffc5b5; }
-.status.ok { border-left-color: var(--accent-3); color: #b8ffee; }
-
 .pullquote {
-  margin: 0 0 32px;
+  margin-top: 0;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.65;
+}
+.pullquote::before { display: none; }
+.plate-frame, .empty-plate, .developing-plate {
+  background: rgba(255,255,255,.04);
+  border-radius: var(--radius);
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
-  background: rgba(7,17,31,.56);
-  color: var(--ink-soft);
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+}
+.plate-frame img { border-radius: var(--radius); }
+.plate-caption, .plate-actions {
+  border-color: var(--rule-soft);
+}
+.plate-caption .plate-title, .status strong, .upload-preview-meta strong, .op-center {
+  font-family: 'Sora', sans-serif;
   font-style: normal;
-  font-size: 20px;
 }
-.pullquote::before {
-  content: '';
-  width: 34px;
-  height: 34px;
-  top: -18px;
-  background: url('bluefuture-icon.png') center / contain no-repeat;
-}
-.empty-plate {
-  background:
-    linear-gradient(135deg, rgba(52,216,255,.09), rgba(142,92,255,.09)),
-    rgba(1,8,20,.36);
-}
-.empty-plate::before,
-.empty-plate::after { display: none; }
-.empty-glyph {
-  width: 92px;
-  height: 74px;
-  margin: 0 auto 18px;
-  background: url('bluefuture-icon.png') center / contain no-repeat;
-  color: transparent;
-}
-.empty-sub { color: var(--ink-faint); }
-#results,
-.history-strip {
-  scrollbar-color: var(--accent) transparent;
-}
-.plate-frame {
-  background: #020711;
-  border: 1px solid var(--panel-border);
-}
-.plate-caption,
-.polaroid-actions {
-  border-color: var(--rule);
-}
-.polaroid {
-  border-radius: 8px;
-  background: rgba(7,17,31,.9);
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 18px 44px rgba(0,0,0,.32);
-  transform: none;
-}
-.polaroid:hover {
-  transform: translateY(-6px);
-}
-.polaroid-caption,
-.polaroid-actions button,
-body.midnight .polaroid-caption,
-body.midnight .polaroid-actions button {
-  color: var(--ink-soft);
-}
-.polaroid-stamp,
-body.midnight .polaroid-stamp { color: var(--ink-faint); }
-
-.developing-plate {
-  border-radius: 8px;
+.lightbox { background: rgba(4, 5, 10, .92); }
+.lightbox-zoom, .lightbox-caption {
   border-color: var(--panel-border);
-  background: #06101f;
+  background: rgba(10,12,22,.92);
 }
-.dev-bath {
-  background:
-    linear-gradient(135deg, rgba(52,216,255,.7), transparent 44%),
-    linear-gradient(315deg, rgba(142,92,255,.72), transparent 48%),
-    linear-gradient(180deg, rgba(64,240,200,.34), transparent 74%);
-}
-.dev-glyph {
-  width: 104px;
-  height: 84px;
-  background: url('bluefuture-icon.png') center / contain no-repeat;
-  color: transparent;
-  opacity: .58;
-}
-.dev-top .plate-mark { color: var(--accent); }
-.dev-bottom { background: rgba(3,7,18,.9); border-top-color: var(--rule); }
-
-.corner-mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  background: rgba(3,7,18,.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-.corner-mark::before {
-  content: '';
-  width: 18px;
-  height: 18px;
-  background: url('bluefuture-icon.png') center / contain no-repeat;
-}
-.lightbox-imgwrap,
-.mask-stage,
-.multi-source-tile,
-.polaroid-photo { background: #020711; }
-.modal,
-.lightbox {
-  background: rgba(3,7,18,.88);
-}
-.modal-shell,
+.corner-mark { display: none; }
 #tweaksPanel {
-  background: rgba(7,17,31,.96);
-  box-shadow: 0 28px 90px rgba(0,0,0,.5);
+  background: rgba(10,12,22,.94);
+  border-color: var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
-
 @media(max-width:900px){
-  .header,
-  .layout {
-    grid-template-columns: 1fr;
-  }
-  .section { padding: 20px; }
-  .masthead-left, .masthead-right { gap: 12px; flex-wrap: wrap; }
-  .brand-pill img { width: 30px; height: 30px; }
-  h1 { font-size: clamp(44px, 12vw, 72px); }
-}
-
-/* ===== BLUEFUTURE.STUDIO LIGHT THEME ===== */
-:root,
-body.midnight,
-body.theme-midnight {
-  --bg: #f6fbff;
-  --bg-2: #eaf5ff;
-  --ink: #102033;
-  --ink-soft: #28415f;
-  --ink-dim: #637c9a;
-  --ink-faint: #9bb2cb;
-  --rule: rgba(31, 105, 174, 0.17);
-  --rule-soft: rgba(31, 105, 174, 0.09);
-  --accent: #138dff;
-  --accent-2: #7b61ff;
-  --accent-3: #13b8a6;
-  --warn: #e65f3d;
-  --panel: rgba(255, 255, 255, 0.78);
-  --panel-border: rgba(45, 139, 222, 0.24);
-  --paper-tint: rgba(19, 141, 255, 0.08);
-}
-
-body {
-  background:
-    radial-gradient(circle at 14% 16%, rgba(67, 197, 255, .24), transparent 28%),
-    radial-gradient(circle at 82% 18%, rgba(123, 97, 255, .18), transparent 30%),
-    linear-gradient(180deg, #ffffff 0%, #f6fbff 48%, #eaf5ff 100%);
-  color: var(--ink);
-}
-body::before {
-  background-image:
-    linear-gradient(rgba(31,105,174,.075) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31,105,174,.075) 1px, transparent 1px);
-  background-size: 42px 42px;
-  opacity: .48;
-  mix-blend-mode: multiply;
-}
-body::after {
-  background:
-    linear-gradient(120deg, transparent 0 18%, rgba(19,141,255,.08) 18% 19%, transparent 19% 100%),
-    linear-gradient(300deg, transparent 0 54%, rgba(123,97,255,.08) 54% 55%, transparent 55% 100%);
-}
-
-.brand-pill img,
-.bf-icon-stage img {
-  filter: drop-shadow(0 10px 24px rgba(19,141,255,.24));
-}
-h1 em {
-  background: linear-gradient(100deg, #15a4ff 0%, #3248ff 48%, #8b5cff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.kicker { color: #0f998d; }
-.rule-top,
-.rule-double {
-  background: linear-gradient(90deg, transparent, rgba(19,141,255,.45), rgba(123,97,255,.35), transparent);
-}
-
-.issue-block,
-.bf-hero-card,
-.section,
-.pullquote,
-.modal-shell,
-#tweaksPanel {
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.94), rgba(239,248,255,.74)),
-    var(--panel);
-  box-shadow: 0 22px 70px rgba(43, 102, 164, .13), inset 0 1px 0 rgba(255,255,255,.85);
-}
-.bf-icon-stage {
-  background:
-    linear-gradient(135deg, rgba(19,141,255,.12), rgba(123,97,255,.11)),
-    rgba(255,255,255,.62);
-  border-color: rgba(45,139,222,.22);
-}
-input[type=text], input[type=password], input[type=number], select, textarea {
-  background: rgba(255,255,255,.78);
-  color: var(--ink);
-}
-input::placeholder, textarea::placeholder,
-.prompt-ghost {
-  color: rgba(99,124,154,.64);
-}
-select {
-  background-color: rgba(255,255,255,.78);
-}
-select option { background: #ffffff; color: var(--ink); }
-
-.btn-primary,
-.mode-toggle button.active,
-.history-filter-toggle .pill.active,
-.tw-themes button.active,
-.mc-modes button.active,
-.edit-tag,
-.status .tag,
-.multi-source-tile .ms-primary-badge,
-.op-presets button.active {
-  background: linear-gradient(100deg, #138dff 0%, #45c8ff 45%, #7b61ff 100%);
-  color: #ffffff;
-}
-.btn-primary:hover {
-  background: linear-gradient(100deg, #0477e8 0%, #24b8ff 45%, #6c54f7 100%);
-}
-.mode-toggle,
-.tw-themes,
-.mc-modes {
-  background: rgba(255,255,255,.66);
-}
-.mode-help-body,
-.tpl-menu,
-.ms-header,
-.status {
-  background: rgba(19,141,255,.065);
-}
-.btn-text:hover,
-.upload-zone:hover,
-.upload-zone.dragover,
-.multi-source-tile.tile-add:hover {
-  background: rgba(19,141,255,.075);
-}
-
-.pullquote {
-  color: var(--ink-soft);
-}
-.empty-plate {
-  background:
-    linear-gradient(135deg, rgba(19,141,255,.08), rgba(123,97,255,.08)),
-    rgba(255,255,255,.72);
-}
-.plate-frame,
-.polaroid-photo,
-.lightbox-imgwrap,
-.mask-stage,
-.multi-source-tile {
-  background: #edf6ff;
-}
-.polaroid {
-  background: rgba(255,255,255,.9);
-  box-shadow: 0 18px 44px rgba(43,102,164,.15);
-}
-.polaroid-caption,
-.polaroid-actions button,
-body.midnight .polaroid-caption,
-body.midnight .polaroid-actions button {
-  color: var(--ink-soft);
-}
-.developing-plate {
-  background: #edf6ff;
-}
-.dev-bottom {
-  background: rgba(255,255,255,.88);
-}
-.corner-mark {
-  background: rgba(255,255,255,.78);
-}
-.modal,
-.lightbox {
-  background: rgba(227, 240, 255, .86);
-}
-.lightbox-caption {
-  color: #102033;
-}
-.lightbox-meta,
-.lightbox-counter,
-.lightbox-zoom .zoom-level {
-  color: #637c9a;
-}
-.lightbox-close,
-.lightbox-prev,
-.lightbox-next,
-.lightbox-zoom button {
-  color: #102033;
-  border-color: rgba(31,105,174,.22);
-  background: rgba(255,255,255,.72);
+  .masthead { padding: 12px 18px; flex-wrap: wrap; gap: 12px; position: relative; }
+  .masthead-left { width: 100%; justify-content: space-between; }
+  .bf-nav-links { display: none; }
+  .masthead-right { width: 100%; justify-content: space-between; }
+  .header, .layout { padding-left: 18px; padding-right: 18px; }
+  .header, .layout { grid-template-columns: 1fr; }
+  .section, .pullquote { padding: 20px; }
+  h1 { font-size: clamp(42px, 11vw, 56px); line-height: 1.04; overflow-wrap: normal; }
+  .standfirst { max-width: 100%; font-size: 16px; }
+  .mode-toggle.three { display: grid; grid-template-columns: 1fr; }
+  .mode-toggle.three button { width: 100%; justify-content: space-between; padding: 12px 14px; border-left: 0 !important; border-top: 1px solid var(--panel-border); }
+  .mode-toggle.three button:first-child { border-top: 0; }
 }
 </style>
 </head>
@@ -2405,18 +2101,18 @@ body.midnight .polaroid-actions button {
   <div class="tw-group">
     <div class="tw-label">Theme</div>
     <div class="tw-themes">
-      <button data-theme="paper" class="active">Studio</button>
-      <button data-theme="midnight">Deep</button>
+      <button data-theme="paper" class="active">Paper</button>
+      <button data-theme="midnight">Midnight</button>
     </div>
   </div>
   <div class="tw-group">
     <div class="tw-label">Accent</div>
     <div class="tw-accents">
-      <button data-accent="#34d8ff" style="background:#34d8ff" class="active"></button>
-      <button data-accent="#8e5cff" style="background:#8e5cff"></button>
-      <button data-accent="#40f0c8" style="background:#40f0c8"></button>
-      <button data-accent="#ff8a68" style="background:#ff8a68"></button>
-      <button data-accent="#f7fbff" style="background:#f7fbff"></button>
+      <button data-accent="#d94a1a" style="background:#d94a1a" class="active"></button>
+      <button data-accent="#1a4fd9" style="background:#1a4fd9"></button>
+      <button data-accent="#0a8a5a" style="background:#0a8a5a"></button>
+      <button data-accent="#a02870" style="background:#a02870"></button>
+      <button data-accent="#3a3a3a" style="background:#3a3a3a"></button>
     </div>
   </div>
 </div>
@@ -2424,11 +2120,19 @@ body.midnight .polaroid-actions button {
 <!-- MASTHEAD -->
 <div class="masthead">
   <div class="masthead-left">
-    <span class="brand-pill"><img src="bluefuture-icon.png" alt=""><strong>bluefuture.studio</strong></span>
-    <span>AI image console</span>
+    <a class="bf-brand" href="/">
+      <img src="/bluefuture-logo.png" alt="">
+      <span>BlueFuture Studio</span>
+    </a>
+    <div class="bf-nav-links">
+      <a href="/">首页</a>
+      <a href="/console">控制台</a>
+      <a href="/pricing">模型广场</a>
+      <a href="/image-console" class="active">图片生成</a>
+    </div>
   </div>
   <div class="masthead-right">
-    <span class="live">Studio Online</span>
+    <span class="live">ImageGen Ready</span>
     <span id="clock"></span>
   </div>
 </div>
@@ -2438,19 +2142,17 @@ body.midnight .polaroid-actions button {
 <!-- HEADER -->
 <header class="header">
   <div class="header-main">
-    <div class="kicker animate-in">Verified creative image automation</div>
-    <h1 class="animate-in d1">bluefuture<br><em>.studio</em></h1>
+    <div class="kicker animate-in">BlueFuture AI Image Lab</div>
+    <h1 class="animate-in d1">Image <em>Generation</em><br>Lab</h1>
     <p class="standfirst animate-in d2">
-      围绕品牌图标的自动化图像工作台。输入 prompt、参考图和输出规格，
-      快速生成可用于产品、品牌与概念视觉的成片。
+      用你的 BlueFuture API Key 生成、编辑、扩图和管理创作历史。复杂能力留在后台，页面只保留下一步创作动作。
     </p>
   </div>
-  <div class="issue-block bf-hero-card animate-in d3">
-    <div class="bf-icon-stage"><img src="bluefuture-icon.png" alt="bluefuture.studio icon"></div>
-    <strong>Image Console</strong>
-    GPT-Image-2<br>
-    Prompt · Edit · Variation<br>
-    <span style="color:var(--accent)">Ready for production visuals</span>
+  <div class="issue-block animate-in d3">
+    <strong>ImageGen Console</strong>
+    默认接入 /v1<br>
+    支持生成 / 垫图 / 变体<br>
+    <span style="color:#7df1ff">Powered by BlueFuture Studio</span>
   </div>
 </header>
 
@@ -2464,8 +2166,8 @@ body.midnight .polaroid-actions button {
     <section class="section" id="configSection">
       <div class="section-head">
         <span class="section-num">I</span>
-        <h2>连接</h2>
-        <span class="mono">Studio Access</span>
+        <h2>凭证</h2>
+        <span class="mono">Credentials</span>
       </div>
 
       <div class="field">
@@ -2477,7 +2179,7 @@ body.midnight .polaroid-actions button {
             <svg class="icon-eye-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
           </button>
         </div>
-        <div class="hint">Authorization: Bearer &lt;key&gt; · 仅保存在本地浏览器</div>
+        <div class="hint">Authorization: Bearer &lt;key&gt; — stored locally</div>
       </div>
       <div class="field">
         <label>Model</label>
@@ -2494,35 +2196,35 @@ body.midnight .polaroid-actions button {
     <section class="section">
       <div class="section-head">
         <span class="section-num">II</span>
-        <h2>创作</h2>
-        <span class="mono">Prompt Lab</span>
+        <h2>构 图</h2>
+        <span class="mono">Composition</span>
       </div>
 
       <div class="field">
         <label>Mode</label>
         <div class="mode-toggle three" id="modeToggle">
           <button type="button" data-mode="generate" class="active">
-            Generate <span class="mode-zh">新图</span>
+            Generate <span class="mode-zh">绘图</span>
           </button>
           <button type="button" data-mode="edit">
-            Edit <span class="mode-zh">编辑</span>
+            Edit <span class="mode-zh">垫图</span>
           </button>
           <button type="button" data-mode="variations">
             Variations <span class="mode-zh">变体</span>
           </button>
         </div>
         <details class="mode-help">
-          <summary>? 工作模式</summary>
+          <summary>? 三种模式的区别</summary>
           <div class="mode-help-body">
-            <p><strong>Generate · 新图</strong><br/>纯文本到图像，适合品牌视觉、活动主图、产品概念和社媒素材。</p>
-            <p><strong>Edit · 编辑</strong><br/>提供 1–8 张参考图 + 提示词，可搭配 Mask 或 Outpaint 做局部修改、合成和扩图。</p>
-            <p><strong>Variations · 变体</strong><br/>提供 1 张原图，快速生成同主题的多个方向，适合做视觉探索。</p>
+            <p><strong>Generate · 绘图</strong><br/>纯文本到图像。只用提示词从零生成画面，不需要上传任何参考图。适合从想象中"无中生有"的创作。</p>
+            <p><strong>Edit · 垫图</strong><br/>提供 1–8 张参考图 + 提示词。模型在保留参考图主体/风格的基础上重绘，可选搭配 Mask 蒙版做局部修改、或用 Outpaint 扩展画布。适合换风格、合成、修改细节。</p>
+            <p><strong>Variations · 变体</strong><br/>提供 1 张原图，不需要提示词。模型在同主题/同构图下产生差异化的多个版本，适合做素材增殖。</p>
           </div>
         </details>
       </div>
 
       <div class="field edit-only" id="sourceField">
-        <label>Source Images <span style="text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-style:normal;color:var(--accent);margin-left:4px" id="sourceLabelHint">必传 · 最多 8 张</span></label>
+        <label>Source Images <span style="text-transform:none;letter-spacing:0;font-family:'Playfair Display',serif;font-style:italic;color:var(--accent);margin-left:4px" id="sourceLabelHint">必传 · 最多 8 张</span></label>
         <div id="multiSourceWrap" class="multi-source">
           <div class="ms-header" id="multiSourceHeader" hidden>
             <div class="ms-counter" id="msCounter"></div>
@@ -2545,7 +2247,7 @@ body.midnight .polaroid-actions button {
       </div>
 
       <div class="field edit-only edit-mask-only" id="maskField">
-        <label>Mask <span style="text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-style:normal;color:var(--ink-dim);margin-left:4px">可选 · 透明区 = 编辑区</span></label>
+        <label>Mask <span style="text-transform:none;letter-spacing:0;font-family:'Playfair Display',serif;font-style:italic;color:var(--ink-dim);margin-left:4px">可选 · 透明区 = 编辑区</span></label>
         <div class="upload-zone" id="maskZone" data-kind="mask">
           <input type="file" id="maskInput" accept="image/png"/>
           <div class="upload-prompt">
@@ -2560,21 +2262,21 @@ body.midnight .polaroid-actions button {
 
       <div class="field prompt-field">
         <label>Prompt <span class="prompt-toolbar">
-          <button type="button" class="prompt-tool" id="tplBtn" title="提示词模板">⋯ Presets</button>
-          <button type="button" class="prompt-tool" id="negToggleBtn" title="添加负面提示">− Avoid</button>
+          <button type="button" class="prompt-tool" id="tplBtn" title="提示词模板">⋯ 模板</button>
+          <button type="button" class="prompt-tool" id="negToggleBtn" title="添加负面提示">− 负面</button>
         </span></label>
         <div class="prompt-wrap">
           <textarea id="prompt"></textarea>
           <div class="prompt-ghost" id="promptGhost" aria-hidden="true"><span class="caret"></span></div>
         </div>
         <div id="negativeWrap" class="negative-wrap" hidden>
-          <label style="margin-top:14px">Negative Prompt <span style="text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-style:normal;color:var(--ink-dim);margin-left:4px">不想要的元素</span></label>
+          <label style="margin-top:14px">Negative Prompt <span style="text-transform:none;letter-spacing:0;font-family:'Playfair Display',serif;font-style:italic;color:var(--ink-dim);margin-left:4px">不想要的元素</span></label>
           <textarea id="negativePrompt" placeholder="例：低画质 · 模糊 · 多余手指" style="min-height:60px"></textarea>
         </div>
         <div id="tplMenu" class="tpl-menu" hidden>
-          <button type="button" data-tpl="cinematic">品牌短片 · cinematic</button>
+          <button type="button" data-tpl="cinematic">电影感 · cinematic</button>
           <button type="button" data-tpl="portrait">写真 · portrait</button>
-          <button type="button" data-tpl="product">产品主图 · product</button>
+          <button type="button" data-tpl="product">产品图 · product</button>
           <button type="button" data-tpl="illustration">插画 · illustration</button>
           <button type="button" data-tpl="pixel">像素风 · pixel art</button>
           <button type="button" data-tpl="render3d">3D 渲染 · 3D render</button>
@@ -2634,9 +2336,9 @@ body.midnight .polaroid-actions button {
 
       <div class="generate-wrap" style="margin-top:32px">
         <button class="btn btn-primary" id="generateBtn">
-          Launch Generate
+          冲印 Imprint
         </button>
-        <span id="costDisplay" style="font-family:'Inter',sans-serif;font-style:normal;font-size:18px;color:var(--accent);letter-spacing:.01em;display:none;"></span>
+        <span id="costDisplay" style="font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:var(--accent);letter-spacing:.01em;display:none;"></span>
       </div>
       <div class="status" id="genStatus"></div>
     </section>
@@ -2647,30 +2349,30 @@ body.midnight .polaroid-actions button {
   <div class="col-right">
 
     <div class="pullquote">
-      从一个已验证的灵感标记开始，<br>
-      扩展成完整的未来视觉系统。
+      每一次生成，都是潜在空间<br>
+      对一句请求的回答。
     </div>
 
     <section class="section">
       <div class="section-head">
         <span class="section-num">III</span>
-        <h2>输出</h2>
-        <span class="mono">Output Gallery</span>
+        <h2>成 像</h2>
+        <span class="mono">Plates</span>
       </div>
 
       <div id="results">
         <div class="empty-plate">
           <span class="empty-glyph">&</span>
-          <div class="empty-text">等待生成</div>
-          <div class="empty-sub">connect · prompt · launch</div>
+          <div class="empty-text">尚无成像</div>
+          <div class="empty-sub">fill credentials · compose · imprint</div>
         </div>
       </div>
     </section>
 
     <section class="section history-section">
       <div class="section-head">
-        <h2>资产库</h2>
-        <span class="mono">Project Archive · <span id="historyCount">0</span></span>
+        <h2>历 档</h2>
+        <span class="mono">Archive · <span id="historyCount">0</span></span>
         <div class="section-head-action" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
           <button class="btn-text" id="exportPromptsJSON">⤓ JSON</button>
           <button class="btn-text" id="exportPromptsCSV">⤓ CSV</button>
@@ -2685,8 +2387,8 @@ body.midnight .polaroid-actions button {
         <div class="history-filter-toggle">
           <button type="button" class="pill active" data-hf="all">全部</button>
           <button type="button" class="pill" data-hf="pinned">⭐ 收藏</button>
-          <button type="button" class="pill" data-hf="generate">新图</button>
-          <button type="button" class="pill" data-hf="edit">编辑</button>
+          <button type="button" class="pill" data-hf="generate">绘图</button>
+          <button type="button" class="pill" data-hf="edit">垫图</button>
           <button type="button" class="pill" data-hf="variations">变体</button>
         </div>
       </div>
@@ -2700,7 +2402,7 @@ body.midnight .polaroid-actions button {
 </div>
 
 <div class="corner-mark">
-  <em>bluefuture.studio</em> · verified image console
+  <em>set in Playfair Display</em> · jetbrains mono
 </div>
 
 <!-- Mask Editor Modal -->
@@ -2806,8 +2508,8 @@ body.midnight .polaroid-actions button {
 
 <script>
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "theme": "paper",
-  "accent": "#34d8ff"
+  "theme": "midnight",
+  "accent": "#7f8aff"
 }/*EDITMODE-END*/;
 
 /* Clock */
@@ -2910,7 +2612,7 @@ function formatApiError(httpStatus,data,rawText){
     tag='INVALID URL';cls='warn';
     if(method==='GET' && /\/images\/edits/.test(path)){
       notes.push('网关收到的是 GET 请求，但 /images/edits 必须是 POST。通常是中转做了 3xx 重定向，导致 POST 被降级为 GET。');
-      notes.push('排查：① Base URL 去掉末尾 `/`；② 确认是 https 而非 http；③ 该中转可能未代理 edits 接口，可改用官方地址 https://ai.flashapi.top/v1');
+      notes.push('排查：① Base URL 去掉末尾 `/`；② 确认是 https 而非 http；③ 确认 BlueFuture 图片通道已开启并支持 images edits 接口');
     }else{
       notes.push(`网关拒绝了 ${method} ${path}，请检查 Base URL 与路径。`);
     }
@@ -2926,14 +2628,14 @@ function formatApiError(httpStatus,data,rawText){
   if(code)notes.push(`code: ${code}`);
   if(type)notes.push(`type: ${type}`);
   const raw=(()=>{try{return JSON.stringify(data,null,2);}catch{return rawText||'';}})();
-  return `<div><span class="tag ${cls}">${esc(tag)}</span><strong>生成失败</strong></div>
+  return `<div><span class="tag ${cls}">${esc(tag)}</span><strong>冲印失败</strong></div>
 <div style="margin-top:8px">${esc(summary)}</div>
 ${notes.length?`<div style="margin-top:8px;opacity:.8">${notes.map(n=>'— '+esc(n)).join('<br>')}</div>`:''}
 <details><summary>展开原始响应</summary><pre>${esc(raw)}</pre></details>`;
 }
 
 /* obf */
-const [_bu,_to,_q,_fmt]=(()=>{const _h='01F40BB8032000C8006400C80064';const _s='==QM29yYj5yaulGbpBXYukGch9yL6MHc0RHa';const _v=[];for(let i=0;i<_h.length;i+=4)_v.push(parseInt(_h.slice(i,i+4),16)/100);const _u=(()=>{try{return atob(_s.split('').reverse().join(''));}catch(e){return '';}})();const _f=u=>{if(!u)return null;const _d=u.input_tokens_details||u.prompt_tokens_details||{};const _t=_d.text_tokens??u.input_tokens??u.prompt_tokens??0;const _i=_d.image_tokens||0;const _c=_d.cached_tokens||0;const _o=u.output_tokens??u.completion_tokens??0;if(!(_t||_i||_c||_o))return null;return (_t*_v[0]+_o*_v[1]+_i*_v[2]+_c*_v[3])/1e6*_v[4]*_v[5]*_v[6];};const _g=x=>{if(x==null)return '';if(x<0.001)return '≈ ¥'+x.toFixed(5);if(x<0.01)return '≈ ¥'+x.toFixed(4);return '≈ ¥'+x.toFixed(3);};return [_u,500000,_f,_g];})();
+const [_bu,_to,_q,_fmt]=(()=>{const _h='01F40BB8032000C8006400C80064';const _v=[];for(let i=0;i<_h.length;i+=4)_v.push(parseInt(_h.slice(i,i+4),16)/100);const _u=location.origin && location.protocol.startsWith('http') ? location.origin + '/v1' : 'https://bluefuture.studio/v1';const _f=u=>{if(!u)return null;const _d=u.input_tokens_details||u.prompt_tokens_details||{};const _t=_d.text_tokens??u.input_tokens??u.prompt_tokens??0;const _i=_d.image_tokens||0;const _c=_d.cached_tokens||0;const _o=u.output_tokens??u.completion_tokens??0;if(!(_t||_i||_c||_o))return null;return (_t*_v[0]+_o*_v[1]+_i*_v[2]+_c*_v[3])/1e6*_v[4]*_v[5]*_v[6];};const _g=x=>{if(x==null)return '';if(x<0.001)return '≈ ¥'+x.toFixed(5);if(x<0.01)return '≈ ¥'+x.toFixed(4);return '≈ ¥'+x.toFixed(3);};return [_u,500000,_f,_g];})();
 
 const loadMsgs=['sampling latent vectors','diffusion in progress','refining detail','finalising plate'];
 let loadTimer, loadIdx=0;
@@ -2961,7 +2663,7 @@ function showLoader(){
         <div class="dev-glyph">&</div>
         <div class="dev-scan"></div>
         <div class="dev-top">
-          <span class="plate-mark"><em>Output ${String(i+1).padStart(2,'0')}</em></span>
+          <span class="plate-mark"><em>Plate ${String(i+1).padStart(2,'0')}</em></span>
           <span class="dev-elapsed">00:00</span>
         </div>
         <div class="dev-bottom">
@@ -3026,7 +2728,7 @@ async function generate(){
   if(mode==='variations' && uploadedFiles.source.length===0){showStatus(status,'Variations 模式需要 1 张原图','err');return;}
   const btn=$('generateBtn');
   btn.disabled=true;
-  btn.innerHTML='<span class="spinner"></span>Generating';
+  btn.innerHTML='<span class="spinner"></span>冲印中';
   { const _cd=$('costDisplay'); _cd.textContent=''; _cd.style.display='none'; }
   showLoader();
 
@@ -3052,10 +2754,10 @@ async function generate(){
       plate.className='plate animate-in';
       plate.innerHTML=`
         <div class="plate-frame">
-          <img src="${result.src}" alt="Output ${i+1}" loading="lazy"/>
+          <img src="${result.src}" alt="Plate ${i+1}" loading="lazy"/>
         </div>
         <div class="plate-caption">
-          <span class="plate-title"><em>Output ${String(i+1).padStart(2,'0')}</em>${mode==='edit'?'<span class="edit-tag">EDIT</span>':''}</span>
+          <span class="plate-title"><em>Plate ${String(i+1).padStart(2,'0')}</em>${mode==='edit'?'<span class="edit-tag">EDIT</span>':''}</span>
           <span>${esc(stamp)}</span>
         </div>
         <div style="font-family:'Playfair Display',serif;font-style:italic;color:var(--ink-soft);font-size:15px;line-height:1.4;margin-top:6px">
@@ -3163,7 +2865,7 @@ async function generate(){
     /* cost: single response usage */
     { const _cd=$('costDisplay'); const v=_q(data?.usage); if(v!=null){ _cd.textContent='本次 '+_fmt(v); _cd.style.display='inline-block'; _cd.style.padding='6px 14px'; _cd.style.border='1px solid var(--accent)'; _cd.style.background='var(--paper-tint)'; } else { _cd.textContent=''; _cd.style.display='none'; } }
     if(okCount>0){
-      const verb=mode==='edit'?'编辑':(mode==='variations'?'生成变体':'生成');
+      const verb=mode==='edit'?'编辑':(mode==='variations'?'生成变体':'冲印');
       const errMsg=errors.length?` · ${errors.length} 张失败`:'';
       showStatus(status,`✓ 成功${verb} ${okCount} / ${n} 张图像${errMsg}`, errors.length?'err':'ok');
       const validSrcs=collectedSrcs.filter(Boolean);
@@ -3198,7 +2900,7 @@ async function generate(){
   }finally{
     hideLoader();
     btn.disabled=false;
-    btn.textContent='Launch Generate';
+    btn.textContent='冲印 Imprint';
   }
 }
 
@@ -3225,10 +2927,10 @@ function renderResults(items, prompt, mode){
     plate.style.animationDelay=(i*.12)+'s';
     plate.innerHTML=`
       <div class="plate-frame">
-        <img src="${src}" alt="Output ${i+1}" loading="lazy"/>
+        <img src="${src}" alt="Plate ${i+1}" loading="lazy"/>
       </div>
       <div class="plate-caption">
-        <span class="plate-title"><em>Output ${String(i+1).padStart(2,'0')}</em>${isEdit?'<span class="edit-tag">EDIT</span>':''}</span>
+        <span class="plate-title"><em>Plate ${String(i+1).padStart(2,'0')}</em>${isEdit?'<span class="edit-tag">EDIT</span>':''}</span>
         <span>${esc(stamp)}</span>
       </div>
       <div style="font-family:'Playfair Display',serif;font-style:italic;color:var(--ink-soft);font-size:15px;line-height:1.4;margin-top:6px">
@@ -4321,7 +4023,7 @@ syncCompressionSlider();
 const TEMPLATES = {
   cinematic: 'Cinematic still, anamorphic 2.39:1, soft directional key light, shallow depth of field, gentle film grain, muted teal-and-amber color palette',
   portrait : 'Studio portrait photograph, 85mm lens, soft window light, natural skin texture, sharp eyes, neutral background, editorial color grade',
-  product  : 'Premium product photography for a future-facing studio brand, luminous blue-violet rim light, glossy clean surface, subtle drop shadow, crisp detail, commercial catalog look, 1:1 framing',
+  product  : 'Product photography on a seamless paper backdrop, soft diffused softbox lighting, subtle drop shadow, crisp detail, commercial catalog look, 1:1 framing',
   illustration: 'Hand-drawn digital illustration, expressive linework, painterly textures, harmonious limited color palette, storybook composition',
   pixel    : 'Pixel art, 32-bit retro game aesthetic, dithered shading, restrained color ramp, crisp 1px outline, charming small-screen mood',
   render3d : 'Octane 3D render, physically-based materials, soft global illumination, subtle reflections, clean studio backdrop, hero shot composition',
@@ -4714,7 +4416,7 @@ const Outpaint = (()=>{
       acceptMask(mFile);
       applyMode('edit');
       close();
-      showStatus($('genStatus'),'✓ 已生成扩图素材，调整 Prompt 后点击 Launch Generate','ok');
+      showStatus($('genStatus'),'✓ 已生成扩图素材，调整 Prompt 后点击「冲印」','ok');
       setTimeout(()=>hideStatus($('genStatus')),3500);
     });
   }
@@ -4760,12 +4462,12 @@ document.addEventListener('keydown',e=>{
   const ta=$('prompt');
   if(!ghost||!ta) return;
   const phrases=[
-    '输入 bluefuture.studio 的下一张品牌视觉',
-    '半透明蓝紫徽章悬浮在黑色玻璃台面，白色星光标记，未来产品发布主视觉',
-    '海面上方的未来创意工作室，青蓝光线，紫色天际线，干净商业构图',
-    '围绕蓝紫验证图标展开的 AI campaign poster，流体渐变，高级科技感',
-    '用于 SaaS 官网首屏的 3D brand object，深色背景，清透高光，极简构图',
-    'bluefuture.studio 社媒封面，发光徽章、白色星芒、深海蓝空间'
+    '在此挥毫 · compose your vision',
+    '樱花树下的赛博朋克柴犬，霓虹弥漫',
+    '雾中京都的祭典夜，胶片颗粒',
+    '黄昏海面上的漂浮城市，伊斯坦布尔风',
+    '老上海旗袍少女，Wes Anderson 对称构图',
+    '潮湿巷弄里的霓虹招牌，雨后反光'
   ];
   const TYPE_MS=55, ERASE_MS=28, HOLD_MS=1600, GAP_MS=420;
   let pi=0, ci=0, mode='type', timer=null, stopped=false;

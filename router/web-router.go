@@ -2,6 +2,7 @@ package router
 
 import (
 	"embed"
+	"io"
 	"net/http"
 	"strings"
 
@@ -29,6 +30,30 @@ func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
+	router.GET("/image-console", func(c *gin.Context) {
+		c.Header("Cache-Control", "no-cache")
+		c.Data(http.StatusOK, "text/html; charset=utf-8", assets.DefaultIndexPage)
+	})
+	router.GET("/image-console-app/*filepath", func(c *gin.Context) {
+		name := strings.TrimPrefix(c.Request.URL.Path, "/")
+		file, err := defaultFS.Open(name)
+		if err != nil {
+			c.Status(http.StatusNotFound)
+			return
+		}
+		defer file.Close()
+
+		info, err := file.Stat()
+		if err != nil {
+			c.Status(http.StatusNotFound)
+			return
+		}
+
+		if strings.HasSuffix(name, ".html") {
+			c.Header("Cache-Control", "no-cache")
+		}
+		http.ServeContent(c.Writer, c.Request, info.Name(), info.ModTime(), file.(io.ReadSeeker))
+	})
 	router.Use(static.Serve("/", themeFS))
 	router.NoRoute(func(c *gin.Context) {
 		c.Set(middleware.RouteTagKey, "web")
