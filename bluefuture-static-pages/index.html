@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>BlueFuture Studio — 一站式 AI 模型入口</title>
+<meta name="description" content="BlueFuture Studio 是面向年轻创作者和 AI 用户的一站式模型入口，统一接入 OpenAI、Claude、Gemini、DeepSeek 等热门模型。">
+<link rel="icon" href="/bluefuture-logo.png">
+<script>
+// Set theme ASAP to prevent flash
+(function(){
+  var t=localStorage.getItem('bluefuture_theme')||'light';
+  if(t==='system') t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090a;
+  --bg-1:#0c0d0f;
+  --bg-2:#111214;
+  --surface:#16171a;
+  --surface-hover:#1c1d21;
+  --surface-elevated:#1f2024;
+  --border:rgba(255,255,255,0.07);
+  --border-strong:rgba(255,255,255,0.12);
+  --border-glow:rgba(126,139,255,0.28);
+  --text:#f4f5f8;
+  --text-2:#b4b8c0;
+  --text-3:#7d808a;
+  --text-4:#5a5e67;
+  --accent:#5e6ad2;
+  --accent-2:#7f8aff;
+  --accent-bright:#9ba3ff;
+  --accent-glow:rgba(126,139,255,0.4);
+  --green:#4cb782;
+  --red:#eb5757;
+  --yellow:#f2c94c;
+  --radius-sm:8px;
+  --radius:12px;
+  --radius-lg:20px;
+  --radius-xl:28px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-spring:cubic-bezier(.2,1.8,.3,1);
+}
+/* ==================== Light Theme ==================== */
+[data-theme="light"]{
+  --bg:#ffffff;--bg-1:#fafafa;--bg-2:#f5f5f7;
+  --surface:#f0f0f3;--surface-hover:#e8e8ec;--surface-elevated:#e3e3e8;
+  --border:rgba(0,0,0,0.08);--border-strong:rgba(0,0,0,0.14);--border-glow:rgba(94,106,210,0.3);
+  --text:#1a1a2e;--text-2:#4a4a5a;--text-3:#8a8a9a;--text-4:#b0b0be;
+  --accent:#5e6ad2;--accent-2:#4f5bc0;--accent-bright:#5e6ad2;--accent-glow:rgba(94,106,210,0.25);
+  --green:#34a853;--red:#d93025;--yellow:#f9ab00;
+}
+[data-theme="light"] .bg-atmosphere{
+  background:radial-gradient(ellipse 1200px 600px at 50% -10%,rgba(94,106,210,0.08),transparent 60%),
+             radial-gradient(ellipse 800px 400px at 85% 15%,rgba(126,139,255,0.05),transparent 60%),
+             radial-gradient(ellipse 700px 350px at 15% 45%,rgba(94,106,210,0.03),transparent 55%);
+}
+/* Logo: SVG inline keeps brand gradient across themes */
+img.nav-logo,[data-theme="light"] img.nav-logo,[data-theme="light"] .footer-brand img{filter:grayscale(1) brightness(0.25) contrast(1.2);opacity:.9}
+svg.nav-logo{display:block;flex-shrink:0}
+/* Gemini icons: dark monochrome in light theme */
+[data-theme="light"] #gemGrad stop:first-child,
+[data-theme="light"] #gemGrad2 stop:first-child{stop-color:#4a4a5a}
+[data-theme="light"] #gemGrad stop:last-child,
+[data-theme="light"] #gemGrad2 stop:last-child{stop-color:#1a1a2e}
+[data-theme="light"] .bg-grid{opacity:.35;
+  background-image:linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px);
+}
+[data-theme="light"] .bg-grain{opacity:.015}
+[data-theme="light"] .top-notice{background:rgba(250,250,252,0.85)}
+[data-theme="light"] .nav{background:rgba(255,255,255,0.72)}
+[data-theme="light"] .nav.scrolled{background:rgba(255,255,255,0.92)}
+[data-theme="light"] .lang-dd-menu{background:rgba(255,255,255,0.96);box-shadow:0 10px 32px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.06)}
+[data-theme="light"] .btn-primary{background:#1a1a2e;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.15),0 4px 12px rgba(0,0,0,0.1)}
+[data-theme="light"] .btn-primary:hover{background:#2a2a40;box-shadow:0 2px 4px rgba(0,0,0,0.2),0 6px 20px rgba(0,0,0,0.15)}
+[data-theme="light"] .btn-ghost{border-color:rgba(0,0,0,0.15)}
+[data-theme="light"] .btn-ghost:hover{background:var(--surface);border-color:rgba(0,0,0,0.25)}
+[data-theme="light"] .hero h1 .grad{background:linear-gradient(135deg,#1a1a2e 0%,var(--accent) 45%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text}
+[data-theme="light"] .hero::before{background:radial-gradient(circle,rgba(94,106,210,0.06),transparent 60%)}
+[data-theme="light"] .terminal{background:linear-gradient(180deg,#f8f8fa,#f0f0f3);border-color:var(--border-strong);box-shadow:0 40px 80px -20px rgba(0,0,0,0.1),0 0 0 1px rgba(94,106,210,0.1),0 0 60px rgba(94,106,210,0.04)}
+[data-theme="light"] .terminal-glow{background:radial-gradient(ellipse at center,rgba(94,106,210,0.08),transparent 60%)}
+[data-theme="light"] .stat .num{background:linear-gradient(180deg,#1a1a2e,#5a5a70);-webkit-background-clip:text;background-clip:text}
+[data-theme="light"] .plan.featured{background:linear-gradient(180deg,rgba(94,106,210,0.08),rgba(94,106,210,0.02));border-color:rgba(94,106,210,0.3)}
+[data-theme="light"] .price-card .pc-pct .num{background:linear-gradient(180deg,#1a1a2e,#5a5a70);-webkit-background-clip:text;background-clip:text}
+[data-theme="light"] .qs-code{background:#f0f0f3}
+[data-theme="light"] .pc-logo,[data-theme="light"] .ch-logo,[data-theme="light"] .qs-icon{color:#1a1a2e !important}
+[data-theme="light"] .cta-box{background:linear-gradient(135deg,#f5f5f7 0%,#ececf0 100%);border-color:var(--border-strong)}
+[data-theme="light"] .cta-box::before{background:radial-gradient(ellipse 800px 300px at 50% 0%,rgba(94,106,210,0.1),transparent 60%)}
+[data-theme="light"] .cta-box::after{background-image:radial-gradient(circle at 50% 50%,rgba(0,0,0,0.03) 1px,transparent 1px)}
+[data-theme="light"] .top-banner{background:linear-gradient(90deg,rgba(94,106,210,0.06),rgba(126,139,255,0.03),rgba(94,106,210,0.06))}
+[data-theme="light"] .feature::before{background:linear-gradient(90deg,transparent,rgba(94,106,210,0.35),transparent)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;
+  overflow-x:hidden;min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;font-weight:600;letter-spacing:-0.025em;line-height:1.08;color:var(--text)}
+.mono{font-family:'JetBrains Mono',monospace}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-bright);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:currentColor}
+
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.section{padding:120px 0;position:relative}
+@media (max-width:768px){.container{padding:0 20px}.section{padding:72px 0}}
+
+.bg-atmosphere{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 1200px 600px at 50% -10%,rgba(94,106,210,0.18),transparent 60%),
+             radial-gradient(ellipse 800px 400px at 85% 15%,rgba(126,139,255,0.09),transparent 60%),
+             radial-gradient(ellipse 700px 350px at 15% 45%,rgba(94,106,210,0.06),transparent 55%);
+}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 1400px 800px at 50% 0%,black 30%,transparent 70%);
+          mask-image:radial-gradient(ellipse 1400px 800px at 50% 0%,black 30%,transparent 70%);
+}
+.bg-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main,nav,footer,.top-banner,.top-notice{position:relative;z-index:2}
+
+.top-notice{background:rgba(14,15,17,0.85);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.top-notice-inner{max-width:1200px;margin:0 auto;padding:9px 32px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-3);font-family:'DM Sans',sans-serif}
+.top-notice-inner .sep{color:var(--text-4);opacity:.6}
+.top-notice-inner a{color:var(--accent-bright);text-decoration:underline;text-decoration-color:rgba(155,163,255,0.35);text-underline-offset:3px;text-decoration-thickness:1px;transition:all .18s var(--ease);display:inline-flex;align-items:center;gap:4px}
+.top-notice-inner a::after{content:'→';font-size:10px;opacity:.7;transition:transform .18s var(--ease)}
+.top-notice-inner a:hover{color:#fff;text-decoration-color:rgba(255,255,255,0.6)}
+.top-notice-inner a:hover::after{transform:translateX(2px)}
+@media (max-width:680px){.top-notice-inner{font-size:11.5px;padding:8px 16px;gap:10px}.top-notice-inner .sep{display:none}}
+
+.top-banner{
+  background:linear-gradient(90deg,rgba(94,106,210,0.12),rgba(126,139,255,0.06),rgba(94,106,210,0.12));
+  border-bottom:1px solid var(--border);
+  padding:10px 24px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:13px;color:var(--text-2);
+}
+.top-banner .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-bright);box-shadow:0 0 12px var(--accent-glow);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.top-banner a{color:var(--accent-bright);font-weight:500}
+.top-banner a:hover{text-decoration:underline}
+
+.nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  background:rgba(8,9,10,0.72);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease),background .3s var(--ease);
+}
+.nav.scrolled{border-bottom-color:var(--border);background:rgba(8,9,10,0.9)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:68px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:17px;letter-spacing:-0.02em}
+.nav-brand svg{width:26px;height:26px}
+.nav-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
+img.nav-logo{filter:grayscale(1) brightness(3) contrast(0.7);opacity:.9}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{padding:8px 14px;font-size:14px;color:var(--text-2);border-radius:var(--radius-sm);transition:all .2s var(--ease);font-weight:450}
+.nav-links a:hover{color:var(--text);background:var(--surface-hover)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.lang-dd{position:relative}
+.lang-dd-trigger{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);color:var(--text-2);font-size:13px;transition:all .18s var(--ease);cursor:pointer}
+.lang-dd-trigger:hover{background:var(--surface-hover);color:var(--text);border-color:var(--border-strong)}
+.lang-dd-trigger .globe{width:14px;height:14px;opacity:.8}
+.lang-dd-trigger .chev{width:11px;height:11px;opacity:.6;transition:transform .2s var(--ease)}
+.lang-dd.open .lang-dd-trigger .chev{transform:rotate(180deg)}
+.lang-dd-menu{position:absolute;top:calc(100% + 6px);right:0;min-width:148px;padding:5px;background:rgba(14,15,17,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border-strong);border-radius:var(--radius);box-shadow:0 10px 32px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.03);opacity:0;transform:translateY(-6px) scale(.96);transform-origin:top right;pointer-events:none;transition:all .2s var(--ease);z-index:110}
+.lang-dd.open .lang-dd-menu{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.lang-dd-menu button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:8px 12px;border-radius:7px;color:var(--text-2);font-size:13px;text-align:left;transition:all .15s var(--ease);cursor:pointer;font-family:inherit}
+.lang-dd-menu button:hover{background:var(--surface-hover);color:var(--text)}
+.lang-dd-menu button.active{background:var(--surface-elevated);color:var(--text)}
+.lang-dd-menu .lang-label{flex:1}
+.lang-dd-menu .lang-code{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-4);letter-spacing:0.04em}
+.lang-dd-menu button.active .lang-code{color:var(--text-3)}
+
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13.5px;padding:8px 14px;border-radius:var(--radius-sm);transition:all .2s var(--ease);cursor:pointer;white-space:nowrap}
+/* Primary: white with dark text (Linear signature) */
+.btn-primary{background:#f4f5f8;color:#08090a;box-shadow:0 1px 0 0 rgba(255,255,255,0.4) inset,0 1px 2px rgba(0,0,0,0.3),0 4px 12px rgba(0,0,0,0.2)}
+.btn-primary:hover{background:#fff;transform:translateY(-1px);box-shadow:0 1px 0 0 rgba(255,255,255,0.5) inset,0 2px 4px rgba(0,0,0,0.4),0 6px 20px rgba(0,0,0,0.3)}
+/* Ghost: transparent with subtle border */
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border-strong)}
+.btn-ghost:hover{background:var(--surface);border-color:rgba(255,255,255,0.2)}
+/* Accent: rare, used only for the one hero CTA */
+.btn-accent{background:var(--accent);color:#fff;box-shadow:0 1px 0 0 rgba(255,255,255,0.2) inset,0 0 0 1px rgba(94,106,210,0.8),0 4px 16px rgba(94,106,210,0.3)}
+.btn-accent:hover{background:var(--accent-2);transform:translateY(-1px);box-shadow:0 1px 0 0 rgba(255,255,255,0.28) inset,0 0 0 1px rgba(126,139,255,0.95),0 8px 24px rgba(94,106,210,0.5)}
+.btn-link{padding:10px 14px;color:var(--text-2)}
+.btn-link:hover{color:var(--text)}
+.btn svg{width:14px;height:14px;transition:transform .2s var(--ease);flex-shrink:0}
+.btn:hover .arrow{transform:translateX(3px)}
+
+.mobile-toggle{display:none;width:40px;height:40px;align-items:center;justify-content:center;border-radius:var(--radius-sm);border:1px solid var(--border-strong);background:var(--surface)}
+@media (max-width:960px){.nav-links{display:none}.nav-actions .btn-link{display:none}.mobile-toggle{display:flex}}
+
+.hero{min-height:calc(100vh - 68px);display:flex;align-items:center;padding:40px 0;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-20%;left:50%;width:800px;height:800px;transform:translateX(-50%);background:radial-gradient(circle,rgba(126,139,255,0.1),transparent 60%);pointer-events:none;filter:blur(40px)}
+.hero-inner{max-width:1200px;width:100%;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:center}
+@media (max-width:960px){.hero-inner{grid-template-columns:1fr;gap:56px}.hero{min-height:auto;padding:56px 0 72px}}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:13px;color:var(--text-2);margin-bottom:32px;transition:all .2s var(--ease)}
+.hero-badge:hover{border-color:var(--border-glow);background:var(--surface-hover)}
+.hero-badge .tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;letter-spacing:0.05em}
+.hero-badge svg{width:14px;height:14px;transition:transform .2s var(--ease);color:var(--text-3)}
+.hero-badge:hover svg{transform:translateX(2px);color:var(--text)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.28em;color:var(--text-3);text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-size:clamp(36px,4.8vw,60px);font-weight:700;letter-spacing:-0.035em;line-height:1.08;margin-bottom:24px;display:flex;flex-direction:column;gap:4px}
+.hero h1 .grad{background:linear-gradient(135deg,#fff 0%,var(--accent-bright) 45%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+.hero h1 .hero-sub-title{display:block;font-family:'JetBrains Mono',monospace;font-size:clamp(14px,1.4vw,18px);font-weight:500;letter-spacing:0.24em;color:var(--text-3);margin-top:14px;text-transform:uppercase}
+.hero p.hero-sub{font-size:19px;color:var(--text-2);max-width:560px;line-height:1.55;margin-bottom:40px;font-weight:400}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hero-ctas .btn{padding:9px 16px;font-size:13.5px}
+.hero-meta{margin-top:36px;display:flex;align-items:center;gap:20px;color:var(--text-3);font-size:13px;flex-wrap:wrap}
+.hero-meta .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(76,183,130,0.6)}
+.hero-meta kbd{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 6px;border-radius:4px;background:var(--surface-hover);border:1px solid var(--border);color:var(--text-2)}
+
+.hero-visual{position:relative}
+.terminal{
+  background:linear-gradient(180deg,var(--bg-2),var(--bg-1));
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  box-shadow:0 40px 80px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(126,139,255,0.08),0 0 60px rgba(126,139,255,0.1);
+  overflow:hidden;position:relative;
+  transform:perspective(1200px) rotateY(-6deg) rotateX(2deg);
+  transition:transform .5s var(--ease);
+}
+.terminal:hover{transform:perspective(1200px) rotateY(-4deg) rotateX(1deg)}
+.terminal-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.terminal-bar .dots{display:flex;gap:6px}
+.terminal-bar .tdot{width:11px;height:11px;border-radius:50%}
+.terminal-bar .tdot:nth-child(1){background:#ff5f57}
+.terminal-bar .tdot:nth-child(2){background:#febc2e}
+.terminal-bar .tdot:nth-child(3){background:#28c840}
+.terminal-bar .title{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:6px}
+.terminal-body{padding:22px 24px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.72;color:var(--text-2);white-space:pre-wrap;word-break:break-all}
+.terminal-body .c-comment{color:var(--text-4)}
+.terminal-body .c-prompt{color:var(--green)}
+.terminal-body .c-key{color:var(--accent-bright)}
+.terminal-body .c-str{color:#ffb76b}
+.terminal-body .line{display:block;opacity:0;animation:type .4s var(--ease) forwards}
+.terminal-body .line:nth-child(1){animation-delay:.2s}
+.terminal-body .line:nth-child(2){animation-delay:.35s}
+.terminal-body .line:nth-child(3){animation-delay:.5s}
+.terminal-body .line:nth-child(4){animation-delay:.65s}
+.terminal-body .line:nth-child(5){animation-delay:.8s}
+.terminal-body .line:nth-child(6){animation-delay:.95s}
+.terminal-body .line:nth-child(7){animation-delay:1.1s}
+.terminal-body .line:nth-child(8){animation-delay:1.25s}
+@keyframes type{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.terminal-glow{position:absolute;inset:-60px;background:radial-gradient(ellipse at center,rgba(126,139,255,0.2),transparent 60%);filter:blur(40px);z-index:-1;pointer-events:none;animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.6}50%{opacity:1}}
+
+.models{padding:80px 0 100px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;background:linear-gradient(180deg,transparent,rgba(22,23,26,0.3),transparent)}
+.models-heading{text-align:center;margin-bottom:48px}
+.models-heading h2{font-size:14px;font-weight:500;color:var(--text-3);letter-spacing:0.02em;font-family:'DM Sans',sans-serif;text-transform:uppercase}
+.marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent)}
+.marquee-track{display:flex;gap:24px;animation:marquee 45s linear infinite;width:max-content}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.model-chip{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;background:var(--surface);border:1px solid var(--border);border-radius:999px;font-size:14px;color:var(--text-2);white-space:nowrap;transition:all .2s var(--ease)}
+.model-chip:hover{color:var(--text);border-color:var(--border-glow);background:var(--surface-hover)}
+.model-chip .m-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5}
+
+.section-head{text-align:center;max-width:680px;margin:0 auto 64px}
+.section-head h2{font-size:clamp(32px,4vw,48px);font-weight:700;letter-spacing:-0.035em;margin-bottom:18px;line-height:1.08}
+.section-head p{font-size:16px;color:var(--text-2);line-height:1.6;max-width:560px;margin:0 auto}
+
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:960px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:680px){.features-grid{grid-template-columns:1fr}}
+.feature{
+  padding:32px 28px;border-radius:var(--radius-lg);
+  background:linear-gradient(180deg,var(--bg-2),var(--bg-1));
+  border:1px solid var(--border);position:relative;overflow:hidden;
+  transition:all .3s var(--ease);
+}
+.feature::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(126,139,255,0.5),transparent);opacity:0;transition:opacity .3s var(--ease)}
+.feature:hover{border-color:var(--border-glow);background:linear-gradient(180deg,var(--bg-2),#131519);transform:translateY(-3px)}
+.feature:hover::before{opacity:1}
+.feature .icon{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,rgba(94,106,210,0.2),rgba(126,139,255,0.08));border:1px solid rgba(126,139,255,0.24);display:flex;align-items:center;justify-content:center;margin-bottom:22px;color:var(--accent-bright)}
+.feature .icon svg{width:22px;height:22px}
+.feature h3{font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:-0.015em}
+.feature p{color:var(--text-3);font-size:14.5px;line-height:1.6}
+
+.stats{padding:80px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;max-width:1000px;margin:0 auto;padding:0 32px}
+@media (max-width:760px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:40px 24px}}
+.stat{text-align:center}
+.stat .num{font-family:'Sora',sans-serif;font-size:clamp(40px,5vw,60px);font-weight:700;letter-spacing:-0.04em;line-height:1;background:linear-gradient(180deg,#fff,#a9aebb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.stat .label{font-size:13px;color:var(--text-3);letter-spacing:0.02em}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+@media (max-width:960px){.pricing-grid{grid-template-columns:1fr;max-width:420px}}
+.plan{
+  padding:38px 32px;border-radius:var(--radius-xl);
+  background:linear-gradient(180deg,var(--bg-2),var(--bg-1));
+  border:1px solid var(--border);position:relative;
+  transition:all .3s var(--ease);
+}
+.plan:hover{border-color:var(--border-strong);transform:translateY(-4px)}
+.plan.featured{
+  background:linear-gradient(180deg,rgba(94,106,210,0.14),rgba(94,106,210,0.03));
+  border-color:rgba(126,139,255,0.3);
+  box-shadow:0 0 0 1px rgba(126,139,255,0.1),0 20px 60px -20px rgba(94,106,210,0.4);
+}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.1em;padding:6px 12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;text-transform:uppercase;box-shadow:0 6px 18px rgba(94,106,210,0.5)}
+.plan-name{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;color:var(--text-2);margin-bottom:6px;letter-spacing:-0.01em}
+.plan-tag{font-size:13px;color:var(--text-3);margin-bottom:24px}
+.plan-price{display:flex;align-items:baseline;gap:6px;margin-bottom:28px}
+.plan-price .num{font-family:'Sora',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.04em;line-height:1}
+.plan-price .unit{font-size:14px;color:var(--text-3)}
+.plan ul{list-style:none;margin:0 0 32px 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.plan ul li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-2);line-height:1.55}
+.plan ul li svg{width:16px;height:16px;flex-shrink:0;margin-top:3px;color:var(--accent-bright)}
+.plan .btn{width:100%;justify-content:center;padding:13px 20px}
+
+
+.cta-box{
+  max-width:900px;margin:0 auto;padding:72px 48px;
+  border-radius:var(--radius-xl);
+  background:linear-gradient(135deg,#0f1114 0%,#15171c 100%);
+  border:1px solid var(--border-strong);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 800px 300px at 50% 0%,rgba(126,139,255,0.18),transparent 60%);pointer-events:none}
+.cta-box::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse at center,black,transparent 70%);mask-image:radial-gradient(ellipse at center,black,transparent 70%)}
+.cta-box > *{position:relative}
+.cta-box h2{font-size:clamp(34px,4.2vw,52px);margin-bottom:18px}
+.cta-box p{color:var(--text-2);font-size:17px;max-width:560px;margin:0 auto 36px}
+.cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-buttons .btn{padding:14px 26px;font-size:15px}
+
+.footer{border-top:1px solid var(--border);padding:72px 0 36px;margin-top:60px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px}
+@media (max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;gap:40px 24px}.footer-grid > div:first-child{grid-column:1/-1}}
+.footer-brand{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:17px;letter-spacing:-0.02em;margin-bottom:14px}
+.footer-brand svg{width:26px;height:26px}
+.footer-desc{color:var(--text-3);font-size:14px;line-height:1.6;max-width:340px}
+.footer h4{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:18px}
+.footer ul{list-style:none}
+.footer ul li{margin-bottom:10px}
+.footer ul li a{font-size:14px;color:var(--text-2);transition:color .2s var(--ease)}
+.footer ul li a:hover{color:var(--text)}
+#contact{position:relative;padding:14px 18px;margin:-14px -18px;border-radius:12px;border:1px solid transparent;transition:border-color .3s var(--ease),background .3s var(--ease),transform .4s var(--ease)}
+#contact::before{content:'';position:absolute;inset:-2px;border-radius:14px;background:radial-gradient(ellipse at center,rgba(126,139,255,0.25),transparent 70%);opacity:0;pointer-events:none;transition:opacity .3s var(--ease);filter:blur(20px);z-index:-1}
+#contact.flash{border-color:var(--border-glow);background:rgba(126,139,255,0.04);animation:contactPulse 1.6s var(--ease)}
+#contact.flash::before{opacity:1;animation:contactGlow 1.6s var(--ease)}
+#contact.flash .footer-contact li{animation:contactRise .5s var(--ease) backwards}
+#contact.flash .footer-contact li:nth-child(1){animation-delay:.1s}
+@keyframes contactPulse{0%{box-shadow:0 0 0 0 rgba(126,139,255,0.5)}50%{box-shadow:0 0 0 10px rgba(126,139,255,0)}100%{box-shadow:0 0 0 0 rgba(126,139,255,0)}}
+@keyframes contactGlow{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
+@keyframes contactRise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.footer-contact li{display:flex;flex-direction:column;gap:2px;margin-bottom:14px}
+.footer-contact .contact-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-4);letter-spacing:0.06em;text-transform:uppercase}
+.footer-contact .contact-val{font-size:13.5px;color:var(--text);font-family:'JetBrains Mono',monospace;letter-spacing:0.01em;user-select:all;cursor:text}
+.footer-compliance{font-size:12px;color:var(--text-4);line-height:1.6;padding-bottom:20px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);flex-wrap:wrap;gap:12px}
+.footer-bottom .mono{font-family:'JetBrains Mono',monospace;font-size:11px}
+.status-indicator{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;border-radius:999px;background:rgba(76,183,130,0.1);border:1px solid rgba(76,183,130,0.25);color:var(--green);font-size:12px}
+.status-indicator .green-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(76,183,130,0.6);animation:pulse 2s ease-in-out infinite}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ==================== 价格优势 ==================== */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+@media (max-width:960px){.price-grid{grid-template-columns:1fr;max-width:420px}}
+.price-card{position:relative;padding:44px 36px;border-radius:var(--radius-xl);background:linear-gradient(180deg,var(--bg-2),var(--bg-1));border:1px solid var(--border);overflow:hidden;transition:all .3s var(--ease)}
+.price-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 400px 200px at 50% 0%,var(--pc-glow,rgba(126,139,255,0.15)),transparent 70%);pointer-events:none;opacity:.7}
+.price-card > *{position:relative}
+.price-card:hover{transform:translateY(-4px);border-color:var(--border-strong)}
+.price-card .pc-brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.price-card .pc-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border)}
+.price-card .pc-logo svg{width:26px;height:26px}
+.price-card .pc-name{font-family:'Sora',sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.01em}
+.price-card .pc-vendor{font-size:12px;color:var(--text-3);margin-top:2px}
+.price-card .pc-pct{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.price-card .pc-pct .num{font-family:'Sora',sans-serif;font-size:72px;font-weight:800;letter-spacing:-0.05em;line-height:1;background:linear-gradient(180deg,#fff,#a9aebb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.price-card .pc-pct .unit{font-family:'Sora',sans-serif;font-size:28px;font-weight:600;color:var(--text-2);letter-spacing:-0.02em}
+.price-card .pc-note{font-size:13px;color:var(--text-3);margin-bottom:24px}
+.price-card .pc-desc{font-size:14px;color:var(--text-2);line-height:1.6;padding-top:22px;border-top:1px solid var(--border)}
+.price-card.claude{--pc-glow:rgba(255,255,255,0.035)}
+.price-card.claude .pc-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.price-card.gpt{--pc-glow:rgba(255,255,255,0.035)}
+.price-card.gpt .pc-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.price-card.gemini{--pc-glow:rgba(255,255,255,0.035)}
+.price-card.gemini .pc-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+
+/* ==================== 命令行部署 ==================== */
+.quickstart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:960px){.quickstart-grid{grid-template-columns:1fr}}
+.qs-card{padding:0;border-radius:var(--radius-lg);background:linear-gradient(180deg,var(--bg-2),var(--bg-1));border:1px solid var(--border);overflow:hidden;transition:all .3s var(--ease);display:flex;flex-direction:column}
+.qs-card:hover{border-color:var(--border-glow);transform:translateY(-3px)}
+.qs-head{padding:22px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.qs-head-left{display:flex;align-items:center;gap:12px}
+.qs-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border)}
+.qs-icon svg{width:22px;height:22px}
+.qs-icon.claude{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.qs-icon.openai{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.qs-icon.opencode{background:var(--surface);border-color:var(--border-strong);color:var(--text-2)}
+.qs-name{font-family:'Sora',sans-serif;font-weight:600;font-size:15px;letter-spacing:-0.01em}
+.qs-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:4px 8px;border-radius:999px;background:var(--surface-hover);color:var(--text-3);border:1px solid var(--border);letter-spacing:0.03em}
+.qs-body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:14px}
+.qs-code{position:relative;padding:16px 52px 16px 18px;background:#0a0b0d;border:1px solid var(--border);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-2);line-height:1.55;word-break:break-all;overflow:hidden}
+.qs-code .prompt{color:var(--green);margin-right:8px}
+.qs-copy{position:absolute;top:10px;right:10px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--border);border-radius:7px;color:var(--text-3);cursor:pointer;transition:all .18s var(--ease)}
+.qs-copy:hover{background:var(--surface-hover);color:var(--text);border-color:var(--border-strong)}
+.qs-copy svg{width:13px;height:13px}
+.qs-copied{color:var(--green) !important;border-color:rgba(76,183,130,0.4) !important}
+.qs-desc{font-size:13px;color:var(--text-3);line-height:1.55}
+
+/* ==================== 模型渠道 ==================== */
+.channels-wide{max-width:1440px;margin:0 auto;padding:0 32px}
+.channels-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:1200px){.channels-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:680px){.channels-grid{grid-template-columns:1fr}}
+.channel-card{position:relative;padding:32px 28px;border-radius:var(--radius-lg);background:linear-gradient(180deg,var(--bg-2),var(--bg-1));border:1px solid var(--border);overflow:hidden;transition:all .3s var(--ease);display:flex;flex-direction:column}
+.channel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ch-accent,var(--accent-bright)),transparent);opacity:0;transition:opacity .3s var(--ease)}
+.channel-card:hover{transform:translateY(-4px);border-color:var(--border-glow)}
+.channel-card:hover::before{opacity:1}
+.channel-card .ch-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.channel-card .ch-logo{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border)}
+.channel-card .ch-logo svg{width:26px;height:26px}
+.channel-card .ch-head-text{flex:1;min-width:0}
+.channel-card .ch-name{font-family:'Sora',sans-serif;font-size:19px;font-weight:700;letter-spacing:-0.025em;line-height:1.2}
+.channel-card .ch-ratio{display:flex;flex-wrap:wrap;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-2);margin-top:6px;letter-spacing:0.01em;line-height:1.4}
+.channel-card .ch-ratio span{font-weight:600;padding:2px 8px;border-radius:4px;background:rgba(126,139,255,0.08);border:1px solid rgba(126,139,255,0.12)}
+[data-theme="light"] .channel-card .ch-ratio span{background:rgba(94,106,210,0.07);border-color:rgba(94,106,210,0.13)}
+.channel-card .ch-desc{color:var(--text-2);font-size:13.5px;line-height:1.6;margin-bottom:20px;min-height:52px}
+.channel-card .ch-models{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.channel-card .ch-model{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:5px 10px;border-radius:6px;background:var(--surface);border:1px solid var(--border);color:var(--text-2);letter-spacing:0;line-height:1.3}
+.channel-card .ch-footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:18px;border-top:1px solid var(--border);margin-top:auto;gap:10px}
+.channel-card .ch-stat{display:flex;flex-direction:column;gap:3px;min-width:0}
+.channel-card .ch-stat-num{font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:var(--text);letter-spacing:-0.01em;white-space:nowrap}
+.channel-card .ch-stat-label{font-size:10.5px;color:var(--text-3);letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap}
+.channel-card.claude{--ch-accent:#f4f5f8}
+.channel-card.claude .ch-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.channel-card.claude-max{--ch-accent:#f4f5f8}
+.channel-card.claude-max .ch-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.channel-card.gemini{--ch-accent:#f4f5f8}
+.channel-card.gemini .ch-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+.channel-card.gpt{--ch-accent:#f4f5f8}
+.channel-card.gpt .ch-logo{background:var(--surface);border-color:var(--border-strong);color:#f4f5f8}
+
+/* ==================== 为什么选择 ==================== */
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:960px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.why-grid{grid-template-columns:1fr}}
+.why-card{padding:30px 26px;border-radius:var(--radius-lg);background:linear-gradient(180deg,var(--bg-2),var(--bg-1));border:1px solid var(--border);transition:all .3s var(--ease)}
+.why-card:hover{border-color:var(--border-glow);transform:translateY(-3px)}
+.why-card .icon{width:42px;height:42px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--text-3)}
+.why-card .icon svg{width:20px;height:20px}
+.why-card h3{font-family:'Sora',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px;letter-spacing:-0.01em}
+.why-card p{font-size:13.5px;color:var(--text-3);line-height:1.6}
+
+
+/* ==================== [NEW] Scroll Progress Bar ==================== */
+.scroll-progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-bright),var(--accent-2));z-index:200;transition:width .08s linear;box-shadow:0 0 12px var(--accent-glow);pointer-events:none}
+
+/* Keep the native cursor; the custom ring felt too distracting on the landing page. */
+.cursor-dot,.cursor-ring{display:none !important}
+
+/* ==================== [NEW] Hero Mouse Spotlight ==================== */
+.hero{--mx:50%;--my:50%}
+.hero-spotlight{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(600px circle at var(--mx) var(--my),rgba(126,139,255,0.14),transparent 45%);opacity:0;transition:opacity .35s var(--ease)}
+.hero:hover .hero-spotlight{opacity:1}
+[data-theme="light"] .hero-spotlight{background:radial-gradient(600px circle at var(--mx) var(--my),rgba(94,106,210,0.08),transparent 45%)}
+
+/* ==================== [NEW] Cards Mouse Spotlight ==================== */
+.feature,.channel-card,.price-card,.qs-card,.why-card,.plan{--x:50%;--y:50%}
+.feature .card-glow,.channel-card .card-glow,.price-card .card-glow,.qs-card .card-glow,.why-card .card-glow,.plan .card-glow{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(360px circle at var(--x) var(--y),rgba(126,139,255,0.12),transparent 45%);opacity:0;transition:opacity .3s var(--ease);z-index:0}
+.feature:hover .card-glow,.channel-card:hover .card-glow,.price-card:hover .card-glow,.qs-card:hover .card-glow,.why-card:hover .card-glow,.plan:hover .card-glow{opacity:1}
+[data-theme="light"] .card-glow{background:radial-gradient(360px circle at var(--x) var(--y),rgba(94,106,210,0.1),transparent 45%) !important}
+
+/* ==================== [NEW] Aurora Mesh Background ==================== */
+.bg-aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict}
+.bg-aurora .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.32;will-change:transform;transform:translateZ(0);backface-visibility:hidden}
+.bg-aurora .blob:nth-child(1){width:560px;height:560px;background:rgba(94,106,210,0.55);top:-10%;left:-10%;animation:auroraFloat1 22s ease-in-out infinite}
+.bg-aurora .blob:nth-child(2){width:480px;height:480px;background:rgba(126,139,255,0.4);top:38%;right:-8%;animation:auroraFloat2 26s ease-in-out infinite}
+.bg-aurora .blob:nth-child(3){width:440px;height:440px;background:rgba(94,106,210,0.32);bottom:-8%;left:30%;animation:auroraFloat3 30s ease-in-out infinite}
+@keyframes auroraFloat1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(110px,90px) scale(1.22)}}
+@keyframes auroraFloat2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-90px,-140px) scale(1.18)}}
+@keyframes auroraFloat3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(140px,-80px) scale(1.1)}}
+[data-theme="light"] .bg-aurora .blob{opacity:.14}
+
+
+/* ==================== [NEW] Hero Network Canvas ==================== */
+.hero-network{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.55;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 30%,transparent 85%);mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 30%,transparent 85%)}
+[data-theme="light"] .hero-network{opacity:.3}
+
+/* ==================== [NEW] Title Shimmer + Gradient Drift ==================== */
+.hero h1 .grad{background-size:220% auto;animation:gradDrift 9s ease-in-out infinite}
+@keyframes gradDrift{0%,100%{background-position:0% center}50%{background-position:100% center}}
+
+/* ==================== [NEW] Tabular nums ==================== */
+.pc-pct .num,.stat .num,.ch-stat-num{font-variant-numeric:tabular-nums}
+
+/* ==================== [NEW] Magnetic Buttons ==================== */
+.btn-primary,.btn-accent{will-change:transform;transition:transform .25s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
+
+/* ==================== [NEW] 3D Marquee ==================== */
+.marquee{perspective:1100px}
+.marquee-track{transform-style:preserve-3d}
+.model-chip{transform:rotateX(4deg);transition:transform .35s var(--ease),color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+.model-chip:hover{transform:rotateX(0) translateY(-3px) scale(1.06)}
+
+/* ==================== [NEW] Copy Check Animation ==================== */
+.qs-copy .copy-icon-box,.qs-copy .copy-check-box{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .2s var(--ease),transform .3s var(--ease)}
+.qs-copy .copy-check-box{opacity:0;transform:scale(.5)}
+.qs-copy .copy-check-box svg path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s .12s var(--ease)}
+.qs-copy.qs-copied .copy-icon-box{opacity:0;transform:scale(.6)}
+.qs-copy.qs-copied .copy-check-box{opacity:1;transform:scale(1)}
+.qs-copy.qs-copied .copy-check-box svg path{stroke-dashoffset:0}
+
+/* ==================== [NEW] Dropdown Stagger ==================== */
+.lang-dd-menu button{opacity:0;transform:translateY(-4px);transition:opacity .22s var(--ease),transform .22s var(--ease),background .15s,color .15s}
+.lang-dd.open .lang-dd-menu button{opacity:1;transform:translateY(0)}
+.lang-dd.open .lang-dd-menu button:nth-child(1){transition-delay:0.03s}
+.lang-dd.open .lang-dd-menu button:nth-child(2){transition-delay:0.08s}
+.lang-dd.open .lang-dd-menu button:nth-child(3){transition-delay:0.13s}
+
+/* ==================== [NEW] Copy Toast ==================== */
+.copy-toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(24px);padding:11px 22px;border-radius:999px;background:rgba(14,15,17,0.96);border:1px solid var(--border-strong);color:var(--text);font-size:13px;box-shadow:0 16px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(126,139,255,0.15);opacity:0;pointer-events:none;transition:all .35s var(--ease);z-index:10000;font-family:'JetBrains Mono',monospace;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+[data-theme="light"] .copy-toast{background:rgba(255,255,255,0.96);color:var(--text);box-shadow:0 16px 40px rgba(0,0,0,0.16),0 0 0 1px rgba(94,106,210,0.18)}
+.footer-contact .contact-val{cursor:pointer;transition:color .2s;position:relative;display:inline-flex;align-items:center;gap:6px}
+.footer-contact .contact-val:hover{color:var(--accent-bright)}
+.footer-contact .contact-val .copy-hint{opacity:0;transition:opacity .2s;color:var(--text-4);display:inline-flex}
+.footer-contact .contact-val:hover .copy-hint{opacity:.6}
+
+/* ==================== [NEW] Terminal Cycle Crossfade ==================== */
+.terminal-body{transition:opacity .3s var(--ease)}
+.terminal-body.fading{opacity:0}
+.terminal-bar .title .tm-lang{transition:color .3s var(--ease)}
+
+/* ==================== [NEW] Card layering for glow ==================== */
+.channel-card,.price-card,.qs-card,.why-card,.feature,.plan{isolation:isolate}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion:reduce){
+  .bg-aurora .blob,.hero h1 .grad,.top-banner .pulse-dot,.status-indicator .green-dot{animation:none !important}
+  .marquee-track{animation-play-state:paused}
+  .cursor-dot,.cursor-ring{display:none}
+}
+
+/* ==================== [NEW+] Price Comparison Bar ==================== */
+.pc-bar{margin:8px 0 22px}
+.pc-bar-track{position:relative;height:6px;border-radius:999px;background:var(--surface-hover);overflow:hidden;border:1px solid var(--border)}
+.pc-bar-fill{position:absolute;top:0;bottom:0;left:0;width:var(--pc-fill,5%);background:linear-gradient(90deg,var(--accent),var(--accent-bright));border-radius:999px;transform:scaleX(0);transform-origin:left center;transition:transform 1.2s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 14px var(--accent-glow)}
+.pc-bar.visible .pc-bar-fill{transform:scaleX(1)}
+.pc-bar-labels{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-3);letter-spacing:0.04em;text-transform:uppercase}
+.pc-bar-labels .you-pay{color:var(--accent-bright);font-weight:600}
+.pc-bar-labels .vs{color:var(--text-4);text-decoration:line-through;text-decoration-thickness:1px;text-underline-offset:3px}
+[data-theme="light"] .pc-bar-track{background:rgba(0,0,0,0.06)}
+
+/* ==================== [NEW+] Hero Badge ==================== */
+.hero-badge{margin-bottom:24px;animation:heroBadgeFloat 4s ease-in-out infinite}
+@keyframes heroBadgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.hero-badge .live-ping{position:relative;width:8px;height:8px;margin-right:2px;flex-shrink:0}
+.hero-badge .live-ping::before,.hero-badge .live-ping::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--accent-bright)}
+.hero-badge .live-ping::after{animation:livePing 2s ease-out infinite;opacity:.6}
+@keyframes livePing{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.8);opacity:0}}
+
+/* ==================== [NEW+] Featured Channel Corner Badge ==================== */
+.channel-card.featured-glow{position:relative;overflow:visible !important;border-color:rgba(126,139,255,0.45) !important;box-shadow:0 0 0 1px rgba(126,139,255,0.18),0 24px 70px -24px rgba(94,106,210,0.55)}
+.channel-card.featured-glow::before{content:'';position:absolute;inset:-3px;border-radius:calc(var(--radius-lg) + 3px);background:conic-gradient(from 0deg,transparent 0%,var(--accent-bright) 18%,transparent 38%,transparent 58%,var(--accent-2) 78%,transparent 100%);animation:featuredSpin 7s linear infinite;z-index:0;filter:blur(12px);opacity:.65;pointer-events:none;will-change:transform}
+.channel-card.featured-glow::after{content:'';position:absolute;inset:0;border-radius:var(--radius-lg);background:linear-gradient(180deg,rgba(94,106,210,0.12),rgba(94,106,210,0.02));pointer-events:none;opacity:1;z-index:0}
+.channel-card.featured-glow > *:not(.featured-badge){position:relative;z-index:1}
+@keyframes featuredSpin{to{transform:rotate(360deg)}}
+.featured-badge{position:absolute;top:-12px;right:18px;z-index:6;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:0.14em;padding:6px 12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;text-transform:uppercase;box-shadow:0 8px 22px rgba(94,106,210,0.55),0 0 0 1px rgba(255,255,255,0.08) inset;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.featured-badge::before{content:'';width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,255,255,0.8);animation:pulse 1.6s ease-in-out infinite}
+[data-theme="light"] .channel-card.featured-glow{box-shadow:0 0 0 1px rgba(94,106,210,0.18),0 24px 70px -24px rgba(94,106,210,0.35)}
+[data-theme="light"] .channel-card.featured-glow::before{opacity:.4;filter:blur(14px)}
+
+/* ==================== [NEW+] Chip Scramble Highlight ==================== */
+.ch-model.scrambling{color:var(--accent-bright);border-color:rgba(126,139,255,0.35);background:rgba(126,139,255,0.08);transition:all .2s var(--ease)}
+[data-theme="light"] .ch-model.scrambling{background:rgba(94,106,210,0.08);border-color:rgba(94,106,210,0.3)}
+
+/* ==================== [PERF] Scroll Performance Optimizations ==================== */
+.scroll-progress{will-change:width}
+.hero-network{will-change:opacity}
+.terminal{will-change:transform}
+.bg-grid{contain:strict}
+.bg-grain{contain:strict}
+.bg-atmosphere{contain:strict;pointer-events:none}
+/* Pause heavy animations when offscreen */
+.bg-aurora.offscreen .blob,.hero-network.offscreen{animation-play-state:paused !important;visibility:hidden}
+.marquee-track.offscreen.offscreen{animation-play-state:paused !important}
+
+/* ==================== [MOBILE] Mobile Adaptation Fixes ==================== */
+@media (max-width:960px){
+  /* Disable terminal 3D parallax on mobile (causes scroll jank) */
+  .terminal{transform:none !important;transition:none !important}
+  /* Simplify aurora on tablet */
+  .bg-aurora .blob{filter:blur(56px);opacity:.22}
+  .bg-aurora .blob:nth-child(3){display:none}
+}
+@media (max-width:768px){
+  /* Hide hero canvas network on small screens (heavy) */
+  .hero-network{display:none}
+  /* Hide grain noise (texture costs full-viewport repaint on every scroll on mobile) */
+  .bg-grain{display:none}
+  /* Featured card: reposition badge inline on mobile to prevent overflow */
+  .featured-badge{top:-10px;right:14px;padding:5px 10px;font-size:9px;letter-spacing:0.1em}
+  /* Reduce featured glow blur on mobile */
+  .channel-card.featured-glow::before{filter:blur(8px);opacity:.5}
+  /* Reduce hero spotlight cost */
+  .hero-spotlight{display:none}
+  /* Reduce magnetic / count-up overhead by smaller blur on aurora */
+  .bg-aurora .blob{filter:blur(48px);opacity:.18}
+}
+@media (max-width:560px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .top-notice-inner{justify-content:center;gap:8px;padding:7px 12px;font-size:11px;white-space:nowrap;overflow:hidden}
+  .top-notice-inner a:last-child{display:none}
+  .nav{overflow:visible}
+  .nav-inner{height:64px;padding:0 18px;gap:0;justify-content:center}
+  .nav-brand{gap:8px;font-size:18px;line-height:1;min-width:0;flex:0 1 auto}
+  .nav-brand .nav-logo{width:24px;height:24px}
+  .nav-brand span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:176px}
+  .nav-actions{display:none}
+  .lang-dd-trigger{height:38px;width:38px;padding:0;justify-content:center;gap:0;font-size:12px;border-radius:10px}
+  .lang-dd-trigger span,.lang-dd-trigger .chev{display:none}
+  .lang-dd-trigger .globe{width:13px;height:13px}
+  .lang-dd-menu{right:0;min-width:132px}
+  .hero{padding:42px 0 52px;overflow:hidden;align-items:flex-start}
+  .hero::before{width:520px;height:520px;top:-10%}
+  .hero-inner{padding:0 18px;gap:34px;display:flex;flex-direction:column;align-items:stretch;max-width:100%}
+  .hero-inner > div:first-child{text-align:center;max-width:100%}
+  /* Hero badge wraps text gracefully */
+  .hero-badge{font-size:11px;padding:5px 10px;margin:0 auto 22px;max-width:100%;gap:8px}
+  .hero-badge svg{display:none}
+  .hero h1{font-size:clamp(44px,13.5vw,54px);line-height:1.05;letter-spacing:-0.04em;margin-bottom:22px;max-width:100%}
+  .hero p.hero-sub{font-size:16.5px;line-height:1.72;margin:0 auto 30px;max-width:330px;word-break:normal;overflow-wrap:break-word}
+  .hero-ctas{gap:10px;flex-wrap:nowrap;justify-content:center}
+  .hero-ctas .btn{height:42px;padding:0 14px;font-size:13px;border-radius:10px;min-width:0}
+  .hero-visual{width:100%;max-width:100%;overflow:hidden}
+  .terminal{width:100%;border-radius:18px;box-shadow:0 22px 56px -30px rgba(0,0,0,0.55),0 0 0 1px rgba(126,139,255,0.08);overflow:hidden}
+  .terminal-bar{padding:12px 14px;gap:8px}
+  .terminal-bar .tdot{width:10px;height:10px}
+  .terminal-bar .title{display:none}
+  .terminal-body{padding:18px 18px 22px;font-size:11.5px;line-height:1.7;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;overflow-x:hidden;min-height:230px;max-height:292px}
+  .terminal-body .line{min-width:0}
+  /* Card hover transform disabled — feels broken on touch */
+  .channel-card:hover,.why-card:hover,.qs-card:hover,.price-card:hover{transform:none}
+  /* Reduce paddings */
+  .section{padding:56px 0}
+}
+/* No-hover devices: disable cursor + heavy hover effects */
+@media (hover:none){
+  .hero-spotlight{display:none}
+  .card-glow{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="copy-toast" id="copyToast">Copied</div>
+
+<div class="bg-aurora"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+<div class="bg-atmosphere"></div>
+<div class="bg-grid"></div>
+<div class="bg-grain"></div>
+
+<div class="top-notice">
+  <div class="top-notice-inner">
+    <span data-i18n="top_rate">充值汇率 1¥ = 1$</span>
+    <span class="sep">|</span>
+    <a href="#contact" data-i18n="top_contact">充值请联系客服</a>
+    <span class="sep">|</span>
+    <a href="/docs.html" data-i18n="top_docs">查看文档</a>
+  </div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BlueFuture Studio">
+        <defs>
+          <linearGradient id="navLogoGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#b1b8ff"/>
+            <stop offset="55%" stop-color="#7f8aff"/>
+            <stop offset="100%" stop-color="#5e6ad2"/>
+          </linearGradient>
+          <linearGradient id="navLogoNode" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#cdd2ff"/>
+            <stop offset="100%" stop-color="#7f8aff"/>
+          </linearGradient>
+          <radialGradient id="navLogoHub" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+            <stop offset="60%" stop-color="#9ba3ff" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#5e6ad2" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="16" fill="url(#navLogoHub)"/>
+        <g fill="none" stroke="url(#navLogoGrad)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="32" cy="22" r="10"/>
+          <circle cx="32" cy="22" r="10" transform="rotate(120 32 32)"/>
+          <circle cx="32" cy="22" r="10" transform="rotate(240 32 32)"/>
+        </g>
+        <g fill="url(#navLogoNode)" stroke="rgba(12,13,15,0.6)" stroke-width="0.6">
+          <circle cx="32" cy="12" r="2.6"/>
+          <circle cx="49.32" cy="42" r="2.6"/>
+          <circle cx="14.68" cy="42" r="2.6"/>
+        </g>
+        <circle cx="32" cy="32" r="2.4" fill="#ffffff"/>
+      </svg>
+      <span>BlueFuture Studio</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" data-i18n="nav_home">首页</a>
+      <a href="/console" data-i18n="nav_console">控制台</a>
+      <a href="/pricing" data-i18n="nav_pricing">模型广场</a>
+      <a href="/docs.html" data-i18n="nav_docs">文档</a>
+      <a target="_top" href="/status-bluefuture.html" data-i18n="nav_status">状态</a>
+    </div>
+    <div class="nav-actions">
+      <div class="lang-dd" id="themeDD">
+        <button class="lang-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+          <svg id="themeIcon" class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <span id="themeDDLabel">浅色</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5l3 3 3-3"/></svg>
+        </button>
+        <div class="lang-dd-menu" role="menu"></div>
+      </div>
+      <div class="lang-dd" id="langDD">
+        <button class="lang-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+          <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          <span id="langDDLabel">中文</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5l3 3 3-3"/></svg>
+        </button>
+        <div class="lang-dd-menu" role="menu"></div>
+      </div>
+      <a href="/sign-in" class="btn btn-link" data-i18n="auth_login">登录</a>
+      <a href="/console" class="btn btn-primary">
+        <span data-i18n="cta_get_started">开始使用</span>
+        <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<section class="hero">
+  <canvas class="hero-network" id="heroNetwork" aria-hidden="true"></canvas>
+  <div class="hero-spotlight" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div>
+      <a href="/status-bluefuture.html" target="_top" class="hero-badge reveal">
+        <span class="tag" data-i18n="hero_badge_tag">NEW</span>
+        <span class="live-ping"></span>
+        <span data-i18n="hero_badge_text">状态监控页已上线</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <h1 class="reveal">
+        <span data-i18n="hero_title_1">一个入口，</span>
+        <span class="grad" data-i18n="hero_title_2">用好所有 AI</span>
+      </h1>
+      <p class="hero-sub reveal" data-i18n="hero_sub">把选模型、管额度、接 API 变成三个清楚动作。复杂留在后台，页面只保留你下一步要做的事。</p>
+      <div class="hero-ctas reveal">
+        <a href="/console" class="btn btn-primary">
+          <span data-i18n="hero_cta_primary">进入控制台</span>
+          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="/docs.html" class="btn btn-ghost">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2H4.5A1.5 1.5 0 003 3.5v9A1.5 1.5 0 004.5 14h7a1.5 1.5 0 001.5-1.5V6z"/><path d="M9 2v4h4"/><path d="M6 9h4M6 11.5h3"/></svg>
+          <span data-i18n="hero_cta_secondary">查看文档</span>
+        </a>
+      </div>
+
+    </div>
+    <div class="hero-visual reveal">
+      <div class="terminal">
+        <div class="terminal-glow"></div>
+        <div class="terminal-bar">
+          <div class="dots">
+            <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
+          </div>
+          <div class="title">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7l2 2-2 2M9 11h3"/></svg>
+            <span>curl — bluefuture.studio</span>
+          </div>
+        </div>
+        <div class="terminal-body"><span class="line"><span class="c-prompt">$</span> curl https://bluefuture.studio/v1/chat/completions \
+</span><span class="line">  -H <span class="c-str">"Authorization: Bearer $KEY"</span> \
+</span><span class="line">  -H <span class="c-str">"Content-Type: application/json"</span> \
+</span><span class="line">  -d <span class="c-str">'{</span>
+</span><span class="line">    <span class="c-str">"model": </span><span class="c-key">"claude-sonnet-4-6"</span><span class="c-str">,</span>
+</span><span class="line">    <span class="c-str">"messages": [{ </span><span class="c-key">"role"</span><span class="c-str">: </span><span class="c-key">"user"</span><span class="c-str">, </span><span class="c-key">"content"</span><span class="c-str">: </span><span class="c-key">"Hi"</span><span class="c-str"> }]</span>
+</span><span class="line">  <span class="c-str">}'</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================== 价格优势 ================== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal"><h2><span data-i18n="price_title_1">价格优势</span></h2>
+      <p data-i18n="price_sub">把昂贵的海外顶尖模型转化为更容易接入、更容易管理的生产力能力。</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card claude reveal">
+        <div class="pc-brand">
+          <div class="pc-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
+          </div>
+          <div>
+            <div class="pc-name">Claude</div>
+            <div class="pc-vendor">Anthropic</div>
+          </div>
+        </div>
+        <div class="pc-pct">
+          <span class="num">5</span><span class="unit">%</span>
+        </div>
+        <div class="pc-note" data-i18n="price_claude_note">Claude 官方 API 价格的</div>
+        <div class="pc-bar" data-pct="5" style="--pc-fill:5%">
+          <div class="pc-bar-track"><div class="pc-bar-fill"></div></div>
+          <div class="pc-bar-labels"><span class="you-pay" data-i18n="pc_bar_you">你付 5%</span><span class="vs" data-i18n="pc_bar_vs">官方 100%</span></div>
+        </div>
+        <div class="pc-desc" data-i18n="price_claude_desc">接入 Claude Sonnet、Opus、Haiku 全系列，支持 1M 上下文、缓存与流式输出。</div>
+      </div>
+      <div class="price-card gpt reveal">
+        <div class="pc-brand">
+          <div class="pc-logo">
+            <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.949 6.547a3.94 3.94 0 0 0-.348-3.273 4.11 4.11 0 0 0-4.4-1.934A4.1 4.1 0 0 0 8.423.2 4.15 4.15 0 0 0 6.305.086a4.1 4.1 0 0 0-1.891.948 4.04 4.04 0 0 0-1.158 1.753 4.1 4.1 0 0 0-1.563.679A4 4 0 0 0 .554 4.72a3.99 3.99 0 0 0 .502 4.731 3.94 3.94 0 0 0 .346 3.274 4.11 4.11 0 0 0 4.402 1.933c.382.425.852.764 1.377.995.526.231 1.095.35 1.67.346 1.78.002 3.358-1.132 3.901-2.804a4.1 4.1 0 0 0 1.563-.68 4 4 0 0 0 1.14-1.253 3.99 3.99 0 0 0-.506-4.716m-6.097 8.406a3.05 3.05 0 0 1-1.945-.694l.096-.054 3.23-1.838a.53.53 0 0 0 .265-.455v-4.49l1.366.778q.02.011.025.035v3.722c-.003 1.653-1.361 2.992-3.037 2.996m-6.53-2.75a2.95 2.95 0 0 1-.36-2.01l.095.057L5.29 12.09a.53.53 0 0 0 .527 0l3.949-2.246v1.555a.05.05 0 0 1-.022.041L6.473 13.3c-1.454.826-3.311.335-4.15-1.098m-.85-6.94A3.02 3.02 0 0 1 3.07 3.949v3.785a.51.51 0 0 0 .262.451l3.93 2.237-1.366.779a.05.05 0 0 1-.048 0L2.585 9.342a2.98 2.98 0 0 1-1.113-4.094zm11.216 2.571L8.747 5.576l1.362-.776a.05.05 0 0 1 .048 0l3.265 1.86a3 3 0 0 1 1.173 1.207 2.96 2.96 0 0 1-.27 3.2 3.05 3.05 0 0 1-1.36.997V8.279a.52.52 0 0 0-.276-.445m1.36-2.015-.097-.057-3.226-1.855a.53.53 0 0 0-.53 0L6.249 6.153V4.598a.04.04 0 0 1 .019-.04L9.533 2.7a3.07 3.07 0 0 1 3.257.139c.474.325.843.778 1.066 1.303.223.526.289 1.103.191 1.664zM5.503 8.575 4.139 7.8a.05.05 0 0 1-.026-.037V4.049c0-.57.166-1.127.476-1.607s.752-.864 1.275-1.105a3.08 3.08 0 0 1 3.234.41l-.096.054-3.23 1.838a.53.53 0 0 0-.265.455zm.742-1.577 1.758-1 1.762 1v2l-1.755 1-1.762-1z"/></svg>
+          </div>
+          <div>
+            <div class="pc-name">GPT</div>
+            <div class="pc-vendor">OpenAI</div>
+          </div>
+        </div>
+        <div class="pc-pct">
+          <span class="num">3</span><span class="unit">%</span>
+        </div>
+        <div class="pc-note" data-i18n="price_gpt_note">GPT 官方 API 价格的</div>
+        <div class="pc-bar" data-pct="3" style="--pc-fill:3%">
+          <div class="pc-bar-track"><div class="pc-bar-fill"></div></div>
+          <div class="pc-bar-labels"><span class="you-pay" data-i18n="pc_bar_you_gpt">你付 3%</span><span class="vs" data-i18n="pc_bar_vs">官方 100%</span></div>
+        </div>
+        <div class="pc-desc" data-i18n="price_gpt_desc">接入 GPT-5、Codex 及全部开放模型，支持 Responses API 与工具调用。</div>
+      </div>
+      <div class="price-card gemini reveal">
+        <div class="pc-brand">
+          <div class="pc-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gemGrad" x1="0" y1="0" x2="24" y2="24"><stop offset="0" stop-color="#f4f5f8"/><stop offset="1" stop-color="#b4b8c0"/></linearGradient></defs><path fill="url(#gemGrad)" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+          </div>
+          <div>
+            <div class="pc-name">Gemini</div>
+            <div class="pc-vendor">Google</div>
+          </div>
+        </div>
+        <div class="pc-pct">
+          <span class="num">10</span><span class="unit">%</span>
+        </div>
+        <div class="pc-note" data-i18n="price_gemini_note">Gemini 官方 API 价格的</div>
+        <div class="pc-bar" data-pct="10" style="--pc-fill:10%">
+          <div class="pc-bar-track"><div class="pc-bar-fill"></div></div>
+          <div class="pc-bar-labels"><span class="you-pay" data-i18n="pc_bar_you_gemini">你付 10%</span><span class="vs" data-i18n="pc_bar_vs">官方 100%</span></div>
+        </div>
+        <div class="pc-desc" data-i18n="price_gemini_desc">接入 Gemini 2.5/3.0 Pro、Flash 全系列，支持超长上下文与多模态输入。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 模型渠道 ================== -->
+<section class="section">
+  <div class="channels-wide">
+    <div class="section-head reveal"><h2><span data-i18n="ch_title_1">模型</span> <span data-i18n="ch_title_2">渠道</span></h2>
+      <p data-i18n="ch_sub">按模型能力和常见接入场景拆分渠道展示，让你先看适配，再进入控制台继续配置。</p>
+    </div>
+    <div class="channels-grid">
+      <div class="channel-card claude reveal">
+        <div class="ch-head">
+          <div class="ch-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
+          </div>
+          <div class="ch-head-text">
+            <div class="ch-name">Claude-Mixed</div>
+            <div class="ch-ratio">
+              <span data-i18n="ch_mixed_ratio_r">倍率 1 : 0.5</span>
+              <span data-i18n="ch_mixed_ratio_v">1元 ≈ 2.5 美元额度</span>
+            </div>
+          </div>
+        </div>
+        <div class="ch-desc" data-i18n="ch_mixed_desc">高缓存混合通道，适合大多数稳定调用场景。</div>
+        <div class="ch-models">
+          <span class="ch-model">claude-opus-4-7</span>
+          <span class="ch-model">claude-opus-4-6</span>
+          <span class="ch-model">claude-opus-4-5</span>
+          <span class="ch-model">claude-sonnet-4-6</span>
+          <span class="ch-model">claude-sonnet-4-5</span>
+        </div>
+        <div class="ch-footer">
+          <div class="ch-stat"><div class="ch-stat-num">200K</div><div class="ch-stat-label" data-i18n="ch_context">上下文</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">60%</div><div class="ch-stat-label" data-i18n="ch_cache">缓存率</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">96.5%</div><div class="ch-stat-label" data-i18n="ch_uptime">可用性</div></div>
+        </div>
+      </div>
+      <div class="channel-card claude-max featured-glow reveal">
+        <span class="featured-badge" data-i18n="featured_badge">BEST VALUE</span>
+        <div class="ch-head">
+          <div class="ch-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
+          </div>
+          <div class="ch-head-text">
+            <div class="ch-name">Claude Code Max 20x</div>
+            <div class="ch-ratio">
+              <span data-i18n="ch_max_ratio_r">倍率 1 : 1.7</span>
+              <span data-i18n="ch_max_ratio_v">1元 ≈ 0.6 美元额度</span>
+            </div>
+          </div>
+        </div>
+        <div class="ch-desc" data-i18n="ch_max_desc">偏向满血输出与超长上下文，适合高要求编码工作流。</div>
+        <div class="ch-models">
+          <span class="ch-model">claude-opus-4-7 (1M)</span>
+          <span class="ch-model">claude-opus-4-6 (1M)</span>
+          <span class="ch-model">claude-opus-4-5</span>
+          <span class="ch-model">claude-sonnet-4-6</span>
+          <span class="ch-model">claude-sonnet-4-5</span>
+        </div>
+        <div class="ch-footer">
+          <div class="ch-stat"><div class="ch-stat-num">1M</div><div class="ch-stat-label" data-i18n="ch_context2">上下文</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">80%+</div><div class="ch-stat-label" data-i18n="ch_cache2">缓存率</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">95.6%</div><div class="ch-stat-label" data-i18n="ch_uptime2">可用性</div></div>
+        </div>
+      </div>
+      <div class="channel-card gemini reveal">
+        <div class="ch-head">
+          <div class="ch-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gemGrad2" x1="0" y1="0" x2="24" y2="24"><stop offset="0" stop-color="#f4f5f8"/><stop offset="1" stop-color="#b4b8c0"/></linearGradient></defs><path fill="url(#gemGrad2)" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+          </div>
+          <div class="ch-head-text">
+            <div class="ch-name">Gemini3</div>
+            <div class="ch-ratio">
+              <span data-i18n="ch_gemini_ratio_r">倍率 1 : 1.1</span>
+              <span data-i18n="ch_gemini_ratio_v">1元 ≈ 0.9 美元额度</span>
+            </div>
+          </div>
+        </div>
+        <div class="ch-desc" data-i18n="ch_gemini_desc">更适合 API 与对话式接入，覆盖常见 Gemini 调用场景。</div>
+        <div class="ch-models">
+          <span class="ch-model">gemini-3.1-pro-preview</span>
+          <span class="ch-model">gemini-3-pro-preview</span>
+          <span class="ch-model">gemini-3-flash-preview</span>
+          <span class="ch-model">gemini-2.5-flash</span>
+        </div>
+        <div class="ch-footer">
+          <div class="ch-stat"><div class="ch-stat-num">2M</div><div class="ch-stat-label" data-i18n="ch_context3">上下文</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">T1/T3</div><div class="ch-stat-label" data-i18n="ch_tier">账号层级</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">92.2%</div><div class="ch-stat-label" data-i18n="ch_uptime3">可用性</div></div>
+        </div>
+      </div>
+      <div class="channel-card gpt reveal">
+        <div class="ch-head">
+          <div class="ch-logo">
+            <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.949 6.547a3.94 3.94 0 0 0-.348-3.273 4.11 4.11 0 0 0-4.4-1.934A4.1 4.1 0 0 0 8.423.2 4.15 4.15 0 0 0 6.305.086a4.1 4.1 0 0 0-1.891.948 4.04 4.04 0 0 0-1.158 1.753 4.1 4.1 0 0 0-1.563.679A4 4 0 0 0 .554 4.72a3.99 3.99 0 0 0 .502 4.731 3.94 3.94 0 0 0 .346 3.274 4.11 4.11 0 0 0 4.402 1.933c.382.425.852.764 1.377.995.526.231 1.095.35 1.67.346 1.78.002 3.358-1.132 3.901-2.804a4.1 4.1 0 0 0 1.563-.68 4 4 0 0 0 1.14-1.253 3.99 3.99 0 0 0-.506-4.716m-6.097 8.406a3.05 3.05 0 0 1-1.945-.694l.096-.054 3.23-1.838a.53.53 0 0 0 .265-.455v-4.49l1.366.778q.02.011.025.035v3.722c-.003 1.653-1.361 2.992-3.037 2.996m-6.53-2.75a2.95 2.95 0 0 1-.36-2.01l.095.057L5.29 12.09a.53.53 0 0 0 .527 0l3.949-2.246v1.555a.05.05 0 0 1-.022.041L6.473 13.3c-1.454.826-3.311.335-4.15-1.098m-.85-6.94A3.02 3.02 0 0 1 3.07 3.949v3.785a.51.51 0 0 0 .262.451l3.93 2.237-1.366.779a.05.05 0 0 1-.048 0L2.585 9.342a2.98 2.98 0 0 1-1.113-4.094zm11.216 2.571L8.747 5.576l1.362-.776a.05.05 0 0 1 .048 0l3.265 1.86a3 3 0 0 1 1.173 1.207 2.96 2.96 0 0 1-.27 3.2 3.05 3.05 0 0 1-1.36.997V8.279a.52.52 0 0 0-.276-.445m1.36-2.015-.097-.057-3.226-1.855a.53.53 0 0 0-.53 0L6.249 6.153V4.598a.04.04 0 0 1 .019-.04L9.533 2.7a3.07 3.07 0 0 1 3.257.139c.474.325.843.778 1.066 1.303.223.526.289 1.103.191 1.664zM5.503 8.575 4.139 7.8a.05.05 0 0 1-.026-.037V4.049c0-.57.166-1.127.476-1.607s.752-.864 1.275-1.105a3.08 3.08 0 0 1 3.234.41l-.096.054-3.23 1.838a.53.53 0 0 0-.265.455zm.742-1.577 1.758-1 1.762 1v2l-1.755 1-1.762-1z"/></svg>
+          </div>
+          <div class="ch-head-text">
+            <div class="ch-name">Codex-GPT</div>
+            <div class="ch-ratio">
+              <span data-i18n="ch_codex_ratio_r">倍率 1 : 0.2</span>
+              <span data-i18n="ch_codex_ratio_v">1元 ≈ 5 美元额度</span>
+            </div>
+          </div>
+        </div>
+        <div class="ch-desc" data-i18n="ch_codex_desc">偏向编程与自动化使用，适合 Codex 与相关开发链路。</div>
+        <div class="ch-models">
+          <span class="ch-model">gpt-5</span>
+          <span class="ch-model">gpt-5.1-codex-max</span>
+          <span class="ch-model">gpt-5.1-codex-mini</span>
+          <span class="ch-model">gpt-5.2</span>
+        </div>
+        <div class="ch-footer">
+          <div class="ch-stat"><div class="ch-stat-num">400K</div><div class="ch-stat-label" data-i18n="ch_context4">上下文</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">Plus/Pro</div><div class="ch-stat-label" data-i18n="ch_subscription">订阅级别</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">97.5%</div><div class="ch-stat-label" data-i18n="ch_uptime4">可用性</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 命令行级极简部署 ================== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal"><h2><span data-i18n="qs_title_1">命令行级</span> <span data-i18n="qs_title_2">极简部署</span></h2>
+      <p data-i18n="qs_sub">无需反复调试环境变量，直接按常见开发工具给出最短接入路径。</p>
+    </div>
+    <div class="quickstart-grid">
+      <div class="qs-card reveal">
+        <div class="qs-head">
+          <div class="qs-head-left">
+            <div class="qs-icon claude">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
+            </div>
+            <div class="qs-name">Claude Code</div>
+          </div>
+          <div class="qs-badge">SH</div>
+        </div>
+        <div class="qs-body">
+          <div class="qs-code" id="qsCode1"><span class="prompt">$</span>curl -fsSL https://bluefuture.studio/sh/claudecode.sh | bash<button class="qs-copy" data-copy="curl -fsSL https://bluefuture.studio/sh/claudecode.sh | bash"><span class="copy-icon-box"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1 1 0 011-1h8"/></svg></span><span class="copy-check-box"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span></button></div>
+          <div class="qs-desc" data-i18n="qs_claude_desc">一条命令完成 Claude Code 的安装与初始化，自动写入 BlueFuture Studio Base URL。</div>
+        </div>
+      </div>
+      <div class="qs-card reveal">
+        <div class="qs-head">
+          <div class="qs-head-left">
+            <div class="qs-icon openai">
+              <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.949 6.547a3.94 3.94 0 0 0-.348-3.273 4.11 4.11 0 0 0-4.4-1.934A4.1 4.1 0 0 0 8.423.2 4.15 4.15 0 0 0 6.305.086a4.1 4.1 0 0 0-1.891.948 4.04 4.04 0 0 0-1.158 1.753 4.1 4.1 0 0 0-1.563.679A4 4 0 0 0 .554 4.72a3.99 3.99 0 0 0 .502 4.731 3.94 3.94 0 0 0 .346 3.274 4.11 4.11 0 0 0 4.402 1.933c.382.425.852.764 1.377.995.526.231 1.095.35 1.67.346 1.78.002 3.358-1.132 3.901-2.804a4.1 4.1 0 0 0 1.563-.68 4 4 0 0 0 1.14-1.253 3.99 3.99 0 0 0-.506-4.716m-6.097 8.406a3.05 3.05 0 0 1-1.945-.694l.096-.054 3.23-1.838a.53.53 0 0 0 .265-.455v-4.49l1.366.778q.02.011.025.035v3.722c-.003 1.653-1.361 2.992-3.037 2.996m-6.53-2.75a2.95 2.95 0 0 1-.36-2.01l.095.057L5.29 12.09a.53.53 0 0 0 .527 0l3.949-2.246v1.555a.05.05 0 0 1-.022.041L6.473 13.3c-1.454.826-3.311.335-4.15-1.098m-.85-6.94A3.02 3.02 0 0 1 3.07 3.949v3.785a.51.51 0 0 0 .262.451l3.93 2.237-1.366.779a.05.05 0 0 1-.048 0L2.585 9.342a2.98 2.98 0 0 1-1.113-4.094zm11.216 2.571L8.747 5.576l1.362-.776a.05.05 0 0 1 .048 0l3.265 1.86a3 3 0 0 1 1.173 1.207 2.96 2.96 0 0 1-.27 3.2 3.05 3.05 0 0 1-1.36.997V8.279a.52.52 0 0 0-.276-.445m1.36-2.015-.097-.057-3.226-1.855a.53.53 0 0 0-.53 0L6.249 6.153V4.598a.04.04 0 0 1 .019-.04L9.533 2.7a3.07 3.07 0 0 1 3.257.139c.474.325.843.778 1.066 1.303.223.526.289 1.103.191 1.664zM5.503 8.575 4.139 7.8a.05.05 0 0 1-.026-.037V4.049c0-.57.166-1.127.476-1.607s.752-.864 1.275-1.105a3.08 3.08 0 0 1 3.234.41l-.096.054-3.23 1.838a.53.53 0 0 0-.265.455zm.742-1.577 1.758-1 1.762 1v2l-1.755 1-1.762-1z"/></svg>
+            </div>
+            <div class="qs-name">Codex</div>
+          </div>
+          <div class="qs-badge">SH</div>
+        </div>
+        <div class="qs-body">
+          <div class="qs-code"><span class="prompt">$</span>curl -fsSL https://bluefuture.studio/sh/codex.sh | bash<button class="qs-copy" data-copy="curl -fsSL https://bluefuture.studio/sh/codex.sh | bash"><span class="copy-icon-box"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1 1 0 011-1h8"/></svg></span><span class="copy-check-box"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span></button></div>
+          <div class="qs-desc" data-i18n="qs_codex_desc">OpenAI Codex CLI 一键接入，包含身份、模型与网关地址配置。</div>
+        </div>
+      </div>
+      <div class="qs-card reveal">
+        <div class="qs-head">
+          <div class="qs-head-left">
+            <div class="qs-icon opencode">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg>
+            </div>
+            <div class="qs-name">OpenCode</div>
+          </div>
+          <div class="qs-badge">SH</div>
+        </div>
+        <div class="qs-body">
+          <div class="qs-code"><span class="prompt">$</span>curl -fsSL https://bluefuture.studio/sh/opencode.sh | bash<button class="qs-copy" data-copy="curl -fsSL https://bluefuture.studio/sh/opencode.sh | bash"><span class="copy-icon-box"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1 1 0 011-1h8"/></svg></span><span class="copy-check-box"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span></button></div>
+          <div class="qs-desc" data-i18n="qs_opencode_desc">开源 OpenCode 工具链整合，直接使用统一网关的所有模型。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 为什么选择 BlueFuture Studio ================== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal"><h2><span data-i18n="why_title_1">为什么选择</span> <span>BlueFuture Studio</span></h2>
+      <p data-i18n="why_sub">统一入口、兼容协议和清晰计费，让团队更容易把 BlueFuture Studio 接进真实工作流。</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3 data-i18n="why_1_title">价格更低</h3>
+        <p data-i18n="why_1_desc">把海外顶尖模型接入成本压到更容易接受的区间，让测试与正式调用都更可控。</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3 data-i18n="why_2_title">部署更快</h3>
+        <p data-i18n="why_2_desc">只需要替换 Base URL，就能把现有脚本、SDK 和工作流接进统一网关。</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+        <h3 data-i18n="why_3_title">支持更多</h3>
+        <p data-i18n="why_3_desc">Claude、GPT、Gemini 等模型能力统一展示和接入，减少多套入口的维护成本。</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3 data-i18n="why_4_title">安全可靠</h3>
+        <p data-i18n="why_4_desc">品牌前台、控制台和 API 网关入口收拢到一个站点，路径清晰，维护简单。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <h2><span data-i18n="cta_title_1">准备好开始了吗？</span></h2>
+      <p data-i18n="cta_sub">只需几行代码，即可接入全球顶尖大模型。免费额度开箱即用。</p>
+      <div class="cta-buttons">
+        <a href="/sign-up" class="btn btn-primary">
+          <span data-i18n="cta_primary">免费注册</span>
+          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="/docs.html" class="btn btn-ghost" data-i18n="cta_secondary">阅读文档</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg class="nav-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BlueFuture Studio">
+            <defs>
+              <linearGradient id="footLogoGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#b1b8ff"/>
+                <stop offset="55%" stop-color="#7f8aff"/>
+                <stop offset="100%" stop-color="#5e6ad2"/>
+              </linearGradient>
+              <linearGradient id="footLogoNode" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cdd2ff"/>
+                <stop offset="100%" stop-color="#7f8aff"/>
+              </linearGradient>
+              <radialGradient id="footLogoHub" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                <stop offset="60%" stop-color="#9ba3ff" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#5e6ad2" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="32" cy="32" r="16" fill="url(#footLogoHub)"/>
+            <g fill="none" stroke="url(#footLogoGrad)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="32" cy="22" r="10"/>
+              <circle cx="32" cy="22" r="10" transform="rotate(120 32 32)"/>
+              <circle cx="32" cy="22" r="10" transform="rotate(240 32 32)"/>
+            </g>
+            <g fill="url(#footLogoNode)" stroke="rgba(12,13,15,0.6)" stroke-width="0.6">
+              <circle cx="32" cy="12" r="2.6"/>
+              <circle cx="49.32" cy="42" r="2.6"/>
+              <circle cx="14.68" cy="42" r="2.6"/>
+            </g>
+            <circle cx="32" cy="32" r="2.4" fill="#ffffff"/>
+          </svg>
+          <span>BlueFuture Studio</span>
+        </div>
+        <p class="footer-desc" data-i18n="footer_desc">面向生产环境的统一 AI 模型网关。兼容 OpenAI 协议，支持 40+ 主流大模型。</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer_product">产品</h4>
+        <ul>
+          <li><a href="/console" data-i18n="footer_console">控制台</a></li>
+          <li><a href="/pricing" data-i18n="footer_pricing">模型广场</a></li>
+          <li><a href="/docs.html" data-i18n="footer_docs">文档</a></li>
+          <li><a target="_top" href="/status-bluefuture.html" data-i18n="footer_status_link">服务状态</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_resources">资源</h4>
+        <ul>
+          <li><a href="/docs-api.html" data-i18n="footer_api_ref">API 参考</a></li>
+          <li><a href="/docs-guide.html" data-i18n="footer_guides">使用指南</a></li>
+          <li><a href="/docs-tools.html" data-i18n="footer_tools">工具</a></li>
+          <li><a href="/docs-help.html" data-i18n="footer_help">帮助中心</a></li>
+        </ul>
+      </div>
+      <div id="contact">
+        <h4 data-i18n="footer_contact_title">联系方式</h4>
+        <ul class="footer-contact">
+          <li><span class="contact-label" data-i18n="contact_wechat">微信</span><span class="contact-val">roselove3000</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-compliance" data-i18n="footer_compliance">使用本服务时请遵守《生成式人工智能服务管理暂行办法》及相关适用法律法规，不得利用大模型生成或传播违法违规内容。</div>
+    <div class="footer-bottom">
+      <div>© <span id="year"></span> BlueFuture Studio. <span data-i18n="footer_copyright">保留所有权利</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const i18n = {
+  zh: {
+    banner_text:'状态监控页已上线，实时追踪 40+ 模型可用性',
+    banner_link:'查看状态 →',
+    nav_home:'首页',nav_console:'控制台',nav_pricing:'模型广场',nav_docs:'文档',nav_status:'状态',
+    auth_login:'登录',cta_get_started:'开始使用',
+    top_rate:'充值汇率 1¥ = 1$',top_contact:'充值请联系客服',top_docs:'查看文档',
+    hero_badge_tag:'NEW',hero_badge_text:'状态监控页已上线',
+    hero_title_1:'一个入口，',hero_title_2:'用好所有 AI',
+    hero_sub:'把选模型、管额度、接 API 变成三个清楚动作。复杂留在后台，页面只保留你下一步要做的事。',
+    hero_cta_primary:'进入控制台',hero_cta_secondary:'查看文档',
+    hero_meta_live:'所有系统运行正常',hero_meta_shortcut:'快速搜索',
+    price_eyebrow:'PRICING',price_title_1:'价格优势',
+    price_sub:'把昂贵的海外顶尖模型转化为更容易接入、更容易管理的生产力能力。',
+    price_claude_note:'Claude 官方 API 价格的',
+    price_claude_desc:'接入 Claude Sonnet、Opus、Haiku 全系列，支持 1M 上下文、缓存与流式输出。',
+    price_gpt_note:'GPT 官方 API 价格的',
+    price_gpt_desc:'接入 GPT-5、Codex 及全部开放模型，支持 Responses API 与工具调用。',
+    price_gemini_note:'Gemini 官方 API 价格的',
+    price_gemini_desc:'接入 Gemini 2.5/3.0 Pro、Flash 全系列，支持超长上下文与多模态输入。',
+    qs_eyebrow:'QUICK START',qs_title_1:'命令行级',qs_title_2:'极简部署',
+    qs_sub:'无需反复调试环境变量，直接按常见开发工具给出最短接入路径。',
+    qs_claude_desc:'一条命令完成 Claude Code 的安装与初始化，自动写入 BlueFuture Studio Base URL。',
+    qs_codex_desc:'OpenAI Codex CLI 一键接入，包含身份、模型与网关地址配置。',
+    qs_opencode_desc:'开源 OpenCode 工具链整合，直接使用统一网关的所有模型。',
+    ch_eyebrow:'CHANNELS',ch_title_1:'模型',ch_title_2:'渠道',
+    ch_sub:'按模型能力和常见接入场景拆分渠道展示，让你先看适配，再进入控制台继续配置。',
+    ch_mixed_ratio_r:'倍率 1 : 0.5',ch_mixed_ratio_v:'1元 ≈ 2.5 美元额度',
+    ch_max_ratio_r:'倍率 1 : 1.7',ch_max_ratio_v:'1元 ≈ 0.6 美元额度',
+    ch_gemini_ratio_r:'倍率 1 : 1.1',ch_gemini_ratio_v:'1元 ≈ 0.9 美元额度',
+    ch_codex_ratio_r:'倍率 1 : 0.2',ch_codex_ratio_v:'1元 ≈ 5 美元额度',
+    ch_mixed_desc:'逆向分组 Kiro + AntiGravity 账号池，200K 上下文，缓存率约 60%。适合全场景对话与长文档处理。',
+    ch_max_desc:'Claude Code MAX 订阅号池，1M 上下文支持，缓存率 80% 以上，完美适配 CC 使用场景。',
+    ch_gemini_desc:'Gemini T3/T1 账号池。支持 Gemini 3 Pro、2.5 Flash 全系列，多模态输入开箱即用。',
+    ch_codex_desc:'CodexGPT Team/Plus/Pro 账号池。超值低价，养虾编码无敌，完美适配长期开发任务。',
+    ch_context:'上下文',ch_cache:'缓存率',ch_uptime:'可用性',
+    ch_context2:'上下文',ch_cache2:'缓存率',ch_uptime2:'可用性',
+    ch_context3:'上下文',ch_tier:'账号层级',ch_uptime3:'可用性',
+    ch_context4:'上下文',ch_subscription:'订阅级别',ch_uptime4:'可用性',
+    why_eyebrow:'ADVANTAGES',why_title_1:'为什么选择',
+    why_sub:'统一入口、兼容协议和清晰计费，让团队更容易把 BlueFuture Studio 接进真实工作流。',
+    why_1_title:'价格更低',why_1_desc:'把海外顶尖模型接入成本压到更容易接受的区间，让测试与正式调用都更可控。',
+    why_2_title:'部署更快',why_2_desc:'只需要替换 Base URL，就能把现有脚本、SDK 和工作流接进统一网关。',
+    why_3_title:'支持更多',why_3_desc:'Claude、GPT、Gemini 等模型能力统一展示和接入，减少多套入口的维护成本。',
+    why_4_title:'安全可靠',why_4_desc:'品牌前台、控制台和 API 网关入口收拢到一个站点，路径清晰，维护简单。',
+    cta_title_1:'准备好开始了吗？',
+    cta_sub:'只需几行代码，即可接入全球顶尖大模型。免费额度开箱即用。',
+    cta_primary:'免费注册',cta_secondary:'阅读文档',
+    footer_desc:'面向生产环境的统一 AI 模型网关。兼容 OpenAI 协议，支持 40+ 主流大模型。',
+    footer_status:'所有系统正常',
+    footer_product:'产品',footer_console:'控制台',footer_pricing:'模型广场',footer_docs:'文档',footer_status_link:'服务状态',
+    footer_resources:'资源',footer_api_ref:'API 参考',footer_guides:'使用指南',footer_tools:'工具',footer_help:'帮助中心',
+    footer_contact_title:'联系方式',contact_wechat:'微信',
+    footer_copyright:'保留所有权利',
+    footer_compliance:'使用本服务时请遵守《生成式人工智能服务管理暂行办法》及相关适用法律法规，不得利用大模型生成或传播违法违规内容。',
+    theme_light:'浅色',theme_dark:'深色',theme_system:'跟随系统',
+  },
+  en: {
+    banner_text:'Status page is live — track 40+ models in real time',
+    banner_link:'View status →',
+    nav_home:'Home',nav_console:'Console',nav_pricing:'Models',nav_docs:'Docs',nav_status:'Status',
+    auth_login:'Sign in',cta_get_started:'Get started',
+    top_rate:'Exchange rate 1¥ = 1$',top_contact:'Contact support',top_docs:'Docs',
+    hero_badge_tag:'NEW',hero_badge_text:'Status page is now live',
+    hero_title_1:'One entry,',hero_title_2:'all AI ready',
+    hero_sub:'Choose models, manage credits, and connect APIs in three clear moves. Complexity stays behind the scenes.',
+    hero_cta_primary:'Open console',hero_cta_secondary:'Read the docs',
+    hero_meta_live:'All systems operational',hero_meta_shortcut:'for quick search',
+    price_eyebrow:'PRICING',price_title_1:'Pricing advantage',
+    price_sub:'Turn expensive frontier models into affordable and manageable productivity.',
+    price_claude_note:'of official Claude API price',
+    price_claude_desc:'Full Claude Sonnet, Opus and Haiku series with 1M context, caching and streaming.',
+    price_gpt_note:'of official GPT API price',
+    price_gpt_desc:'Full GPT-5, Codex and all open models with Responses API and tool calling.',
+    price_gemini_note:'of official Gemini API price',
+    price_gemini_desc:'Full Gemini 2.5/3.0 Pro and Flash series with long context and multimodal input.',
+    qs_eyebrow:'QUICK START',qs_title_1:'Minimal CLI',qs_title_2:'deployment',
+    qs_sub:'No env-var tweaking — follow the shortest path for your favorite dev tool.',
+    qs_claude_desc:'One command to install and configure Claude Code with BlueFuture Studio base URL.',
+    qs_codex_desc:'OpenAI Codex CLI one-click setup, including auth, model and gateway config.',
+    qs_opencode_desc:'Open-source OpenCode toolchain integration, all models ready out of the box.',
+    ch_eyebrow:'CHANNELS',ch_title_1:'Model',ch_title_2:'channels',
+    ch_sub:'Channels split by model capability and common use cases so you can pick what fits.',
+    ch_mixed_ratio_r:'Ratio 1 : 0.5',ch_mixed_ratio_v:'¥1 ≈ $2.5',
+    ch_max_ratio_r:'Ratio 1 : 1.7',ch_max_ratio_v:'¥1 ≈ $0.6',
+    ch_gemini_ratio_r:'Ratio 1 : 1.1',ch_gemini_ratio_v:'¥1 ≈ $0.9',
+    ch_codex_ratio_r:'Ratio 1 : 0.2',ch_codex_ratio_v:'¥1 ≈ $5',
+    ch_mixed_desc:'Reverse-group Kiro + AntiGravity account pool with 200K context and ~60% cache rate. Great for general chat and long docs.',
+    ch_max_desc:'Claude Code MAX subscription pool with 1M context support and 80%+ cache rate. Perfect for CC workflows.',
+    ch_gemini_desc:'Gemini T3/T1 account pool with full Gemini 3 Pro, 2.5 Flash series and multimodal input.',
+    ch_codex_desc:'CodexGPT Team/Plus/Pro pool — unbeatable price for long coding sessions.',
+    ch_context:'Context',ch_cache:'Cache',ch_uptime:'Uptime',
+    ch_context2:'Context',ch_cache2:'Cache',ch_uptime2:'Uptime',
+    ch_context3:'Context',ch_tier:'Tier',ch_uptime3:'Uptime',
+    ch_context4:'Context',ch_subscription:'Subscription',ch_uptime4:'Uptime',
+    why_eyebrow:'ADVANTAGES',why_title_1:'Why choose',
+    why_sub:'Unified entry, compatible protocols and clear billing — easy to fit into real workflows.',
+    why_1_title:'Lower cost',why_1_desc:'Squeeze frontier model cost into an acceptable range for both testing and production.',
+    why_2_title:'Faster deploy',why_2_desc:'Swap the base URL and your existing scripts, SDKs and pipelines are ready to go.',
+    why_3_title:'More models',why_3_desc:'Claude, GPT, Gemini and more — unified showcase to reduce multi-entry maintenance.',
+    why_4_title:'Secure & reliable',why_4_desc:'Landing, console and gateway funneled into one site, clear paths and simple maintenance.',
+    cta_title_1:'Ready to build?',
+    cta_sub:'Just a few lines of code to tap into the world\u2019s best AI models. Free credit, no credit card.',
+    cta_primary:'Sign up free',cta_secondary:'Read docs',
+    footer_desc:'The production-grade unified AI gateway. OpenAI compatible, 40+ models.',
+    footer_status:'All systems operational',
+    footer_product:'Product',footer_console:'Console',footer_pricing:'Models',footer_docs:'Docs',footer_status_link:'Status',
+    footer_resources:'Resources',footer_api_ref:'API reference',footer_guides:'Guides',footer_tools:'Tools',footer_help:'Help center',
+    footer_contact_title:'Contact',contact_wechat:'WeChat',
+    footer_copyright:'All rights reserved',
+    footer_compliance:'Please comply with the Interim Measures for the Management of Generative AI Services and applicable laws when using this service. Do not use LLMs to generate or distribute illegal content.',
+    theme_light:'Light',theme_dark:'Dark',theme_system:'System',
+  }
+};
+
+// Language registry — to add a new language, add an entry below
+const LANGS = [
+  { code: 'zh', label: '中文', tag: 'ZH', parent: 'zh-CN' },
+  { code: 'en', label: 'English', tag: 'EN', parent: 'en-US' },
+  // { code: 'ja', label: '日本語', tag: 'JA', parent: 'ja-JP' },
+  // { code: 'ko', label: '한국어', tag: 'KO', parent: 'ko-KR' },
+];
+
+let currentLang = 'zh';
+try{ const saved = localStorage.getItem('bluefuture_lang'); if(LANGS.find(l=>l.code===saved)) currentLang = saved; }catch(e){}
+
+function applyLangCore(lang){
+  const conf = LANGS.find(l=>l.code===lang) || LANGS[0];
+  currentLang = conf.code;
+  try{ localStorage.setItem('bluefuture_lang', conf.code); }catch(e){}
+  document.documentElement.lang = conf.parent;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    const val = i18n[conf.code] && i18n[conf.code][key];
+    if(val !== undefined) el.textContent = val;
+  });
+  const labelEl = document.getElementById('langDDLabel');
+  if(labelEl) labelEl.textContent = conf.label;
+  document.querySelectorAll('.lang-dd-menu button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === conf.code);
+  });
+  try{ window.parent.postMessage({type:'landing-sync-lang', lang: conf.parent}, '*'); }catch(e){}
+}
+function applyLang(lang){ applyLangCore(lang); if(typeof updateThemeLabels==='function') updateThemeLabels(); }
+
+// Build lang dropdown menu
+const langDD = document.getElementById('langDD');
+const langMenu = langDD.querySelector('.lang-dd-menu');
+LANGS.forEach(l=>{
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.dataset.lang = l.code;
+  btn.innerHTML = '<span class="lang-label">' + l.label + '</span><span class="lang-code">' + l.tag + '</span>';
+  btn.addEventListener('click', ()=>{
+    applyLang(l.code);
+    langDD.classList.remove('open');
+  });
+  langMenu.appendChild(btn);
+});
+// Toggle dropdown
+const langTrigger = langDD.querySelector('.lang-dd-trigger');
+langTrigger.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  langDD.classList.toggle('open');
+});
+// Close on outside click
+document.addEventListener('click', (e)=>{
+  if(!langDD.contains(e.target)) langDD.classList.remove('open');
+  if(!themeDD.contains(e.target)) themeDD.classList.remove('open');
+});
+
+// ==================== Theme Switcher ====================
+const THEMES = [
+  {key:'light', icon:'sun'},
+  {key:'dark', icon:'moon'},
+  {key:'system', icon:'auto'}
+];
+const THEME_ICONS = {
+  sun:'<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>',
+  moon:'<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>',
+  auto:'<circle cx="12" cy="12" r="10"/><path d="M12 2v20M12 2a10 10 0 010 20"/>'
+};
+const themeDD = document.getElementById('themeDD');
+const themeMenu = themeDD.querySelector('.lang-dd-menu');
+const themeIcon = document.getElementById('themeIcon');
+const themeDDLabel = document.getElementById('themeDDLabel');
+let currentTheme = 'light';
+try{ const saved = localStorage.getItem('bluefuture_theme'); if(THEMES.find(t=>t.key===saved)) currentTheme = saved; }catch(e){}
+
+const systemDarkMQ = window.matchMedia('(prefers-color-scheme: dark)');
+
+function resolveTheme(pref){
+  if(pref==='system') return systemDarkMQ.matches ? 'dark' : 'light';
+  return pref;
+}
+
+function applyTheme(pref){
+  currentTheme = pref;
+  try{ localStorage.setItem('bluefuture_theme', pref); }catch(e){}
+  const effective = resolveTheme(pref);
+  document.documentElement.setAttribute('data-theme', effective);
+  // Update icon
+  const iconKey = THEMES.find(t=>t.key===pref)?.icon || 'sun';
+  themeIcon.innerHTML = THEME_ICONS[iconKey];
+  // Update label
+  const labelKey = 'theme_' + pref;
+  const label = (i18n[currentLang] && i18n[currentLang][labelKey]) || pref;
+  themeDDLabel.textContent = label;
+  // Update active state
+  themeMenu.querySelectorAll('button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.theme === pref);
+  });
+  try{ window.parent.postMessage({type:'landing-sync-theme', theme: effective}, '*'); }catch(e){}
+}
+
+// Build theme dropdown
+THEMES.forEach(t=>{
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.dataset.theme = t.key;
+  const labelKey = 'theme_' + t.key;
+  const zhLabel = i18n.zh[labelKey] || t.key;
+  const enLabel = i18n.en[labelKey] || t.key;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0">' + THEME_ICONS[t.icon] + '</svg><span class="lang-label">' + (currentLang==='zh'?zhLabel:enLabel) + '</span>';
+  btn.addEventListener('click', ()=>{
+    applyTheme(t.key);
+    themeDD.classList.remove('open');
+  });
+  themeMenu.appendChild(btn);
+});
+
+// Toggle theme dropdown
+themeDD.querySelector('.lang-dd-trigger').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  themeDD.classList.toggle('open');
+  langDD.classList.remove('open');
+});
+// Also close lang when opening theme and vice-versa
+langTrigger.addEventListener('click', ()=>{ themeDD.classList.remove('open'); });
+
+// Listen for system theme change
+systemDarkMQ.addEventListener('change', ()=>{
+  if(currentTheme==='system') applyTheme('system');
+});
+
+// Apply theme on load
+applyTheme(currentTheme);
+
+// Update theme dropdown labels on language change
+function updateThemeLabels(){
+  themeMenu.querySelectorAll('button').forEach(btn=>{
+    const key = 'theme_' + btn.dataset.theme;
+    const label = (i18n[currentLang] && i18n[currentLang][key]) || btn.dataset.theme;
+    const labelSpan = btn.querySelector('.lang-label');
+    if(labelSpan) labelSpan.textContent = label;
+  });
+  const curKey = 'theme_' + currentTheme;
+  themeDDLabel.textContent = (i18n[currentLang] && i18n[currentLang][curKey]) || currentTheme;
+}
+
+// Copy-to-clipboard for quick start cards
+document.querySelectorAll('.qs-copy').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const text = btn.getAttribute('data-copy');
+    if(!text) return;
+    navigator.clipboard?.writeText(text).then(()=>{
+      btn.classList.add('qs-copied');
+      setTimeout(()=>btn.classList.remove('qs-copied'), 1500);
+    });
+  });
+});
+
+
+applyLang(currentLang);
+
+const nav = document.getElementById('nav');
+const onScroll = ()=>{ nav.classList.toggle('scrolled', window.scrollY > 8); };
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+window.addEventListener('message', (event)=>{
+  if(event.data && event.data.lang){
+    const l = event.data.lang.startsWith('en') ? 'en' : 'zh';
+    if(l !== currentLang) applyLang(l);
+  }
+  if(event.data && event.data.themeMode){
+    document.documentElement.setAttribute('data-theme', event.data.themeMode === 'light' ? 'light' : 'dark');
+  }
+});
+// Highlight contact section when anchor link is clicked
+function flashContact(){
+  const el = document.getElementById('contact');
+  if(!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+  setTimeout(()=>{
+    el.classList.remove('flash');
+    void el.offsetWidth;
+    el.classList.add('flash');
+    setTimeout(()=>el.classList.remove('flash'), 1700);
+  }, 600);
+}
+document.addEventListener('click', (e)=>{
+  const a = e.target.closest('a[href="#contact"]');
+  if(a){
+    e.preventDefault();
+    flashContact();
+  }
+});
+
+// Only intercept internal navigation when running inside an iframe (React Landing wrapper)
+const inIframe = window.self !== window.top;
+if(inIframe){
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a');
+    if(!a) return;
+    const href = a.getAttribute('href');
+    if(!href || href.startsWith('#')) return;
+    if(/^https?:\/\//.test(href)) return;
+    e.preventDefault();
+    try{ window.parent.postMessage({type:'navigate', href}, '*'); }catch(err){ window.location.href = href; }
+  });
+}
+
+// ============================================================
+// ==================== [NEW] Visual Boost ====================
+// ============================================================
+
+// --- i18n extensions for new strings ---
+Object.assign(i18n.zh, {
+  copy_toast:'已复制', copy_prefix:'已复制：',
+  hero_badge_tag:'NEW', hero_badge_text:'状态监控页已上线',
+  pc_bar_you:'你付 5%', pc_bar_you_gpt:'你付 3%', pc_bar_you_gemini:'你付 10%',
+  pc_bar_vs:'官方 100%',
+  featured_badge:'最佳性价比'
+});
+Object.assign(i18n.en, {
+  copy_toast:'Copied', copy_prefix:'Copied: ',
+  hero_badge_tag:'NEW', hero_badge_text:'Status page is now live',
+  pc_bar_you:'You pay 5%', pc_bar_you_gpt:'You pay 3%', pc_bar_you_gemini:'You pay 10%',
+  pc_bar_vs:'Official 100%',
+  featured_badge:'Best Value'
+});
+applyLang(currentLang);
+
+// ---------- Scroll Progress Bar (rAF-throttled, no forced reflow) ----------
+(function(){
+  const bar = document.getElementById('scrollProgress');
+  if(!bar) return;
+  let ticking = false, cachedMax = 0;
+  const recompute = ()=>{
+    const h = document.documentElement;
+    cachedMax = h.scrollHeight - h.clientHeight;
+  };
+  const update = ()=>{
+    const pct = cachedMax > 0 ? (window.scrollY / cachedMax) * 100 : 0;
+    bar.style.width = pct + '%';
+    ticking = false;
+  };
+  const onScroll = ()=>{
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
+  };
+  recompute();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', ()=>{ recompute(); onScroll(); }, {passive:true});
+  // Recompute layout dims when ResizeObserver fires (on dynamic content)
+  if('ResizeObserver' in window){
+    const ro = new ResizeObserver(recompute);
+    ro.observe(document.body);
+  }
+  update();
+})();
+
+// ---------- Pause heavy fixed/looped animations when scrolled offscreen ----------
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  const targets = [
+    {sel:'.hero-network', threshold:0},
+    {sel:'.marquee-track', threshold:0}
+  ];
+  targets.forEach(t=>{
+    document.querySelectorAll(t.sel).forEach(el=>{
+      const io = new IntersectionObserver(([entry])=>{
+        if(entry.isIntersecting){ el.classList.remove('offscreen'); }
+        else{ el.classList.add('offscreen'); }
+      }, {threshold:t.threshold, rootMargin:'120px'});
+      io.observe(el);
+    });
+  });
+  // Aurora: pause when hero is scrolled fully out of view
+  const aurora = document.querySelector('.bg-aurora');
+  const hero = document.querySelector('.hero');
+  if(aurora && hero){
+    const io = new IntersectionObserver(([entry])=>{
+      // Only pause once hero is well below viewport (saves cost on long pages)
+      if(entry.boundingClientRect.bottom < -200){ aurora.classList.add('offscreen'); }
+      else { aurora.classList.remove('offscreen'); }
+    }, {rootMargin:'0px', threshold:0});
+    io.observe(hero);
+  }
+})();
+
+// ---------- Inject .card-glow into all interactive cards ----------
+(function(){
+  const sel = '.feature,.channel-card,.price-card,.qs-card,.why-card,.plan';
+  // Skip on touch devices for perf
+  const isTouch = matchMedia('(hover:none),(pointer:coarse)').matches;
+  if(isTouch) return;
+  document.querySelectorAll(sel).forEach(card=>{
+    if(card.querySelector(':scope > .card-glow')) return;
+    const g = document.createElement('div');
+    g.className = 'card-glow';
+    card.prepend(g);
+    let pending = false, _x = 0, _y = 0;
+    const apply = ()=>{ card.style.setProperty('--x', _x + '%'); card.style.setProperty('--y', _y + '%'); pending = false; };
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      _x = ((e.clientX - r.left) / r.width * 100);
+      _y = ((e.clientY - r.top) / r.height * 100);
+      if(!pending){ pending = true; requestAnimationFrame(apply); }
+    });
+  });
+})();
+
+// ---------- Hero spotlight follow (rAF-throttled, desktop only) ----------
+(function(){
+  const isTouch = matchMedia('(hover:none),(pointer:coarse)').matches;
+  if(isTouch) return;
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+  let pending = false, _mx = 50, _my = 50;
+  const apply = ()=>{ hero.style.setProperty('--mx', _mx + '%'); hero.style.setProperty('--my', _my + '%'); pending = false; };
+  hero.addEventListener('mousemove', (e)=>{
+    const r = hero.getBoundingClientRect();
+    _mx = ((e.clientX - r.left) / r.width * 100);
+    _my = ((e.clientY - r.top) / r.height * 100);
+    if(!pending){ pending = true; requestAnimationFrame(apply); }
+  });
+})();
+
+// ---------- Custom cursor ----------
+(function(){
+  return;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(!fine || window.innerWidth < 900) return;
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if(!dot || !ring) return;
+  document.body.classList.add('cursor-active','cursor-ready');
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my;
+  document.addEventListener('mousemove',(e)=>{
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = 'translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+  });
+  document.addEventListener('mouseleave',()=>{ dot.style.opacity='0'; ring.style.opacity='0'; });
+  document.addEventListener('mouseenter',()=>{ dot.style.opacity='1'; ring.style.opacity='1'; });
+  const tick = ()=>{
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    ring.style.transform = 'translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
+    requestAnimationFrame(tick);
+  };
+  tick();
+  const hoverSel = 'a, button, .feature, .channel-card, .price-card, .plan, .qs-card, .model-chip, .why-card, [role="button"], .contact-val';
+  document.querySelectorAll(hoverSel).forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ ring.classList.add('hover'); dot.classList.add('hover'); });
+    el.addEventListener('mouseleave',()=>{ ring.classList.remove('hover'); dot.classList.remove('hover'); });
+  });
+})();
+
+// ---------- Count-up animations ----------
+(function(){
+  const easeOut = p => 1 - Math.pow(1 - p, 3);
+  const animate = (el, target, suffix='', decimals=0, dur=1400)=>{
+    el.classList.add('animating');
+    const t0 = performance.now();
+    const step = (t)=>{
+      const p = Math.min(1, (t - t0) / dur);
+      const v = target * easeOut(p);
+      el.textContent = (decimals ? v.toFixed(decimals) : Math.round(v)) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+      else{ el.textContent = (decimals ? target.toFixed(decimals) : Math.round(target)) + suffix; setTimeout(()=>el.classList.remove('animating'),300); }
+    };
+    requestAnimationFrame(step);
+  };
+  const setup = (el)=>{
+    const raw = el.textContent.trim();
+    const m = raw.match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+    if(!m) return; // e.g. "T1/T3", "Plus/Pro"
+    const num = parseFloat(m[1]);
+    const suffix = m[2] || '';
+    const decimals = (m[1].split('.')[1] || '').length;
+    if(isNaN(num)) return;
+    el.dataset.target = num;
+    el.dataset.suffix = suffix;
+    el.dataset.decimals = decimals;
+    el.dataset.original = raw;
+    el.textContent = '0' + suffix;
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          animate(el, num, suffix, decimals);
+          io.unobserve(el);
+        }
+      });
+    }, {threshold:0.4});
+    io.observe(el);
+  };
+  document.querySelectorAll('.pc-pct .num, .stat .num, .ch-stat-num').forEach(setup);
+})();
+
+// ---------- Terminal typing cycle ----------
+(function(){
+  const body = document.querySelector('.terminal-body');
+  if(!body) return;
+  const payloads = [
+    { model:'claude-sonnet-4-6', role:'user', content:'Hi' },
+    { model:'gpt-5.1-codex-max', role:'user', content:'Write a Python web scraper' },
+    { model:'gemini-3-pro-preview', role:'user', content:'Explain quantum computing' }
+  ];
+  const render = (p)=>{
+    return '<span class="line"><span class="c-prompt">$</span> curl https://bluefuture.studio/v1/chat/completions \\\n' +
+      '</span><span class="line">  -H <span class="c-str">"Authorization: Bearer $KEY"</span> \\\n' +
+      '</span><span class="line">  -H <span class="c-str">"Content-Type: application/json"</span> \\\n' +
+      '</span><span class="line">  -d <span class="c-str">\'{</span>\n' +
+      '</span><span class="line">    <span class="c-str">"model": </span><span class="c-key">"'+p.model+'"</span><span class="c-str">,</span>\n' +
+      '</span><span class="line">    <span class="c-str">"messages": [{ </span><span class="c-key">"role"</span><span class="c-str">: </span><span class="c-key">"'+p.role+'"</span><span class="c-str">, </span><span class="c-key">"content"</span><span class="c-str">: </span><span class="c-key">"'+p.content+'"</span><span class="c-str"> }]</span>\n' +
+      '</span><span class="line">  <span class="c-str">}\'</span></span>';
+  };
+  let idx = 0;
+  setInterval(()=>{
+    idx = (idx + 1) % payloads.length;
+    body.classList.add('fading');
+    setTimeout(()=>{
+      body.innerHTML = render(payloads[idx]);
+      // re-trigger entrance animation
+      body.querySelectorAll('.line').forEach((l,i)=>{
+        l.style.animation = 'none';
+        void l.offsetWidth;
+        l.style.animation = 'type .4s var(--ease) '+(0.05 + i*0.06)+'s forwards';
+        l.style.opacity = '0';
+      });
+      body.classList.remove('fading');
+    }, 320);
+  }, 6000);
+})();
+
+// ---------- Hero network canvas ----------
+(function(){
+  const canvas = document.getElementById('heroNetwork');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  let W = 0, H = 0;
+  let mouse = {x:-9999,y:-9999};
+  const particles = [];
+  const N = 36;
+  for(let i = 0; i < N; i++){
+    particles.push({
+      x: Math.random(),
+      y: Math.random(),
+      vx: (Math.random() - 0.5) * 0.0005,
+      vy: (Math.random() - 0.5) * 0.0005
+    });
+  }
+  const resize = ()=>{
+    const r = canvas.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
+  };
+  const hero = canvas.closest('.hero');
+  if(hero){
+    hero.addEventListener('mousemove',(e)=>{
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    hero.addEventListener('mouseleave',()=>{ mouse.x = -9999; mouse.y = -9999; });
+  }
+  let visible = true, rafId = 0;
+  const loop = ()=>{
+    if(!visible){ rafId = 0; return; }
+    ctx.clearRect(0, 0, W, H);
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const baseRGB = isLight ? '94,106,210' : '126,139,255';
+    particles.forEach(p=>{
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > 1) p.vx *= -1;
+      if(p.y < 0 || p.y > 1) p.vy *= -1;
+    });
+    // connect close pairs
+    for(let i = 0; i < particles.length; i++){
+      for(let j = i + 1; j < particles.length; j++){
+        const ax = particles[i].x * W, ay = particles[i].y * H;
+        const bx = particles[j].x * W, by = particles[j].y * H;
+        const dx = ax - bx, dy = ay - by;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if(d < 130){
+          ctx.strokeStyle = 'rgba('+baseRGB+','+(0.16 * (1 - d/130)).toFixed(3)+')';
+          ctx.lineWidth = 0.6;
+          ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+        }
+      }
+    }
+    // draw particles, enlarge near cursor
+    particles.forEach(p=>{
+      const px = p.x * W, py = p.y * H;
+      const dx = px - mouse.x, dy = py - mouse.y;
+      const dm = Math.sqrt(dx*dx + dy*dy);
+      const influence = dm < 140 ? (1 - dm/140) : 0;
+      const r = 1.4 + influence * 2.6;
+      ctx.fillStyle = 'rgba('+baseRGB+','+(0.45 + influence * 0.45).toFixed(3)+')';
+      ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI*2); ctx.fill();
+    });
+    rafId = requestAnimationFrame(loop);
+  };
+  // Pause loop when canvas scrolls offscreen
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(([e])=>{
+      visible = e.isIntersecting;
+      if(visible && !rafId){ rafId = requestAnimationFrame(loop); }
+    }, {threshold:0});
+    io.observe(canvas);
+  }
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden){ visible = false; }
+    else if(canvas.getBoundingClientRect().bottom > 0 && !rafId){ visible = true; rafId = requestAnimationFrame(loop); }
+  });
+  window.addEventListener('resize', resize);
+  resize();
+  rafId = requestAnimationFrame(loop);
+})();
+
+// ---------- Magnetic primary/accent buttons (rAF-throttled) ----------
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  document.querySelectorAll('.btn-primary, .btn-accent').forEach(btn=>{
+    let pending = false, _dx = 0, _dy = 0;
+    const apply = ()=>{ btn.style.transform = 'translate('+_dx+'px,'+_dy+'px)'; pending = false; };
+    btn.addEventListener('mousemove',(e)=>{
+      const r = btn.getBoundingClientRect();
+      _dx = (e.clientX - (r.left + r.width/2)) * 0.18;
+      _dy = (e.clientY - (r.top + r.height/2)) * 0.22;
+      if(!pending){ pending = true; requestAnimationFrame(apply); }
+    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform = ''; });
+  });
+})();
+
+// ---------- Price comparison bar (scale-in on scroll) ----------
+(function(){
+  const bars = document.querySelectorAll('.pc-bar');
+  if(!bars.length) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        // stagger a tiny bit for visual rhythm
+        const idx = Array.from(bars).indexOf(e.target);
+        setTimeout(()=> e.target.classList.add('visible'), 120 + idx * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.3});
+  bars.forEach(b => io.observe(b));
+})();
+
+// ---------- Chip scramble (random ch-model every 4s) ----------
+(function(){
+  const chars = '!<>-_\\/[]{}—=+*^?#ABCDEF0123456789';
+  const active = new WeakSet();
+  const scramble = (el, dur=820)=>{
+    if(active.has(el)) return;
+    active.add(el);
+    el.classList.add('scrambling');
+    const orig = el._origText || el.textContent;
+    el._origText = orig;
+    const len = orig.length;
+    const t0 = performance.now();
+    const step = (t)=>{
+      const p = Math.min(1, (t - t0) / dur);
+      const lock = Math.floor(p * len);
+      let out = '';
+      for(let i = 0; i < len; i++){
+        const ch = orig[i];
+        if(i < lock || ch === ' ' || ch === '(' || ch === ')' || ch === '.' || ch === '-'){
+          out += ch;
+        }else{
+          out += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      el.textContent = out;
+      if(p < 1) requestAnimationFrame(step);
+      else{
+        el.textContent = orig;
+        setTimeout(()=>{ el.classList.remove('scrambling'); active.delete(el); }, 240);
+      }
+    };
+    requestAnimationFrame(step);
+  };
+  let timer = null;
+  const start = ()=>{
+    if(timer) return;
+    timer = setInterval(()=>{
+      const chips = document.querySelectorAll('.ch-model');
+      if(!chips.length) return;
+      // only scramble if user can currently see at least one chip
+      const visible = Array.from(chips).filter(el=>{
+        const r = el.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      });
+      if(!visible.length) return;
+      const chip = visible[Math.floor(Math.random() * visible.length)];
+      scramble(chip);
+    }, 4000);
+  };
+  const stop = ()=>{ if(timer){ clearInterval(timer); timer = null; } };
+  // Only run while tab is active
+  document.addEventListener('visibilitychange', ()=>{ document.hidden ? stop() : start(); });
+  start();
+})();
+
+// ---------- Footer contact click-to-copy ----------
+(function(){
+  const toast = document.getElementById('copyToast');
+  const showToast = (msg)=>{
+    if(!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=>toast.classList.remove('show'), 1900);
+  };
+  document.querySelectorAll('.footer-contact .contact-val').forEach(el=>{
+    // add copy hint icon
+    if(!el.querySelector('.copy-hint')){
+      const hint = document.createElement('span');
+      hint.className = 'copy-hint';
+      hint.innerHTML = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1 1 0 011-1h8"/></svg>';
+      el.appendChild(hint);
+    }
+    el.addEventListener('click',()=>{
+      const val = el.firstChild.textContent.trim();
+      if(!val) return;
+      try{
+        navigator.clipboard?.writeText(val).then(()=>{
+          const prefix = (i18n[currentLang] && i18n[currentLang].copy_prefix) || 'Copied: ';
+          showToast(prefix + val);
+        });
+      }catch(e){}
+    });
+  });
+  // also feed qs-copy completion into toast
+  document.querySelectorAll('.qs-copy').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btn.classList.add('qs-copied');
+      setTimeout(()=>btn.classList.remove('qs-copied'), 1600);
+      const msg = (i18n[currentLang] && i18n[currentLang].copy_toast) || 'Copied';
+      showToast(msg);
+    });
+  });
+})();
+</script>
+</body>
+</html>

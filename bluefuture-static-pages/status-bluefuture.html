@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlueFuture Status</title>
+<meta name="description" content="BlueFuture Studio 服务状态页，查看网站、控制台、模型网关和计费系统的实时可用性。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f8fc;
+  --surface:#fff;
+  --surface-2:#f0f2f8;
+  --border:rgba(20,24,38,.1);
+  --text:#191b2a;
+  --muted:#687086;
+  --soft:#8b92a8;
+  --accent:#5e6ad2;
+  --green:#29a66a;
+  --yellow:#d99b12;
+  --red:#d94b4b;
+  --shadow:0 24px 70px rgba(30,40,90,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden;background:
+  radial-gradient(circle at 50% -20%,rgba(94,106,210,.16),transparent 42%),
+  linear-gradient(180deg,#fbfbff 0%,#f7f8fc 42%,#fff 100%);
+}
+a{color:inherit;text-decoration:none}
+.page{max-width:980px;margin:0 auto;padding:34px 24px 64px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:54px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px}
+.logo{width:28px;height:28px;flex-shrink:0}
+.back{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.78);color:var(--muted);font-size:13px;box-shadow:0 10px 26px rgba(30,40,90,.06)}
+.hero{text-align:center;margin-bottom:34px}
+.status-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid rgba(41,166,106,.22);border-radius:999px;background:rgba(41,166,106,.08);color:var(--green);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;margin-bottom:22px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(41,166,106,.12)}
+h1{font-family:'Sora',sans-serif;font-size:clamp(38px,7vw,72px);line-height:1.02;letter-spacing:-.04em;margin-bottom:18px}
+.hero p{max-width:640px;margin:0 auto;color:var(--muted);font-size:18px;line-height:1.7}
+.summary{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin:32px 0}
+.panel{background:rgba(255,255,255,.82);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}
+.overview{padding:26px}
+.overview-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:24px}
+.overview h2,.section-title{font-family:'Sora',sans-serif;font-size:18px;letter-spacing:-.02em}
+.updated{font-family:'JetBrains Mono',monospace;color:var(--soft);font-size:11px}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.metric{background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:16px}
+.metric strong{display:block;font-family:'Sora',sans-serif;font-size:28px;line-height:1;margin-bottom:8px}
+.metric span{color:var(--muted);font-size:12px}
+.incident{padding:26px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.incident .tag{width:max-content;padding:5px 10px;border-radius:999px;background:rgba(41,166,106,.1);color:var(--green);font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;text-transform:uppercase}
+.incident h2{font-family:'Sora',sans-serif;font-size:22px}
+.incident p{color:var(--muted);line-height:1.65}
+.services{padding:24px;margin-bottom:18px}
+.service-list{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.service{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:18px;border:1px solid var(--border);border-radius:18px;background:rgba(255,255,255,.7)}
+.service-main{display:flex;align-items:center;gap:13px;min-width:0}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(41,166,106,.1);flex-shrink:0}
+.dot.yellow{background:var(--yellow);box-shadow:0 0 0 5px rgba(217,155,18,.12)}
+.service-name{font-weight:700;font-size:15px;margin-bottom:3px}
+.service-desc{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uptime{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.uptime strong{display:block;color:var(--text);font-size:15px;margin-bottom:4px}
+.bars{display:grid;grid-template-columns:repeat(60,1fr);gap:3px;margin-top:16px}
+.bar{height:28px;border-radius:4px;background:var(--green);opacity:.86}
+.bar.dim{opacity:.55}
+.bar.warn{background:var(--yellow)}
+.history{padding:24px}
+.history-list{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+.history-item{display:flex;gap:12px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.history-item:last-child{border-bottom:none;padding-bottom:0}
+.time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft);min-width:72px}
+.history-item h3{font-size:14px;margin-bottom:4px}
+.history-item p{font-size:13px;color:var(--muted);line-height:1.55}
+.footer{margin-top:34px;color:var(--soft);font-size:12px;text-align:center}
+@media (max-width:760px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .page{width:100%;max-width:100vw;padding:22px 18px 48px;overflow:hidden}
+  .page *{max-width:100%}
+  .top{margin-bottom:38px}
+  .back{display:none}
+  .brand{font-size:18px}
+  .hero{text-align:left;width:100%;overflow:hidden}
+  .status-pill{margin-bottom:18px}
+  .hero p{width:100%;max-width:336px;font-size:16px;overflow-wrap:anywhere;word-break:break-word}
+  h1{font-size:42px;letter-spacing:-.035em}
+  .panel,.summary,.overview,.incident,.services,.history{min-width:0;width:100%}
+  .summary{grid-template-columns:1fr}
+  .overview-head{flex-direction:column;gap:8px;margin-bottom:18px}
+  .metric-grid{grid-template-columns:1fr}
+  .metric{padding:15px 16px}
+  .service{grid-template-columns:1fr;gap:12px}
+  .service-main{align-items:flex-start;min-width:0}
+  .service-name,.service-desc{overflow-wrap:anywhere;white-space:normal}
+  .uptime{text-align:left;padding-left:23px}
+  .bars{grid-template-columns:repeat(30,1fr);gap:2px;max-width:100%;overflow:hidden}
+  .bar{height:24px}
+  .bar:nth-child(n+31){display:none}
+  .history-item{display:block}
+  .time{display:block;margin-bottom:6px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <a class="brand" href="/">
+      <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="64" y2="64"><stop offset="0" stop-color="#b1b8ff"/><stop offset=".55" stop-color="#7f8aff"/><stop offset="1" stop-color="#5e6ad2"/></linearGradient></defs>
+        <circle cx="32" cy="32" r="16" fill="rgba(94,106,210,.12)"/>
+        <g fill="none" stroke="url(#g)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="22" r="10"/><circle cx="32" cy="22" r="10" transform="rotate(120 32 32)"/><circle cx="32" cy="22" r="10" transform="rotate(240 32 32)"/></g>
+        <circle cx="32" cy="32" r="2.4" fill="#5e6ad2"/>
+      </svg>
+      <span>BlueFuture Status</span>
+    </a>
+    <a class="back" href="/">← <span>返回首页</span></a>
+  </header>
+
+  <section class="hero">
+    <div class="status-pill"><span class="pulse"></span> All systems operational</div>
+    <h1>服务运行正常</h1>
+    <p>公开状态页展示 BlueFuture Studio 的核心服务可用性。这里是本地演示版，正式部署时可以替换为 Uptime Kuma 的公开状态页。</p>
+  </section>
+
+  <section class="summary">
+    <div class="panel overview">
+      <div class="overview-head">
+        <h2>过去 30 天</h2>
+        <div class="updated">Updated 16:00</div>
+      </div>
+      <div class="metric-grid">
+        <div class="metric"><strong>99.98%</strong><span>整体可用率</span></div>
+        <div class="metric"><strong>4</strong><span>监控服务</span></div>
+        <div class="metric"><strong>0</strong><span>当前事故</span></div>
+      </div>
+    </div>
+    <div class="panel incident">
+      <div class="tag">No incident</div>
+      <h2>当前没有已知故障</h2>
+      <p>网站、控制台、模型网关和计费服务均处于正常状态。</p>
+    </div>
+  </section>
+
+  <section class="panel services">
+    <h2 class="section-title">服务分组</h2>
+    <div class="service-list">
+      <article class="service">
+        <div>
+          <div class="service-main"><span class="dot"></span><div><div class="service-name">BlueFuture Web</div><div class="service-desc">官网与落地页访问状态</div></div></div>
+          <div class="bars"></div>
+        </div>
+        <div class="uptime"><strong>99.99%</strong>30 天可用率</div>
+      </article>
+      <article class="service">
+        <div>
+          <div class="service-main"><span class="dot"></span><div><div class="service-name">Console</div><div class="service-desc">用户工作台、模型广场与密钥管理</div></div></div>
+          <div class="bars"></div>
+        </div>
+        <div class="uptime"><strong>99.96%</strong>30 天可用率</div>
+      </article>
+      <article class="service">
+        <div>
+          <div class="service-main"><span class="dot"></span><div><div class="service-name">API Gateway</div><div class="service-desc">OpenAI 兼容接口与模型请求转发</div></div></div>
+          <div class="bars api"></div>
+        </div>
+        <div class="uptime"><strong>99.97%</strong>30 天可用率</div>
+      </article>
+      <article class="service">
+        <div>
+          <div class="service-main"><span class="dot yellow"></span><div><div class="service-name">Billing</div><div class="service-desc">充值、余额与用量统计</div></div></div>
+          <div class="bars billing"></div>
+        </div>
+        <div class="uptime"><strong>99.90%</strong>30 天可用率</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel history">
+    <h2 class="section-title">最近事件</h2>
+    <div class="history-list">
+      <div class="history-item"><div class="time">Today</div><div><h3>所有服务正常</h3><p>核心监控项均返回正常响应。</p></div></div>
+      <div class="history-item"><div class="time">May 16</div><div><h3>Billing 短暂延迟</h3><p>用量统计刷新延迟约 3 分钟，已自动恢复。</p></div></div>
+      <div class="history-item"><div class="time">May 14</div><div><h3>模型网关例行维护</h3><p>完成网关规则更新，无用户侧中断。</p></div></div>
+    </div>
+  </section>
+
+  <footer class="footer">本页为本地演示。正式上线建议使用 Uptime Kuma 公开状态页或反代到 status.bluefuture.studio。</footer>
+</div>
+<script>
+document.querySelectorAll('.bars').forEach((box, boxIndex)=>{
+  const warnAt = box.classList.contains('billing') ? [9,10,11] : box.classList.contains('api') ? [36] : [];
+  for(let i=0;i<60;i++){
+    const bar = document.createElement('span');
+    bar.className = 'bar' + (warnAt.includes(i) ? ' warn' : (i % 11 === boxIndex ? ' dim' : ''));
+    box.appendChild(bar);
+  }
+});
+</script>
+</body>
+</html>
